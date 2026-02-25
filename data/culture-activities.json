@@ -1,0 +1,37 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "totalLevels": 5,
+        "totalActivities": 15,
+        "transformationGoals": [
+            "Rigid to Open-minded",
+            "Reactive to Proactive",
+            "Blaming to Owning",
+            "Fixed to Growth Mindset",
+            "Individual to Collaborative"
+        ]
+    },
+    "levels": [
+        {
+            "level": 1,
+            "name": "Foundation - Opening the Mind",
+            "goal": "Break mental barriers about research",
+            "activities": [
+                {
+                    "id": "L1A1",
+                    "title": "Research Awareness Challenge",
+                    "duration": "30 minutes",
+                    "transformation": "Rigid → Open-minded",
+                    "preQuestion": {
+                        "question": "When you hear 'research,' what is your immediate reaction?",
+                        "options": [
+                            {
+                                "id": "a",
+                                "text": "It's too complex for me to understand",
+                                "mindset": "rigid"
+                            },
+                            {
+                                "id": "b",
+                                "text": "It's only for PhD students and professors",
+                                "mindset": "rigid"
+                            }

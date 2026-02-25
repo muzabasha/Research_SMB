@@ -146,6 +146,33 @@ export default function StudentPortal() {
             </nav>
 
             <div className="max-w-7xl mx-auto px-6 py-8">
+                {/* Welcome Section for Beginners */}
+                {currentStep === 1 && score === 0 && (
+                    <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl p-8 mb-8 shadow-lg">
+                        <h2 className="text-3xl font-bold mb-4">🎓 Welcome to Your Research Journey!</h2>
+                        <p className="text-xl mb-4">
+                            Starting from zero? Perfect! This platform will guide you step-by-step from complete beginner to confident researcher.
+                        </p>
+                        <div className="grid md:grid-cols-3 gap-4 mt-6">
+                            <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <div className="text-3xl mb-2">🎯</div>
+                                <h3 className="font-bold mb-1">No Experience Needed</h3>
+                                <p className="text-sm opacity-90">We'll teach you everything from scratch</p>
+                            </div>
+                            <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <div className="text-3xl mb-2">📚</div>
+                                <h3 className="font-bold mb-1">Learn by Doing</h3>
+                                <p className="text-sm opacity-90">Build your research plan interactively</p>
+                            </div>
+                            <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <div className="text-3xl mb-2">🚀</div>
+                                <h3 className="font-bold mb-1">Your Pace, Your Way</h3>
+                                <p className="text-sm opacity-90">Explore freely, no pressure</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {/* Progress Bar */}
                 <div className="bg-white rounded-xl p-6 mb-8 shadow-lg">
                     <div className="flex justify-between items-center mb-4">
@@ -192,6 +219,23 @@ export default function StudentPortal() {
                             <h2 className="text-3xl font-bold mb-4">Choose Your Research Domain</h2>
                             <p className="text-gray-600 mb-6 text-lg">Select an area that interests you</p>
 
+                            {/* Educational Content */}
+                            <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-6 rounded-r-xl">
+                                <h3 className="font-bold text-lg mb-2 text-blue-900">💡 Why This Matters</h3>
+                                <p className="text-gray-700 mb-3">
+                                    Choosing the right domain is the foundation of your research journey. Pick something you're genuinely curious about - passion fuels persistence in research!
+                                </p>
+                                <div className="bg-white p-4 rounded-lg mt-3">
+                                    <h4 className="font-bold mb-2 text-blue-800">Quick Tips:</h4>
+                                    <ul className="space-y-1 text-sm text-gray-700">
+                                        <li>✓ Choose based on interest, not just trends</li>
+                                        <li>✓ Consider available resources and mentors</li>
+                                        <li>✓ Think about real-world problems you want to solve</li>
+                                        <li>✓ Don't worry - you can explore multiple areas later!</li>
+                                    </ul>
+                                </div>
+                            </div>
+
                             <div className="grid md:grid-cols-3 gap-4">
                                 {DOMAINS.map((domain) => (
                                     <button
@@ -227,6 +271,24 @@ export default function StudentPortal() {
                                 Domain: <span className="font-bold text-blue-600">{selectedDomain}</span>
                             </p>
 
+                            {/* Educational Content */}
+                            <div className="bg-purple-50 border-l-4 border-purple-500 p-6 mb-6 rounded-r-xl">
+                                <h3 className="font-bold text-lg mb-2 text-purple-900">💡 What Makes a Good Research Problem?</h3>
+                                <p className="text-gray-700 mb-3">
+                                    A strong research problem is specific, measurable, and addresses a real gap in knowledge or practice. Think about what frustrates you or what could be improved in {selectedDomain}.
+                                </p>
+                                <div className="bg-white p-4 rounded-lg mt-3">
+                                    <h4 className="font-bold mb-2 text-purple-800">Problem Statement Formula:</h4>
+                                    <p className="text-sm text-gray-700 mb-2">
+                                        "In [context], there is a problem with [issue], which affects [stakeholders], resulting in [consequences]."
+                                    </p>
+                                    <h4 className="font-bold mb-2 mt-3 text-purple-800">Example:</h4>
+                                    <p className="text-sm text-gray-700 italic">
+                                        "In healthcare AI systems, there is a problem with bias in diagnostic algorithms, which affects minority patients, resulting in misdiagnosis and health disparities."
+                                    </p>
+                                </div>
+                            </div>
+
                             <textarea
                                 value={problem}
                                 onChange={(e) => setProblem(e.target.value)}
@@ -255,6 +317,24 @@ export default function StudentPortal() {
                                 <div>
                                     <h2 className="text-3xl font-bold">Literature Hunt</h2>
                                     <p className="text-gray-600 text-lg">Explore existing research in {selectedDomain}</p>
+                                </div>
+                            </div>
+
+                            {/* Educational Content */}
+                            <div className="bg-green-50 border-l-4 border-green-500 p-6 mb-6 rounded-r-xl">
+                                <h3 className="font-bold text-lg mb-2 text-green-900">📚 Why Literature Review is Critical</h3>
+                                <p className="text-gray-700 mb-3">
+                                    Literature review helps you understand what's already known, identify gaps, avoid repeating work, and build on existing knowledge. It's like standing on the shoulders of giants!
+                                </p>
+                                <div className="bg-white p-4 rounded-lg mt-3">
+                                    <h4 className="font-bold mb-2 text-green-800">What to Look For:</h4>
+                                    <ul className="space-y-1 text-sm text-gray-700">
+                                        <li>✓ Recent papers (last 3-5 years) for current trends</li>
+                                        <li>✓ Highly cited papers for foundational knowledge</li>
+                                        <li>✓ Research gaps and limitations mentioned by authors</li>
+                                        <li>✓ Methodologies used by successful researchers</li>
+                                        <li>✓ Contradictions or debates in the field</li>
+                                    </ul>
                                 </div>
                             </div>
 
@@ -362,6 +442,24 @@ export default function StudentPortal() {
                                 <div>
                                     <h2 className="text-3xl font-bold">Experiment Builder</h2>
                                     <p className="text-gray-600 text-lg">Design your research methodology</p>
+                                </div>
+                            </div>
+
+                            {/* Educational Content */}
+                            <div className="bg-orange-50 border-l-4 border-orange-500 p-6 mb-6 rounded-r-xl">
+                                <h3 className="font-bold text-lg mb-2 text-orange-900">🔬 Methodology: Your Research Blueprint</h3>
+                                <p className="text-gray-700 mb-3">
+                                    Your methodology is the roadmap showing HOW you'll answer your research question. A clear methodology makes your research reproducible and credible.
+                                </p>
+                                <div className="bg-white p-4 rounded-lg mt-3">
+                                    <h4 className="font-bold mb-2 text-orange-800">Key Components:</h4>
+                                    <ul className="space-y-1 text-sm text-gray-700">
+                                        <li>✓ <strong>Hypothesis:</strong> Your educated guess about the outcome</li>
+                                        <li>✓ <strong>Variables:</strong> What you change, measure, and control</li>
+                                        <li>✓ <strong>Procedure:</strong> Step-by-step process anyone can follow</li>
+                                        <li>✓ <strong>Data Collection:</strong> How you'll gather evidence</li>
+                                        <li>✓ <strong>Analysis Plan:</strong> How you'll interpret results</li>
+                                    </ul>
                                 </div>
                             </div>
 
@@ -566,6 +664,24 @@ export default function StudentPortal() {
                                 <div>
                                     <h2 className="text-3xl font-bold">Outcome Path</h2>
                                     <p className="text-gray-600 text-lg">Define expected results and impact</p>
+                                </div>
+                            </div>
+
+                            {/* Educational Content */}
+                            <div className="bg-indigo-50 border-l-4 border-indigo-500 p-6 mb-6 rounded-r-xl">
+                                <h3 className="font-bold text-lg mb-2 text-indigo-900">🎯 Planning for Impact</h3>
+                                <p className="text-gray-700 mb-3">
+                                    Great research doesn't just answer questions - it creates positive change. Think about who will benefit from your work and how it advances knowledge or solves real problems.
+                                </p>
+                                <div className="bg-white p-4 rounded-lg mt-3">
+                                    <h4 className="font-bold mb-2 text-indigo-800">Types of Research Impact:</h4>
+                                    <ul className="space-y-1 text-sm text-gray-700">
+                                        <li>✓ <strong>Academic:</strong> Advancing theoretical knowledge</li>
+                                        <li>✓ <strong>Practical:</strong> Solving real-world problems</li>
+                                        <li>✓ <strong>Social:</strong> Improving lives and communities</li>
+                                        <li>✓ <strong>Economic:</strong> Creating value and opportunities</li>
+                                        <li>✓ <strong>Environmental:</strong> Protecting our planet</li>
+                                    </ul>
                                 </div>
                             </div>
 

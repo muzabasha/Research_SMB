@@ -1,8 +1,35 @@
 # 🎓 Research Navigator 4.1
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/muzabasha/research-nav)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-16.1-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+
 **Experiential Research Ecosystem (NEP 2020 Aligned)**
 
 An AI-powered platform for research learning, funding intelligence, and lab incubation.
+
+🔗 **Live Demo**: [Coming Soon]  
+📦 **Repository**: https://github.com/muzabasha/research-nav  
+📚 **Documentation**: [Complete Guide](COMPLETE_GUIDE.md)
+
+## 🚀 Quick Deploy to Vercel
+
+**Ready to deploy in 15 minutes!**
+
+### Option 1: One-Click Deploy
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/muzabasha/research-nav)
+
+### Option 2: Manual Deploy
+
+1. **Database**: Create free PostgreSQL on [Supabase](https://supabase.com)
+2. **Deploy**: Import to [Vercel](https://vercel.com)
+3. **Configure**: Add environment variables
+4. **Initialize**: Run `npx prisma db push`
+
+📖 **Detailed Guide**: [VERCEL_DEPLOY.md](VERCEL_DEPLOY.md)  
+✅ **Checklist**: [DEPLOY_CHECKLIST.md](DEPLOY_CHECKLIST.md)
 
 ## 🚀 Features
 
@@ -24,42 +51,33 @@ An AI-powered platform for research learning, funding intelligence, and lab incu
 
 ## 📦 Installation
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/research-navigator.git
-cd research-navigator
-```
+### Quick Start (5 minutes)
 
-2. Install dependencies:
 ```bash
+# Clone repository
+git clone https://github.com/muzabasha/research-nav.git
+cd research-nav
+
+# Install dependencies
 npm install
-```
 
-3. Set up environment variables:
-```bash
-cp .env.local .env
-```
+# Setup environment
+cp .env.example .env.local
+# Edit .env.local with your DATABASE_URL
 
-Edit `.env` with your credentials:
-```
-DATABASE_URL="postgresql://user:password@localhost:5432/research_navigator"
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-secret-key"
-OPENAI_API_KEY="your-openai-api-key"
-```
+# Initialize database
+npm run prisma:generate
+npm run prisma:push
+npm run seed
 
-4. Initialize database:
-```bash
-npx prisma generate
-npx prisma db push
-```
-
-5. Run development server:
-```bash
+# Start development server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
+
+📖 **Full Setup Guide**: [SETUP.md](SETUP.md)  
+⚡ **Quick Start**: [QUICKSTART.md](QUICKSTART.md)
 
 ## 🗄️ Database Schema
 
@@ -99,26 +117,27 @@ ROI = seedAmount * (publicationWeight + hIndexWeight + teamWeight) * fundingProb
 
 ## 🚀 Deployment
 
-### Vercel Deployment
+### Vercel (Recommended)
 
-1. Install Vercel CLI:
-```bash
-npm i -g vercel
-```
+**Status**: ✅ Ready to Deploy
 
-2. Login and deploy:
-```bash
-vercel login
-vercel
-```
+1. **Fork/Clone**: Repository already on GitHub
+2. **Import**: Go to [vercel.com/new](https://vercel.com/new)
+3. **Configure**: Add environment variables
+4. **Deploy**: Click deploy button
 
-3. Set environment variables in Vercel dashboard
+**Time**: ~10 minutes  
+**Cost**: Free tier available
+
+📖 **Complete Guide**: [VERCEL_DEPLOY.md](VERCEL_DEPLOY.md)  
+✅ **Checklist**: [DEPLOY_CHECKLIST.md](DEPLOY_CHECKLIST.md)
 
 ### Database Setup (Supabase/Neon)
 
-1. Create PostgreSQL database on Supabase or Neon
-2. Copy connection string to `DATABASE_URL`
-3. Run migrations:
+1. Create PostgreSQL database on [Supabase](https://supabase.com) or [Neon](https://neon.tech)
+2. Copy connection string
+3. Add to Vercel environment variables
+4. Run migrations:
 ```bash
 npx prisma db push
 ```
@@ -145,11 +164,13 @@ research-navigator/
 
 ## 🎯 Roadmap
 
-### Phase 1 (Month 1-2)
+### Phase 1 (Month 1-2) ✅ COMPLETE
 - ✅ Core UI and authentication
 - ✅ Database schema
 - ✅ Funding call ingestion
 - ✅ Similarity engine
+- ✅ GitHub repository
+- ✅ Vercel deployment ready
 
 ### Phase 2 (Month 3-4)
 - 🔄 Proposal builder with AI
@@ -165,14 +186,38 @@ research-navigator/
 
 Contributions welcome! Please read our contributing guidelines.
 
-## 📄 License
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-MIT License
+## � License
 
-## 👥 Team
+MIT License - see [LICENSE](LICENSE) file for details
+
+## �👥 Team
 
 Built for NEP 2020 experiential research learning.
 
+**Repository**: https://github.com/muzabasha/research-nav  
+**Maintainer**: [@muzabasha](https://github.com/muzabasha)
+
 ## 📞 Support
 
-For issues and questions, please open a GitHub issue.
+For issues and questions:
+- 📖 Check [Documentation](COMPLETE_GUIDE.md)
+- 🐛 Open [GitHub Issue](https://github.com/muzabasha/research-nav/issues)
+- 💬 Start [Discussion](https://github.com/muzabasha/research-nav/discussions)
+
+## 🌟 Star History
+
+If you find this project useful, please consider giving it a star ⭐
+
+---
+
+**Built with ❤️ for NEP 2020 Experiential Research Learning**
+
+**Version**: 4.1.0  
+**Status**: ✅ Production Ready  
+**Last Updated**: February 25, 2026

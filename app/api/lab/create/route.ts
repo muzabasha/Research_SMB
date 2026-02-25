@@ -5,7 +5,13 @@ import { calculateLabROI } from '@/lib/ai'
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
-        const { labName, seedAmount, piId, pgCount, sugCount } = body
+        const { labName, seedAmount, piId, pgCount, sugCount } = body as {
+            labName: string
+            seedAmount: number
+            piId: string
+            pgCount: number
+            sugCount: number
+        }
 
         const pi = await prisma.user.findUnique({
             where: { id: piId },

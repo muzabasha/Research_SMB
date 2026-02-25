@@ -4,7 +4,12 @@ import { evaluateProposal } from '@/lib/ai'
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
-        const { title, methodology, budget, callTitle } = body
+        const { title, methodology, budget, callTitle } = body as {
+            title: string
+            methodology?: string
+            budget?: number
+            callTitle: string
+        }
 
         const evaluation = await evaluateProposal({
             title,

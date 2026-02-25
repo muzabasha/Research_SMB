@@ -5,7 +5,14 @@ import { generateEmbedding } from '@/lib/similarity'
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
-        const { userId, publications, hIndex, citations, keywords, department } = body
+        const { userId, publications, hIndex, citations, keywords, department } = body as {
+            userId: string
+            publications: number
+            hIndex: number
+            citations: number
+            keywords: string[]
+            department: string
+        }
 
         // Generate embedding for faculty keywords
         const keywordText = keywords.join(' ')

@@ -69,22 +69,22 @@ export default function StudentPortal() {
     const handleProblemSubmit = () => {
         if (problem.length > 50) {
             setScore(45)
-            setCurrentStep(3)
         }
+        setCurrentStep(3)
     }
 
     const handleLiteratureComplete = () => {
         if (selectedPapers.length >= 3 && literatureNotes.length > 100) {
             setScore(65)
-            setCurrentStep(4)
         }
+        setCurrentStep(4)
     }
 
     const handleExperimentComplete = () => {
         if (experimentType && hypothesis && variables.independent.length > 0 && methodology.length > 50) {
             setScore(85)
-            setCurrentStep(5)
         }
+        setCurrentStep(5)
     }
 
     const handleOutcomeComplete = () => {
@@ -240,8 +240,7 @@ export default function StudentPortal() {
 
                             <button
                                 onClick={handleProblemSubmit}
-                                disabled={problem.length < 50}
-                                className="mt-6 bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2"
+                                className="mt-6 bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 flex items-center gap-2"
                             >
                                 Continue to Literature Hunt <ArrowRight />
                             </button>
@@ -347,8 +346,7 @@ export default function StudentPortal() {
 
                             <button
                                 onClick={handleLiteratureComplete}
-                                disabled={selectedPapers.length < 3 || literatureNotes.length < 100}
-                                className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2"
+                                className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 flex items-center gap-2"
                             >
                                 Continue to Experiment Builder <ArrowRight />
                             </button>
@@ -376,8 +374,8 @@ export default function StudentPortal() {
                                             key={type.id}
                                             onClick={() => setExperimentType(type.id)}
                                             className={`p-6 rounded-xl border-2 text-left transition-all ${experimentType === type.id
-                                                    ? 'border-purple-500 bg-purple-50'
-                                                    : 'border-gray-200 hover:border-purple-300'
+                                                ? 'border-purple-500 bg-purple-50'
+                                                : 'border-gray-200 hover:border-purple-300'
                                                 }`}
                                         >
                                             <div className="text-4xl mb-2">{type.icon}</div>
@@ -552,8 +550,7 @@ export default function StudentPortal() {
 
                             <button
                                 onClick={handleExperimentComplete}
-                                disabled={!experimentType || !hypothesis || variables.independent.length === 0 || methodology.length < 50}
-                                className="bg-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-purple-700 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2"
+                                className="bg-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-purple-700 flex items-center gap-2"
                             >
                                 Continue to Outcome Path <ArrowRight />
                             </button>
@@ -719,8 +716,7 @@ export default function StudentPortal() {
 
                             <button
                                 onClick={handleOutcomeComplete}
-                                disabled={expectedOutcomes.length < 2 || impactAreas.length < 2 || !timeline}
-                                className="bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2"
+                                className="bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-700 flex items-center gap-2"
                             >
                                 Complete Research Journey <Award />
                             </button>

@@ -52,6 +52,60 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Resource Person Profile */}
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-2xl p-8 mb-16 shadow-lg">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center">
+                <Users className="w-6 h-6" />
+              </div>
+              <h3 className="text-3xl font-bold text-indigo-900">Meet Your Research Guide</h3>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-md">
+              <div className="text-center mb-4">
+                <div className="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-3">
+                  Resource Person Profile
+                </div>
+                <p className="text-gray-700 text-lg mb-4">
+                  Learn from an experienced research mentor dedicated to guiding students and faculty
+                  on their research journey. Explore their expertise, publications, and insights.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a
+                  href="https://scholar-sparkle-web.lovable.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+                >
+                  <Users className="w-5 h-5" />
+                  View Resource Person Profile
+                </a>
+                <div className="text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <span className="text-green-600">●</span>
+                    <span>Available for guidance and mentorship</span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-6 grid md:grid-cols-3 gap-4 text-center">
+                <div className="bg-indigo-50 rounded-lg p-4">
+                  <div className="text-2xl font-bold text-indigo-600 mb-1">Expert</div>
+                  <div className="text-sm text-gray-600">Research Guidance</div>
+                </div>
+                <div className="bg-purple-50 rounded-lg p-4">
+                  <div className="text-2xl font-bold text-purple-600 mb-1">Mentor</div>
+                  <div className="text-sm text-gray-600">Student & Faculty Support</div>
+                </div>
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <div className="text-2xl font-bold text-blue-600 mb-1">Scholar</div>
+                  <div className="text-sm text-gray-600">Publications & Insights</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Main Portals */}
         <div className="mb-16">
           <h3 className="text-3xl font-bold text-center mb-8">Choose Your Path</h3>

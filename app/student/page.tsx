@@ -32,6 +32,185 @@ const EXPERIMENT_TYPES = [
     { id: 'computational', name: 'Computational', icon: '💻', description: 'Algorithm and simulation based' },
 ]
 
+// Psychology Questions for Each Step
+const PSYCHOLOGY_QUESTIONS = {
+    1: {
+        question: "When choosing a research area, what drives you most?",
+        options: [
+            { id: 'a', text: "Solving real-world problems that impact society", mindset: "Impact-Driven Innovator" },
+            { id: 'b', text: "Exploring cutting-edge technology and new frontiers", mindset: "Curious Explorer" },
+            { id: 'c', text: "Building on existing knowledge systematically", mindset: "Methodical Builder" },
+            { id: 'd', text: "Following my passion regardless of trends", mindset: "Passionate Pioneer" }
+        ],
+        interpretations: {
+            'a': {
+                title: "Impact-Driven Innovator 🌍",
+                description: "You're motivated by making a tangible difference. Your research will likely focus on practical applications and societal benefits.",
+                strengths: "Strong sense of purpose, practical thinking, stakeholder awareness",
+                motivation: "Remember: The best research solves real problems. Your impact-first mindset will help you stay focused on what truly matters. Keep asking 'Who benefits from this?'"
+            },
+            'b': {
+                title: "Curious Explorer 🔭",
+                description: "You're driven by discovery and innovation. You thrive on pushing boundaries and exploring uncharted territories.",
+                strengths: "Creative thinking, adaptability, enthusiasm for learning",
+                motivation: "Your curiosity is your superpower! Great researchers ask 'What if?' Channel this energy into systematic exploration. Every breakthrough started with someone like you asking bold questions."
+            },
+            'c': {
+                title: "Methodical Builder 🏗️",
+                description: "You value structure and incremental progress. You excel at building comprehensive understanding through systematic approaches.",
+                strengths: "Attention to detail, systematic thinking, thoroughness",
+                motivation: "Your methodical approach is invaluable in research. Science advances through careful, systematic work. Your patience and precision will lead to reliable, reproducible results."
+            },
+            'd': {
+                title: "Passionate Pioneer 🔥",
+                description: "You're driven by intrinsic motivation and personal interest. Your enthusiasm will sustain you through research challenges.",
+                strengths: "Intrinsic motivation, persistence, authentic engagement",
+                motivation: "Passion is the fuel for long-term research success. Your genuine interest will help you overcome obstacles. Trust your instincts - the best research comes from authentic curiosity."
+            }
+        }
+    },
+    2: {
+        question: "When you encounter a problem, what's your first instinct?",
+        options: [
+            { id: 'a', text: "Break it down into smaller, manageable parts", mindset: "Analytical Thinker" },
+            { id: 'b', text: "Look for similar problems others have solved", mindset: "Collaborative Learner" },
+            { id: 'c', text: "Imagine multiple creative solutions immediately", mindset: "Creative Synthesizer" },
+            { id: 'd', text: "Question why the problem exists in the first place", mindset: "Critical Questioner" }
+        ],
+        interpretations: {
+            'a': {
+                title: "Analytical Thinker 🧩",
+                description: "You excel at decomposing complex problems into manageable components. This systematic approach is crucial for research.",
+                strengths: "Problem decomposition, logical reasoning, structured thinking",
+                motivation: "Your analytical skills are perfect for research! Complex problems become solvable when broken down. Keep using this approach - it's how major breakthroughs happen."
+            },
+            'b': {
+                title: "Collaborative Learner 🤝",
+                description: "You value learning from others' experiences. This collaborative mindset accelerates research progress.",
+                strengths: "Learning from others, building on existing work, networking",
+                motivation: "Standing on the shoulders of giants is smart research! Your ability to learn from others will help you avoid pitfalls and build better solutions. Collaboration is key to modern research."
+            },
+            'c': {
+                title: "Creative Synthesizer 🎨",
+                description: "You generate multiple innovative solutions quickly. This creative thinking leads to novel research approaches.",
+                strengths: "Divergent thinking, innovation, multiple perspectives",
+                motivation: "Your creative mind is a research asset! Novel solutions come from thinking differently. Balance creativity with rigor, and you'll make unique contributions to your field."
+            },
+            'd': {
+                title: "Critical Questioner 🤔",
+                description: "You challenge assumptions and dig deeper into root causes. This critical thinking is essential for impactful research.",
+                strengths: "Critical thinking, root cause analysis, challenging assumptions",
+                motivation: "Questioning assumptions leads to paradigm shifts! Your critical mindset helps identify truly important problems. Keep asking 'why' - that's how we discover what really matters."
+            }
+        }
+    },
+    3: {
+        question: "How do you prefer to learn new information?",
+        options: [
+            { id: 'a', text: "Reading comprehensive reviews and summaries", mindset: "Systematic Learner" },
+            { id: 'b', text: "Diving into original research papers directly", mindset: "Deep Diver" },
+            { id: 'c', text: "Watching videos and visual explanations", mindset: "Visual Learner" },
+            { id: 'd', text: "Discussing and debating with peers", mindset: "Social Learner" }
+        ],
+        interpretations: {
+            'a': {
+                title: "Systematic Learner 📚",
+                description: "You build knowledge systematically through structured resources. This approach ensures comprehensive understanding.",
+                strengths: "Structured learning, comprehensive understanding, efficient synthesis",
+                motivation: "Your systematic approach to literature review will give you a solid foundation. Review papers are your friends - they provide the big picture you need to identify gaps."
+            },
+            'b': {
+                title: "Deep Diver 🏊",
+                description: "You prefer primary sources and original research. This depth-first approach reveals nuances others might miss.",
+                strengths: "Deep understanding, attention to detail, critical reading",
+                motivation: "Your willingness to engage with primary sources is admirable! You'll catch details others miss. Balance depth with breadth to ensure you see the full landscape."
+            },
+            'c': {
+                title: "Visual Learner 👁️",
+                description: "You process information best through visual representations. This helps you see patterns and connections.",
+                strengths: "Pattern recognition, visual thinking, conceptual understanding",
+                motivation: "Visual thinking helps you see connections others miss! Create concept maps and diagrams as you review literature. Your visual approach will help you synthesize complex information."
+            },
+            'd': {
+                title: "Social Learner 💬",
+                description: "You learn through discussion and collaboration. This social approach enriches understanding through multiple perspectives.",
+                strengths: "Collaborative learning, perspective-taking, communication",
+                motivation: "Discussion deepens understanding! Join research groups and journal clubs. Your social learning style will help you build networks and gain diverse perspectives on your research."
+            }
+        }
+    },
+    4: {
+        question: "When designing an experiment, what concerns you most?",
+        options: [
+            { id: 'a', text: "Ensuring the methodology is rigorous and valid", mindset: "Quality Guardian" },
+            { id: 'b', text: "Making sure it's feasible with available resources", mindset: "Pragmatic Planner" },
+            { id: 'c', text: "Designing something innovative and novel", mindset: "Innovation Seeker" },
+            { id: 'd', text: "Ensuring results will be reproducible by others", mindset: "Reliability Champion" }
+        ],
+        interpretations: {
+            'a': {
+                title: "Quality Guardian 🛡️",
+                description: "You prioritize methodological rigor and validity. This ensures your research produces trustworthy results.",
+                strengths: "Attention to validity, methodological rigor, quality focus",
+                motivation: "Your commitment to quality is the hallmark of great research! Rigorous methodology is what separates science from speculation. Your high standards will earn respect in your field."
+            },
+            'b': {
+                title: "Pragmatic Planner 📋",
+                description: "You balance ambition with feasibility. This practical approach helps you complete research successfully.",
+                strengths: "Resource awareness, practical thinking, project management",
+                motivation: "Feasibility is crucial for research success! Your pragmatic approach means you'll actually finish your research. Better to complete a feasible study than abandon an impossible one."
+            },
+            'c': {
+                title: "Innovation Seeker 💡",
+                description: "You strive for novel approaches and creative methodologies. This innovation drives research forward.",
+                strengths: "Creative methodology, innovation, novel approaches",
+                motivation: "Innovation in methodology can be as important as findings! Your creative approach may open new research directions. Balance novelty with proven techniques for best results."
+            },
+            'd': {
+                title: "Reliability Champion 🔄",
+                description: "You value reproducibility and transparency. This commitment strengthens the entire research community.",
+                strengths: "Reproducibility focus, transparency, scientific integrity",
+                motivation: "Reproducibility is the foundation of science! Your commitment to transparency and replicability serves the entire research community. This mindset builds trust and lasting impact."
+            }
+        }
+    },
+    5: {
+        question: "What motivates you most about completing research?",
+        options: [
+            { id: 'a', text: "Contributing new knowledge to humanity", mindset: "Knowledge Builder" },
+            { id: 'b', text: "Solving a specific problem or challenge", mindset: "Problem Solver" },
+            { id: 'c', text: "Personal growth and skill development", mindset: "Growth Seeker" },
+            { id: 'd', text: "Recognition and career advancement", mindset: "Achievement Oriented" }
+        ],
+        interpretations: {
+            'a': {
+                title: "Knowledge Builder 🏛️",
+                description: "You're motivated by contributing to collective human knowledge. This altruistic drive sustains long-term research careers.",
+                strengths: "Long-term thinking, altruistic motivation, big-picture focus",
+                motivation: "Your desire to contribute to human knowledge is noble and powerful! This intrinsic motivation will sustain you through challenges. Remember: every small contribution adds to our collective understanding."
+            },
+            'b': {
+                title: "Problem Solver 🔧",
+                description: "You're driven by finding solutions to specific challenges. This goal-oriented approach leads to practical impact.",
+                strengths: "Goal orientation, practical focus, solution-minded",
+                motivation: "Problem-solving is at the heart of applied research! Your focus on solutions will lead to tangible impact. Keep your problem clearly defined - it will guide you through challenges."
+            },
+            'c': {
+                title: "Growth Seeker 🌱",
+                description: "You value personal development and learning. This growth mindset is essential for research success.",
+                strengths: "Growth mindset, learning orientation, self-improvement",
+                motivation: "Research is the ultimate growth opportunity! Every challenge teaches you something new. Your growth mindset means you'll view obstacles as learning opportunities, not failures."
+            },
+            'd': {
+                title: "Achievement Oriented 🏆",
+                description: "You're motivated by recognition and career goals. This ambition drives productivity and excellence.",
+                strengths: "Ambition, productivity, excellence pursuit",
+                motivation: "Ambition drives achievement! Your goal-oriented approach will help you stay productive and focused. Balance external recognition with intrinsic satisfaction for sustainable success."
+            }
+        }
+    }
+}
+
 export default function StudentPortal() {
     const [currentStep, setCurrentStep] = useState(1)
     const [score, setScore] = useState(0)
@@ -60,6 +239,15 @@ export default function StudentPortal() {
     const [timeline, setTimeline] = useState('')
     const [newOutcome, setNewOutcome] = useState('')
     const [newImpact, setNewImpact] = useState('')
+
+    // Psychology Question state
+    const [psychologyAnswers, setPsychologyAnswers] = useState<{ [key: number]: string }>({})
+    const [showInterpretation, setShowInterpretation] = useState<{ [key: number]: boolean }>({})
+
+    const handlePsychologyAnswer = (stepId: number, answerId: string) => {
+        setPsychologyAnswers(prev => ({ ...prev, [stepId]: answerId }))
+        setShowInterpretation(prev => ({ ...prev, [stepId]: true }))
+    }
 
     const handleDomainSelect = (domain: string) => {
         setSelectedDomain(domain)
@@ -219,6 +407,59 @@ export default function StudentPortal() {
                             <h2 className="text-3xl font-bold mb-4">Choose Your Research Domain</h2>
                             <p className="text-gray-600 mb-6 text-lg">Select an area that interests you</p>
 
+                            {/* Psychology Question */}
+                            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-xl p-6 mb-6">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">?</div>
+                                    <h3 className="text-xl font-bold text-indigo-900">Mindset Discovery</h3>
+                                </div>
+                                <p className="text-lg font-semibold mb-4 text-gray-800">
+                                    {PSYCHOLOGY_QUESTIONS[1].question}
+                                </p>
+                                <div className="grid md:grid-cols-2 gap-3 mb-4">
+                                    {PSYCHOLOGY_QUESTIONS[1].options.map((option) => (
+                                        <button
+                                            key={option.id}
+                                            onClick={() => handlePsychologyAnswer(1, option.id)}
+                                            className={`p-4 rounded-lg text-left transition-all border-2 ${psychologyAnswers[1] === option.id
+                                                ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg'
+                                                : 'bg-white border-indigo-200 hover:border-indigo-400 text-gray-700'
+                                                }`}
+                                        >
+                                            <div className="font-semibold mb-1">{option.id.toUpperCase()}.</div>
+                                            <div className="text-sm">{option.text}</div>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {/* Interpretation */}
+                                {showInterpretation[1] && psychologyAnswers[1] && (
+                                    <div className="bg-white rounded-lg p-5 border-2 border-indigo-300 animate-fadeIn">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <div className="text-2xl">🎯</div>
+                                            <h4 className="text-xl font-bold text-indigo-900">
+                                                {PSYCHOLOGY_QUESTIONS[1].interpretations[psychologyAnswers[1]].title}
+                                            </h4>
+                                        </div>
+                                        <p className="text-gray-700 mb-3">
+                                            {PSYCHOLOGY_QUESTIONS[1].interpretations[psychologyAnswers[1]].description}
+                                        </p>
+                                        <div className="bg-indigo-50 rounded-lg p-4 mb-3">
+                                            <p className="text-sm font-semibold text-indigo-900 mb-1">Your Strengths:</p>
+                                            <p className="text-sm text-gray-700">
+                                                {PSYCHOLOGY_QUESTIONS[1].interpretations[psychologyAnswers[1]].strengths}
+                                            </p>
+                                        </div>
+                                        <div className="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                                            <p className="text-sm font-semibold text-green-900 mb-1">💪 Motivation Boost:</p>
+                                            <p className="text-sm text-gray-700">
+                                                {PSYCHOLOGY_QUESTIONS[1].interpretations[psychologyAnswers[1]].motivation}
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
                             {/* Educational Content */}
                             <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-6 rounded-r-xl">
                                 <h3 className="font-bold text-lg mb-2 text-blue-900">💡 Why This Matters</h3>
@@ -271,6 +512,58 @@ export default function StudentPortal() {
                                 Domain: <span className="font-bold text-blue-600">{selectedDomain}</span>
                             </p>
 
+                            {/* Psychology Question */}
+                            <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl p-6 mb-6">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">?</div>
+                                    <h3 className="text-xl font-bold text-purple-900">Mindset Discovery</h3>
+                                </div>
+                                <p className="text-lg font-semibold mb-4 text-gray-800">
+                                    {PSYCHOLOGY_QUESTIONS[2].question}
+                                </p>
+                                <div className="grid md:grid-cols-2 gap-3 mb-4">
+                                    {PSYCHOLOGY_QUESTIONS[2].options.map((option) => (
+                                        <button
+                                            key={option.id}
+                                            onClick={() => handlePsychologyAnswer(2, option.id)}
+                                            className={`p-4 rounded-lg text-left transition-all border-2 ${psychologyAnswers[2] === option.id
+                                                ? 'bg-purple-600 text-white border-purple-600 shadow-lg'
+                                                : 'bg-white border-purple-200 hover:border-purple-400 text-gray-700'
+                                                }`}
+                                        >
+                                            <div className="font-semibold mb-1">{option.id.toUpperCase()}.</div>
+                                            <div className="text-sm">{option.text}</div>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {showInterpretation[2] && psychologyAnswers[2] && (
+                                    <div className="bg-white rounded-lg p-5 border-2 border-purple-300 animate-fadeIn">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <div className="text-2xl">🎯</div>
+                                            <h4 className="text-xl font-bold text-purple-900">
+                                                {PSYCHOLOGY_QUESTIONS[2].interpretations[psychologyAnswers[2]].title}
+                                            </h4>
+                                        </div>
+                                        <p className="text-gray-700 mb-3">
+                                            {PSYCHOLOGY_QUESTIONS[2].interpretations[psychologyAnswers[2]].description}
+                                        </p>
+                                        <div className="bg-purple-50 rounded-lg p-4 mb-3">
+                                            <p className="text-sm font-semibold text-purple-900 mb-1">Your Strengths:</p>
+                                            <p className="text-sm text-gray-700">
+                                                {PSYCHOLOGY_QUESTIONS[2].interpretations[psychologyAnswers[2]].strengths}
+                                            </p>
+                                        </div>
+                                        <div className="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                                            <p className="text-sm font-semibold text-green-900 mb-1">💪 Motivation Boost:</p>
+                                            <p className="text-sm text-gray-700">
+                                                {PSYCHOLOGY_QUESTIONS[2].interpretations[psychologyAnswers[2]].motivation}
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
                             {/* Educational Content */}
                             <div className="bg-purple-50 border-l-4 border-purple-500 p-6 mb-6 rounded-r-xl">
                                 <h3 className="font-bold text-lg mb-2 text-purple-900">💡 What Makes a Good Research Problem?</h3>
@@ -318,6 +611,58 @@ export default function StudentPortal() {
                                     <h2 className="text-3xl font-bold">Literature Hunt</h2>
                                     <p className="text-gray-600 text-lg">Explore existing research in {selectedDomain}</p>
                                 </div>
+                            </div>
+
+                            {/* Psychology Question */}
+                            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-6 mb-6">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">?</div>
+                                    <h3 className="text-xl font-bold text-blue-900">Mindset Discovery</h3>
+                                </div>
+                                <p className="text-lg font-semibold mb-4 text-gray-800">
+                                    {PSYCHOLOGY_QUESTIONS[3].question}
+                                </p>
+                                <div className="grid md:grid-cols-2 gap-3 mb-4">
+                                    {PSYCHOLOGY_QUESTIONS[3].options.map((option) => (
+                                        <button
+                                            key={option.id}
+                                            onClick={() => handlePsychologyAnswer(3, option.id)}
+                                            className={`p-4 rounded-lg text-left transition-all border-2 ${psychologyAnswers[3] === option.id
+                                                ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
+                                                : 'bg-white border-blue-200 hover:border-blue-400 text-gray-700'
+                                                }`}
+                                        >
+                                            <div className="font-semibold mb-1">{option.id.toUpperCase()}.</div>
+                                            <div className="text-sm">{option.text}</div>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {showInterpretation[3] && psychologyAnswers[3] && (
+                                    <div className="bg-white rounded-lg p-5 border-2 border-blue-300 animate-fadeIn">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <div className="text-2xl">🎯</div>
+                                            <h4 className="text-xl font-bold text-blue-900">
+                                                {PSYCHOLOGY_QUESTIONS[3].interpretations[psychologyAnswers[3]].title}
+                                            </h4>
+                                        </div>
+                                        <p className="text-gray-700 mb-3">
+                                            {PSYCHOLOGY_QUESTIONS[3].interpretations[psychologyAnswers[3]].description}
+                                        </p>
+                                        <div className="bg-blue-50 rounded-lg p-4 mb-3">
+                                            <p className="text-sm font-semibold text-blue-900 mb-1">Your Strengths:</p>
+                                            <p className="text-sm text-gray-700">
+                                                {PSYCHOLOGY_QUESTIONS[3].interpretations[psychologyAnswers[3]].strengths}
+                                            </p>
+                                        </div>
+                                        <div className="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                                            <p className="text-sm font-semibold text-green-900 mb-1">💪 Motivation Boost:</p>
+                                            <p className="text-sm text-gray-700">
+                                                {PSYCHOLOGY_QUESTIONS[3].interpretations[psychologyAnswers[3]].motivation}
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Educational Content */}
@@ -443,6 +788,58 @@ export default function StudentPortal() {
                                     <h2 className="text-3xl font-bold">Experiment Builder</h2>
                                     <p className="text-gray-600 text-lg">Design your research methodology</p>
                                 </div>
+                            </div>
+
+                            {/* Psychology Question */}
+                            <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-2 border-orange-200 rounded-xl p-6 mb-6">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="bg-orange-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">?</div>
+                                    <h3 className="text-xl font-bold text-orange-900">Mindset Discovery</h3>
+                                </div>
+                                <p className="text-lg font-semibold mb-4 text-gray-800">
+                                    {PSYCHOLOGY_QUESTIONS[4].question}
+                                </p>
+                                <div className="grid md:grid-cols-2 gap-3 mb-4">
+                                    {PSYCHOLOGY_QUESTIONS[4].options.map((option) => (
+                                        <button
+                                            key={option.id}
+                                            onClick={() => handlePsychologyAnswer(4, option.id)}
+                                            className={`p-4 rounded-lg text-left transition-all border-2 ${psychologyAnswers[4] === option.id
+                                                ? 'bg-orange-600 text-white border-orange-600 shadow-lg'
+                                                : 'bg-white border-orange-200 hover:border-orange-400 text-gray-700'
+                                                }`}
+                                        >
+                                            <div className="font-semibold mb-1">{option.id.toUpperCase()}.</div>
+                                            <div className="text-sm">{option.text}</div>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {showInterpretation[4] && psychologyAnswers[4] && (
+                                    <div className="bg-white rounded-lg p-5 border-2 border-orange-300 animate-fadeIn">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <div className="text-2xl">🎯</div>
+                                            <h4 className="text-xl font-bold text-orange-900">
+                                                {PSYCHOLOGY_QUESTIONS[4].interpretations[psychologyAnswers[4]].title}
+                                            </h4>
+                                        </div>
+                                        <p className="text-gray-700 mb-3">
+                                            {PSYCHOLOGY_QUESTIONS[4].interpretations[psychologyAnswers[4]].description}
+                                        </p>
+                                        <div className="bg-orange-50 rounded-lg p-4 mb-3">
+                                            <p className="text-sm font-semibold text-orange-900 mb-1">Your Strengths:</p>
+                                            <p className="text-sm text-gray-700">
+                                                {PSYCHOLOGY_QUESTIONS[4].interpretations[psychologyAnswers[4]].strengths}
+                                            </p>
+                                        </div>
+                                        <div className="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                                            <p className="text-sm font-semibold text-green-900 mb-1">💪 Motivation Boost:</p>
+                                            <p className="text-sm text-gray-700">
+                                                {PSYCHOLOGY_QUESTIONS[4].interpretations[psychologyAnswers[4]].motivation}
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Educational Content */}
@@ -667,6 +1064,58 @@ export default function StudentPortal() {
                                 </div>
                             </div>
 
+                            {/* Psychology Question */}
+                            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-6 mb-6">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">?</div>
+                                    <h3 className="text-xl font-bold text-green-900">Mindset Discovery</h3>
+                                </div>
+                                <p className="text-lg font-semibold mb-4 text-gray-800">
+                                    {PSYCHOLOGY_QUESTIONS[5].question}
+                                </p>
+                                <div className="grid md:grid-cols-2 gap-3 mb-4">
+                                    {PSYCHOLOGY_QUESTIONS[5].options.map((option) => (
+                                        <button
+                                            key={option.id}
+                                            onClick={() => handlePsychologyAnswer(5, option.id)}
+                                            className={`p-4 rounded-lg text-left transition-all border-2 ${psychologyAnswers[5] === option.id
+                                                ? 'bg-green-600 text-white border-green-600 shadow-lg'
+                                                : 'bg-white border-green-200 hover:border-green-400 text-gray-700'
+                                                }`}
+                                        >
+                                            <div className="font-semibold mb-1">{option.id.toUpperCase()}.</div>
+                                            <div className="text-sm">{option.text}</div>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {showInterpretation[5] && psychologyAnswers[5] && (
+                                    <div className="bg-white rounded-lg p-5 border-2 border-green-300 animate-fadeIn">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <div className="text-2xl">🎯</div>
+                                            <h4 className="text-xl font-bold text-green-900">
+                                                {PSYCHOLOGY_QUESTIONS[5].interpretations[psychologyAnswers[5]].title}
+                                            </h4>
+                                        </div>
+                                        <p className="text-gray-700 mb-3">
+                                            {PSYCHOLOGY_QUESTIONS[5].interpretations[psychologyAnswers[5]].description}
+                                        </p>
+                                        <div className="bg-green-50 rounded-lg p-4 mb-3">
+                                            <p className="text-sm font-semibold text-green-900 mb-1">Your Strengths:</p>
+                                            <p className="text-sm text-gray-700">
+                                                {PSYCHOLOGY_QUESTIONS[5].interpretations[psychologyAnswers[5]].strengths}
+                                            </p>
+                                        </div>
+                                        <div className="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-500">
+                                            <p className="text-sm font-semibold text-blue-900 mb-1">💪 Motivation Boost:</p>
+                                            <p className="text-sm text-gray-700">
+                                                {PSYCHOLOGY_QUESTIONS[5].interpretations[psychologyAnswers[5]].motivation}
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
                             {/* Educational Content */}
                             <div className="bg-indigo-50 border-l-4 border-indigo-500 p-6 mb-6 rounded-r-xl">
                                 <h3 className="font-bold text-lg mb-2 text-indigo-900">🎯 Planning for Impact</h3>
@@ -839,13 +1288,60 @@ export default function StudentPortal() {
 
                             {/* Completion Message */}
                             {score === 100 && (
-                                <div className="mt-8 bg-gradient-to-r from-green-500 to-blue-500 text-white p-8 rounded-xl text-center">
-                                    <Award className="w-16 h-16 mx-auto mb-4" />
-                                    <h3 className="text-3xl font-bold mb-2">Congratulations! 🎉</h3>
-                                    <p className="text-xl mb-4">You've completed your research journey!</p>
-                                    <p className="text-lg opacity-90">
-                                        You've successfully planned a complete research project from problem identification to outcome definition.
-                                    </p>
+                                <div className="mt-8 space-y-6">
+                                    <div className="bg-gradient-to-r from-green-500 to-blue-500 text-white p-8 rounded-xl text-center">
+                                        <Award className="w-16 h-16 mx-auto mb-4" />
+                                        <h3 className="text-3xl font-bold mb-2">Congratulations! 🎉</h3>
+                                        <p className="text-xl mb-4">You've completed your research journey!</p>
+                                        <p className="text-lg opacity-90">
+                                            You've successfully planned a complete research project from problem identification to outcome definition.
+                                        </p>
+                                    </div>
+
+                                    {/* Mindset Profile Summary */}
+                                    {Object.keys(psychologyAnswers).length === 5 && (
+                                        <div className="bg-white border-2 border-purple-300 rounded-xl p-8">
+                                            <h3 className="text-2xl font-bold mb-4 text-center text-purple-900">
+                                                🧠 Your Complete Research Mindset Profile
+                                            </h3>
+                                            <p className="text-center text-gray-600 mb-6">
+                                                Understanding your mindset helps you leverage your strengths and grow as a researcher
+                                            </p>
+                                            <div className="grid md:grid-cols-2 gap-4">
+                                                {[1, 2, 3, 4, 5].map((stepId) => {
+                                                    const answer = psychologyAnswers[stepId]
+                                                    if (!answer) return null
+                                                    const interpretation = PSYCHOLOGY_QUESTIONS[stepId].interpretations[answer]
+                                                    return (
+                                                        <div key={stepId} className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg p-4 border-2 border-purple-200">
+                                                            <div className="flex items-center gap-2 mb-2">
+                                                                <div className="bg-purple-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">
+                                                                    {stepId}
+                                                                </div>
+                                                                <h4 className="font-bold text-purple-900">{RESEARCH_STEPS[stepId - 1].title}</h4>
+                                                            </div>
+                                                            <p className="text-sm font-semibold text-gray-800 mb-1">
+                                                                {interpretation.title}
+                                                            </p>
+                                                            <p className="text-xs text-gray-600">
+                                                                {interpretation.strengths}
+                                                            </p>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                            <div className="mt-6 bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-300 rounded-lg p-6 text-center">
+                                                <p className="text-lg font-semibold text-gray-800 mb-2">
+                                                    🌟 Your Unique Research DNA
+                                                </p>
+                                                <p className="text-sm text-gray-700">
+                                                    This combination of mindsets makes you uniquely equipped for research success.
+                                                    Embrace your strengths, work on your growth areas, and remember: every great researcher
+                                                    has their own unique approach. Your diversity of thinking is your superpower!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>

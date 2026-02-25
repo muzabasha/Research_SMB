@@ -3,8 +3,56 @@
 import { useState } from 'react'
 import { Upload, Search, FileText, TrendingUp } from 'lucide-react'
 
+// Faculty Psychology Assessment
+const FACULTY_PSYCHOLOGY = {
+    question: "What's your primary motivation for pursuing research funding?",
+    options: [
+        { id: 'a', text: "Building a world-class research program", mindset: "Visionary Leader" },
+        { id: 'b', text: "Solving critical societal problems", mindset: "Impact Champion" },
+        { id: 'c', text: "Advancing my academic career", mindset: "Career Strategist" },
+        { id: 'd', text: "Mentoring students and building research capacity", mindset: "Educator Mentor" }
+    ],
+    interpretations: {
+        'a': {
+            title: "Visionary Leader 🎯",
+            description: "You're driven by building excellence and creating lasting research infrastructure. You think long-term and aim for transformative impact.",
+            strengths: "Strategic thinking, program building, institutional impact, long-term vision",
+            motivation: "Your vision for research excellence will inspire others! Focus on building sustainable programs that outlast individual projects. Great leaders create ecosystems, not just projects. Your strategic approach will build lasting research capacity.",
+            tips: ["Develop 5-year research roadmaps", "Build collaborative research networks", "Focus on infrastructure and capacity building", "Mentor junior faculty in program development"]
+        },
+        'b': {
+            title: "Impact Champion 🌍",
+            description: "You're motivated by solving real-world problems and creating tangible societal benefits. Your research has purpose beyond academia.",
+            strengths: "Problem-focused, stakeholder engagement, practical applications, societal relevance",
+            motivation: "Your commitment to societal impact makes research meaningful! Funding agencies value researchers who connect science to society. Highlight real-world applications and stakeholder benefits in your proposals. Your impact-first approach will resonate with funders.",
+            tips: ["Engage with industry and community partners", "Document societal impact of your work", "Build interdisciplinary collaborations", "Communicate research benefits to non-academics"]
+        },
+        'c': {
+            title: "Career Strategist 📈",
+            description: "You're focused on professional growth and academic advancement. This ambition drives productivity and excellence.",
+            strengths: "Goal-oriented, productivity-focused, strategic planning, career awareness",
+            motivation: "Ambition drives achievement! Your career focus will help you stay productive and strategic. Balance external recognition with intrinsic satisfaction. Build a portfolio that showcases both quantity and quality. Strategic career planning is smart, not selfish.",
+            tips: ["Set clear publication and funding milestones", "Build your h-index strategically", "Network at conferences and workshops", "Seek high-visibility collaborations"]
+        },
+        'd': {
+            title: "Educator Mentor 🎓",
+            description: "You're driven by developing the next generation of researchers. Your legacy is in the people you train and inspire.",
+            strengths: "Mentorship, capacity building, student development, knowledge transfer",
+            motivation: "Your mentorship multiplies your impact! Every student you train extends your research reach. Funding agencies value researchers who build capacity. Highlight your mentorship track record and training plans. Your investment in people creates lasting change.",
+            tips: ["Document student success stories", "Develop structured mentorship programs", "Include student training in proposals", "Build collaborative learning environments"]
+        }
+    }
+}
+
 export default function FacultyPortal() {
     const [activeTab, setActiveTab] = useState('profile')
+    const [psychologyAnswer, setPsychologyAnswer] = useState<string>('')
+    const [showInterpretation, setShowInterpretation] = useState(false)
+
+    const handlePsychologyAnswer = (answerId: string) => {
+        setPsychologyAnswer(answerId)
+        setShowInterpretation(true)
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
@@ -39,6 +87,72 @@ export default function FacultyPortal() {
                             <p className="text-sm opacity-90">Create impactful research programs</p>
                         </div>
                     </div>
+                </div>
+
+                {/* Faculty Psychology Assessment */}
+                <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border-2 border-purple-300 rounded-xl p-8 mb-8 shadow-lg">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">?</div>
+                        <h3 className="text-2xl font-bold text-purple-900">Discover Your Research Motivation Profile</h3>
+                    </div>
+                    <p className="text-lg font-semibold mb-6 text-gray-800">
+                        {FACULTY_PSYCHOLOGY.question}
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-4 mb-6">
+                        {FACULTY_PSYCHOLOGY.options.map((option) => (
+                            <button
+                                key={option.id}
+                                onClick={() => handlePsychologyAnswer(option.id)}
+                                className={`p-5 rounded-xl text-left transition-all border-2 ${psychologyAnswer === option.id
+                                        ? 'bg-purple-600 text-white border-purple-600 shadow-xl scale-105'
+                                        : 'bg-white border-purple-200 hover:border-purple-400 text-gray-700 hover:shadow-lg'
+                                    }`}
+                            >
+                                <div className="font-bold mb-2 text-lg">{option.id.toUpperCase()}.</div>
+                                <div>{option.text}</div>
+                                {psychologyAnswer === option.id && (
+                                    <div className="mt-2 text-sm opacity-90">✓ Selected</div>
+                                )}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Interpretation */}
+                    {showInterpretation && psychologyAnswer && (
+                        <div className="bg-white rounded-xl p-6 border-2 border-purple-400 shadow-lg animate-fadeIn">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="text-3xl">🎯</div>
+                                <h4 className="text-2xl font-bold text-purple-900">
+                                    {FACULTY_PSYCHOLOGY.interpretations[psychologyAnswer].title}
+                                </h4>
+                            </div>
+                            <p className="text-gray-700 mb-4 text-lg">
+                                {FACULTY_PSYCHOLOGY.interpretations[psychologyAnswer].description}
+                            </p>
+                            <div className="grid md:grid-cols-2 gap-4 mb-4">
+                                <div className="bg-purple-50 rounded-lg p-4">
+                                    <p className="font-semibold text-purple-900 mb-2">💪 Your Strengths:</p>
+                                    <p className="text-sm text-gray-700">
+                                        {FACULTY_PSYCHOLOGY.interpretations[psychologyAnswer].strengths}
+                                    </p>
+                                </div>
+                                <div className="bg-blue-50 rounded-lg p-4">
+                                    <p className="font-semibold text-blue-900 mb-2">📋 Action Tips:</p>
+                                    <ul className="text-sm text-gray-700 space-y-1">
+                                        {FACULTY_PSYCHOLOGY.interpretations[psychologyAnswer].tips.map((tip, idx) => (
+                                            <li key={idx}>• {tip}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-5 border-l-4 border-green-500">
+                                <p className="font-semibold text-green-900 mb-2">🚀 Motivation Boost:</p>
+                                <p className="text-sm text-gray-700">
+                                    {FACULTY_PSYCHOLOGY.interpretations[psychologyAnswer].motivation}
+                                </p>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <div className="bg-white rounded-xl shadow-lg mb-8">

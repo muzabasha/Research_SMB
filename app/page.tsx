@@ -9,8 +9,6 @@ export default function InteractivePresentationHome() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
-  const [showInterpretation, setShowInterpretation] = useState(false)
 
   // Generate all presentation slides
   const generateSlides = () => {
@@ -30,7 +28,10 @@ export default function InteractivePresentationHome() {
     STUDENT_QA.forEach((qa) => {
       slides.push({ type: 'stage-intro', data: qa })
       slides.push({ type: 'question', data: qa })
-      slides.push({ type: 'answer', data: qa })
+      // Add interpretation slides for each option (A, B, C, D)
+      qa.options.forEach((option) => {
+        slides.push({ type: 'answer', data: qa, optionId: option.id })
+      })
     })
 
     // Faculty Roadmap
@@ -38,7 +39,10 @@ export default function InteractivePresentationHome() {
     FACULTY_QA.forEach((qa) => {
       slides.push({ type: 'stage-intro', data: qa })
       slides.push({ type: 'question', data: qa })
-      slides.push({ type: 'answer', data: qa })
+      // Add interpretation slides for each option (A, B, C, D)
+      qa.options.forEach((option) => {
+        slides.push({ type: 'answer', data: qa, optionId: option.id })
+      })
     })
 
     // Institute Roadmap
@@ -46,7 +50,10 @@ export default function InteractivePresentationHome() {
     INSTITUTE_QA.forEach((qa) => {
       slides.push({ type: 'stage-intro', data: qa })
       slides.push({ type: 'question', data: qa })
-      slides.push({ type: 'answer', data: qa })
+      // Add interpretation slides for each option (A, B, C, D)
+      qa.options.forEach((option) => {
+        slides.push({ type: 'answer', data: qa, optionId: option.id })
+      })
     })
 
     // Closing
@@ -71,14 +78,10 @@ export default function InteractivePresentationHome() {
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % allSlides.length)
-    setSelectedAnswer(null)
-    setShowInterpretation(false)
   }
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + allSlides.length) % allSlides.length)
-    setSelectedAnswer(null)
-    setShowInterpretation(false)
   }
 
   const toggleFullscreen = () => {
@@ -89,11 +92,6 @@ export default function InteractivePresentationHome() {
       document.exitFullscreen()
       setIsFullscreen(false)
     }
-  }
-
-  const handleAnswerSelect = (optionId: string) => {
-    setSelectedAnswer(optionId)
-    setShowInterpretation(true)
   }
 
   const getRoadmapColor = (roadmap: string) => {
@@ -244,67 +242,62 @@ export default function InteractivePresentationHome() {
 
       case 'question':
         return (
-          <div className="max-w-4xl mx-auto animate-fadeIn">
-            <div className="bg-white/10 backdrop-blur rounded-2xl p-10">
-              <div className="text-center mb-8">
-                <Lightbulb className="w-20 h-20 mx-auto mb-6 text-yellow-400 animate-pulse" />
-                <h2 className="text-4xl font-bold mb-4">💭 Reflection Time</h2>
-                <p className="text-xl text-gray-300 mb-6">{slide.data.context}</p>
+          <div className="w-full h-full flex items-center justify-center px-8 animate-fadeIn">
+            <div className="max-w-6xl w-full">
+              <div className="text-center mb-12">
+                <Lightbulb className="w-24 h-24 mx-auto mb-6 text-yellow-400 animate-pulse" />
+                <h2 className="text-5xl font-bold mb-6">💭 Reflection Time</h2>
+                <p className="text-2xl text-gray-300 mb-4">{slide.data.context}</p>
               </div>
 
-              <div className="bg-white/5 rounded-xl p-8 mb-8">
-                <h3 className="text-3xl font-bold text-center mb-6">{slide.data.question}</h3>
+              <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-2 border-blue-400 rounded-2xl p-10 mb-10">
+                <h3 className="text-4xl font-bold text-center leading-relaxed">{slide.data.question}</h3>
               </div>
 
-              <div className="grid gap-4">
-                {slide.data.options.map((option: any) => (
-                  <button
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {slide.data.options.map((option: any, idx: number) => (
+                  <div
                     key={option.id}
-                    onClick={() => handleAnswerSelect(option.id)}
-                    className={`text-left p-6 rounded-xl transition-all text-xl ${selectedAnswer === option.id
-                      ? 'bg-blue-500 text-white scale-105 shadow-2xl'
-                      : 'bg-white/10 hover:bg-white/20'
-                      }`}
+                    className="bg-white/10 backdrop-blur border-2 border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all hover:scale-105 hover:border-white/40 animate-slideUp"
+                    style={{ animationDelay: `${idx * 0.1}s` }}
                   >
-                    <span className="text-3xl mr-4">{option.emoji}</span>
-                    <span className="font-bold mr-3">{option.id.toUpperCase()}.</span>
-                    {option.text}
-                  </button>
+                    <div className="flex items-start gap-4">
+                      <div className="text-6xl flex-shrink-0">{option.emoji}</div>
+                      <div className="flex-1">
+                        <div className="text-3xl font-bold mb-3 text-blue-300">
+                          {option.id.toUpperCase()}.
+                        </div>
+                        <p className="text-2xl leading-relaxed">{option.text}</p>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
 
-              {selectedAnswer && !showInterpretation && (
-                <div className="text-center mt-8">
-                  <button
-                    onClick={() => setShowInterpretation(true)}
-                    className="bg-gradient-to-r from-green-500 to-green-600 text-white px-10 py-5 rounded-xl text-2xl font-bold hover:from-green-600 hover:to-green-700 transition-all shadow-lg animate-pulse"
-                  >
-                    See Your Interpretation →
-                  </button>
+              <div className="mt-10 text-center">
+                <div className="bg-white/10 backdrop-blur rounded-xl p-6 inline-block">
+                  <p className="text-xl text-gray-300">
+                    <Mic className="w-6 h-6 inline mr-2 text-purple-400" />
+                    <span className="italic">{slide.data.speakerNote}</span>
+                  </p>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         )
 
       case 'answer':
-        if (!selectedAnswer || !showInterpretation) {
-          return (
-            <div className="max-w-4xl mx-auto animate-fadeIn text-center">
-              <Lightbulb className="w-32 h-32 mx-auto mb-8 text-yellow-400" />
-              <h2 className="text-5xl font-bold mb-6">Select an answer on the previous slide</h2>
-              <p className="text-2xl text-gray-300">Go back to choose your response</p>
-            </div>
-          )
-        }
+        const optionId = slide.optionId
+        const interpretation = slide.data.interpretations[optionId]
+        const optionData = slide.data.options.find((opt: any) => opt.id === optionId)
 
-        const interpretation = slide.data.interpretations[selectedAnswer]
         return (
           <div className="max-w-6xl mx-auto animate-fadeIn">
             <div className="bg-white/10 backdrop-blur rounded-2xl p-10">
               <div className="text-center mb-8">
-                <div className="inline-block bg-blue-500 text-white px-8 py-4 rounded-full text-2xl font-bold mb-6">
-                  Your Choice: {selectedAnswer.toUpperCase()}
+                <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-4 rounded-full text-2xl font-bold mb-6">
+                  <span className="text-4xl">{optionData.emoji}</span>
+                  <span>Option {optionId.toUpperCase()}</span>
                 </div>
                 <h2 className="text-5xl font-bold mb-4">{interpretation.title}</h2>
               </div>
@@ -312,7 +305,7 @@ export default function InteractivePresentationHome() {
               <div className="space-y-6">
                 <div className="bg-yellow-500/20 border-2 border-yellow-500 rounded-xl p-8">
                   <h3 className="text-3xl font-bold mb-4">😄 Funny Analogy</h3>
-                  <p className="text-2xl text-gray-200">{interpretation.analogy}</p>
+                  <p className="text-2xl text-gray-200 leading-relaxed">{interpretation.analogy}</p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -329,17 +322,17 @@ export default function InteractivePresentationHome() {
 
                 <div className="bg-blue-500/20 border-2 border-blue-500 rounded-xl p-8">
                   <h3 className="text-3xl font-bold mb-4">✨ Better Approach</h3>
-                  <p className="text-2xl text-gray-200">{interpretation.betterApproach}</p>
+                  <p className="text-2xl text-gray-200 leading-relaxed">{interpretation.betterApproach}</p>
                 </div>
 
                 <div className="bg-green-500/20 border-2 border-green-500 rounded-xl p-8">
                   <h3 className="text-3xl font-bold mb-4">🏛️ Institute Impact</h3>
-                  <p className="text-2xl text-gray-200">{interpretation.instituteImpact}</p>
+                  <p className="text-2xl text-gray-200 leading-relaxed">{interpretation.instituteImpact}</p>
                 </div>
 
                 <div className="bg-orange-500/20 border-2 border-orange-500 rounded-xl p-8">
                   <h3 className="text-3xl font-bold mb-4">🎯 Action Tip</h3>
-                  <p className="text-2xl text-gray-200">{interpretation.actionTip}</p>
+                  <p className="text-2xl text-gray-200 leading-relaxed">{interpretation.actionTip}</p>
                 </div>
 
                 <div className="bg-purple-500/20 border-2 border-purple-500 rounded-xl p-8">
@@ -347,7 +340,7 @@ export default function InteractivePresentationHome() {
                     <Mic className="w-10 h-10 text-purple-400 flex-shrink-0 mt-1" />
                     <div>
                       <h3 className="text-2xl font-bold mb-3">Speaker Insight</h3>
-                      <p className="text-xl text-gray-200 italic">{interpretation.speakerInsight}</p>
+                      <p className="text-xl text-gray-200 italic leading-relaxed">{interpretation.speakerInsight}</p>
                     </div>
                   </div>
                 </div>

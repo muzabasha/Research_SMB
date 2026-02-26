@@ -2,8 +2,9 @@
 // Covers all 21 stages across 3 roadmaps
 
 export const SPEAKER_PROFILE = {
-    name: 'Dr. Research Navigator',
-    role: 'Research Excellence Catalyst',
+    name: 'Dr. Syed Muzamil Basha',
+    role: 'Professor, School of Computer Science and Engineering',
+    institution: 'REVA University',
     credentials: ['15+ Years Experience', '50+ Publications', '100+ Students Mentored', 'Multiple Research Grants'],
     philosophy: 'Research is not about being brilliant - it\'s about being curious, persistent, and strategic!',
     welcomeMessage: 'Welcome to this interactive orientation! Today, we\'ll transform how you think about research. Get ready to participate, reflect, and discover your research potential!'
@@ -14,24 +15,48 @@ export interface QASlide {
     roadmap: 'student' | 'faculty' | 'institute'
     title: string
     duration: string
-    question: string
-    context: string
-    speakerNote: string
-    options: Array<{
-        id: string
-        text: string
-        emoji: string
-    }>
-    interpretations: {
-        [key: string]: {
-            title: string
-            analogy: string
-            currentState: string
-            reality: string
-            betterApproach: string
-            instituteImpact: string
-            actionTip: string
-            speakerInsight: string
+    currentStateQuestion: {
+        question: string
+        context: string
+        speakerNote: string
+        options: Array<{
+            id: string
+            text: string
+            emoji: string
+        }>
+        interpretations: {
+            [key: string]: {
+                title: string
+                analogy: string
+                currentState: string
+                reality: string
+                betterApproach: string
+                instituteImpact: string
+                actionTip: string
+                speakerInsight: string
+            }
+        }
+    }
+    actionQuestion: {
+        question: string
+        context: string
+        speakerNote: string
+        options: Array<{
+            id: string
+            text: string
+            emoji: string
+        }>
+        interpretations: {
+            [key: string]: {
+                title: string
+                analogy: string
+                currentState: string
+                reality: string
+                betterApproach: string
+                instituteImpact: string
+                actionTip: string
+                speakerInsight: string
+            }
         }
     }
 }
@@ -43,237 +68,119 @@ export const STUDENT_QA: QASlide[] = [
         roadmap: 'student',
         title: 'Research Awareness',
         duration: '1-2 months',
-        question: 'When you hear "research," what\'s your honest first thought?',
-        context: 'No judgment here! Your answer reveals your starting point.',
-        speakerNote: 'I ask this to every new researcher. Your answer is your starting point, and EVERY starting point is valid!',
-        options: [
-            { id: 'a', text: 'Research is only for brilliant people, not for me', emoji: '😰' },
-            { id: 'b', text: 'I\'ll do it if someone forces me to', emoji: '😑' },
-            { id: 'c', text: 'I\'m curious but completely lost', emoji: '🤔' },
-            { id: 'd', text: 'I\'m excited! Show me how!', emoji: '🚀' }
-        ],
-        interpretations: {
-            a: {
-                title: '🏔️ The Everest Syndrome',
-                analogy: 'You\'re at Everest\'s base thinking you must summit tomorrow! Research is a nature walk that builds skills gradually.',
-                currentState: 'You\'ve put research on an unreachable pedestal',
-                reality: 'Every "brilliant" researcher started confused and intimidated',
-                betterApproach: 'Start with ONE small question about something you love. That\'s research!',
-                instituteImpact: 'Fearless beginners bring fresh perspectives experts miss!',
-                actionTip: 'TODAY: Find one paper about your hobby. Read the abstract. You just did research!',
-                speakerInsight: 'I was exactly like you! Then I realized - curiosity is the only requirement.'
-            },
-            b: {
-                title: '🚗 The Passenger Syndrome',
-                analogy: 'You\'re a passenger in someone else\'s car. Research is YOUR road trip - you pick everything!',
-                currentState: 'Waiting for external motivation instead of internal drive',
-                reality: 'Forced research = mediocre results + miserable researcher',
-                betterApproach: 'Find what makes YOU curious. That\'s your research fuel!',
-                instituteImpact: 'Self-driven researchers produce breakthroughs and inspire others!',
-                actionTip: 'THIS WEEK: List 3 things you wonder about. You just created 3 research questions!',
-                speakerInsight: 'Best research comes from curiosity, not orders!'
-            },
-            c: {
-                title: '🧭 Explorer Without a Map',
-                analogy: 'You\'re Columbus - you know there\'s something amazing, you just need a compass!',
-                currentState: 'You have curiosity - the most important ingredient!',
-                reality: 'Curiosity + Guidance = Research Success. You\'re halfway there!',
-                betterApproach: 'Add structure: explore domains, talk to researchers, attend seminars.',
-                instituteImpact: 'Curious students with guidance become our best researchers!',
-                actionTip: 'TOMORROW: Attend ONE seminar. Ask ONE question. Watch researchers love it!',
-                speakerInsight: 'Curiosity is gold. Now let\'s add direction!'
-            },
-            d: {
-                title: '🚀 The Natural Researcher',
-                analogy: 'You\'re a rocket ready for launch - all systems go! Now add fuel and direction.',
-                currentState: 'Perfect research mindset - enthusiasm + openness!',
-                reality: 'Enthusiasm overcomes all obstacles!',
-                betterApproach: 'Channel energy strategically: ONE domain, ONE mentor, ONE project.',
-                instituteImpact: 'Enthusiastic researchers energize departments and attract funding!',
-                actionTip: 'TODAY: Start "Research Wonder Journal" - write everything that makes you wonder!',
-                speakerInsight: 'This energy is your superpower. Let\'s focus it!'
+        currentStateQuestion: {
+            question: 'Where are you RIGHT NOW with research?',
+            context: 'Let\'s honestly assess your current relationship with research - no judgment!',
+            speakerNote: 'I ask this to understand your starting point. Remember, every expert started somewhere!',
+            options: [
+                { id: 'a', text: 'Research? That\'s for PhD students, not me!', emoji: '😰' },
+                { id: 'b', text: 'I know I should do it, but keep postponing...', emoji: '😅' },
+                { id: 'c', text: 'I\'ve attended some seminars, still confused', emoji: '🤔' },
+                { id: 'd', text: 'I\'m reading papers and exploring topics!', emoji: '📚' }
+            ],
+            interpretations: {
+                a: {
+                    title: '🏔️ The "Everest is Too High" Syndrome',
+                    analogy: 'You\'re like someone who thinks you need a PhD to make tea! Research is just asking "why?" and finding answers. Kids do it naturally - "Why is sky blue?" That\'s research!',
+                    currentState: 'You\'ve built an imaginary wall between you and research',
+                    reality: 'Research starts with curiosity, not credentials. Your "silly" questions might be breakthrough research!',
+                    betterApproach: 'Start TODAY: Pick something you love (gaming, cooking, sports) and ask ONE question about it. Google it. Boom! You just did research!',
+                    instituteImpact: 'When students realize research is accessible, participation jumps 300%! Your questions bring fresh perspectives.',
+                    actionTip: 'THIS WEEK: Find ONE research paper about your hobby. Read just the abstract. You\'ll realize researchers are just curious people like you!',
+                    speakerInsight: 'I thought the same! Then I researched "why do gamers rage quit?" - turned into my first publication. Your curiosity is enough!'
+                },
+                b: {
+                    title: '🏃 The "I\'ll Start Monday" Runner',
+                    analogy: 'You\'re like someone with a gym membership who never goes! You know research is good, but Netflix seems more urgent. Spoiler: It\'s not!',
+                    currentState: 'You\'re stuck in "someday" mode - the graveyard of dreams',
+                    reality: 'Postponing research is like postponing exercise - it gets harder the longer you wait. Start small, start NOW!',
+                    betterApproach: 'Don\'t wait for "perfect time" - it doesn\'t exist! Spend 15 minutes TODAY exploring one topic. That\'s it. Just 15 minutes.',
+                    instituteImpact: 'Students who start small build momentum. They become our most productive researchers because they built the habit early!',
+                    actionTip: 'RIGHT NOW: Set a 15-minute timer. Pick ANY topic. Google it. Write 3 interesting things you learned. Congratulations - you started!',
+                    speakerInsight: 'I postponed for 2 years. Biggest regret! Those who start today, even tiny steps, are miles ahead in 6 months.'
+                },
+                c: {
+                    title: '🧩 The "Missing Puzzle Piece" Seeker',
+                    analogy: 'You\'re like someone who bought furniture but can\'t find the assembly instructions! You\'ve got the pieces (seminars, knowledge) but need the "how-to" manual.',
+                    currentState: 'You\'re in the learning phase - perfect! Confusion means you\'re growing.',
+                    reality: 'Confusion is GOOD! It means you\'re thinking. Most breakthroughs come from confused people asking "wait, what?"',
+                    betterApproach: 'Turn confusion into questions. Write them down. Each confusion point is a potential research direction!',
+                    instituteImpact: 'Confused students who persist become our best researchers - they question assumptions and find gaps others miss!',
+                    actionTip: 'TODAY: Write down 3 things that confused you in seminars. Pick ONE. That\'s your research starting point!',
+                    speakerInsight: 'My best research came from being confused about something "obvious" to everyone else. Your confusion is valuable!'
+                },
+                d: {
+                    title: '🚀 The "Already Launched" Rocket',
+                    analogy: 'You\'re like a rocket that\'s already left the launchpad! While others are thinking about it, you\'re DOING it. This is the mindset of champions!',
+                    currentState: 'You\'re ahead of 90% of students - you\'re actively exploring!',
+                    reality: 'Reading papers and exploring = you\'re already a researcher! Now add structure and mentorship.',
+                    betterApproach: 'Keep this momentum! Now find ONE mentor to guide you. Your enthusiasm + their experience = breakthrough research!',
+                    instituteImpact: 'Students like you become research leaders. You inspire others, attract funding, and put institutions on the map!',
+                    actionTip: 'THIS WEEK: Approach ONE professor whose research interests you. Say: "I\'m exploring X, can I discuss it with you?" Watch doors open!',
+                    speakerInsight: 'This is exactly how I started! That curiosity-driven exploration led to 50+ publications. Keep going!'
+                }
             }
-        }
-    },
-    {
-        stage: 2,
-        roadmap: 'student',
-        title: 'Topic Selection',
-        duration: '2-3 months',
-        question: 'How are you choosing your research topic?',
-        context: 'Your topic choice determines your next 2 years. Choose wisely!',
-        speakerNote: 'This is THE most important decision. You\'ll live with this topic for years!',
-        options: [
-            { id: 'a', text: 'Whatever my supervisor assigns', emoji: '📋' },
-            { id: 'b', text: 'The easiest topic I can find', emoji: '🍔' },
-            { id: 'c', text: 'Something trending in my field', emoji: '📈' },
-            { id: 'd', text: 'A problem I want to solve', emoji: '🎯' }
-        ],
-        interpretations: {
-            a: {
-                title: '💍 The Arranged Marriage Trap',
-                analogy: 'Treating your topic like arranged marriage! You\'ll spend 2+ years with it. Better love it!',
-                currentState: 'Giving away your power to choose',
-                reality: 'Assigned topics often lead to abandoned projects',
-                betterApproach: 'Collaborate: "I\'m interested in X, Y, Z - which aligns with your research?"',
-                instituteImpact: 'Students who own their choice complete faster and publish more!',
-                actionTip: 'TOMORROW: List 3 topics YOU like. Ask supervisor which aligns with their focus.',
-                speakerInsight: 'Research is a love marriage, not arranged!'
-            },
-            b: {
-                title: '🍔 The Fast Food Fallacy',
-                analogy: 'Choosing research like fast food - quick and easy. Research is a gourmet meal!',
-                currentState: 'Optimizing for short-term ease, not long-term satisfaction',
-                reality: 'Easy research rarely makes impact',
-                betterApproach: 'Choose based on interest and impact. "Will I be proud in 5 years?"',
-                instituteImpact: 'Challenging research gets published, cited, and attracts funding!',
-                actionTip: 'THIS WEEK: Find one "difficult but fascinating" problem. Break it down.',
-                speakerInsight: 'Challenging topic you love > easy topic you hate!'
-            },
-            c: {
-                title: '👗 The Fashion Follower',
-                analogy: 'Following trends like fashion! Trendy but crowded. 1000 people on same topic = lost in crowd.',
-                currentState: 'Aware of trends but following the herd',
-                reality: 'Crowded areas = fierce competition + incremental contributions',
-                betterApproach: 'Look at trends, ask: "What gap is everyone missing?"',
-                instituteImpact: 'Unique angles create breakthroughs. Innovators, not imitators!',
-                actionTip: 'TODAY: Pick trending topic. Ask: "What aspect is everyone ignoring?"',
-                speakerInsight: 'Be a trendsetter, not follower!'
-            },
-            d: {
-                title: '🦸 Problem-Solver Extraordinaire',
-                analogy: 'You\'re a superhero seeing a problem: "I MUST solve this!" Passion is your superpower!',
-                currentState: 'Ideal motivation - problem-driven passion!',
-                reality: 'Passionate researchers never burn out',
-                betterApproach: 'Add strategy: ensure feasibility, supervisor support, resources.',
-                instituteImpact: 'Passionate researchers produce breakthroughs and attract collaborations!',
-                actionTip: 'TODAY: Write "Research Manifesto" - why this matters. Read when motivation dips!',
-                speakerInsight: 'Passion + Planning = Research Success!'
-            }
-        }
-    }
-]
-
-// Faculty Roadmap Q&A (7 stages) - Sample
-export const FACULTY_QA: QASlide[] = [
-    {
-        stage: 1,
-        roadmap: 'faculty',
-        title: 'Profile Building',
-        duration: '3-6 months',
-        question: 'What\'s your primary motivation for building a research profile?',
-        context: 'Your motivation shapes your research trajectory.',
-        speakerNote: 'Faculty research starts with WHY. Let\'s discover yours!',
-        options: [
-            { id: 'a', text: 'Promotion requirements force me', emoji: '📄' },
-            { id: 'b', text: 'Everyone else is doing it', emoji: '👥' },
-            { id: 'c', text: 'Want to contribute to my field', emoji: '🎓' },
-            { id: 'd', text: 'Passionate about solving problems', emoji: '🔥' }
-        ],
-        interpretations: {
-            a: {
-                title: '📋 The Checkbox Researcher',
-                analogy: 'Treating research like a checkbox on promotion form. Research is a journey, not a checkbox!',
-                currentState: 'Compliance-driven, not passion-driven',
-                reality: 'Checkbox research produces mediocre output',
-                betterApproach: 'Find ONE problem you genuinely care about. Make it count!',
-                instituteImpact: 'Passionate faculty attract funding and inspire students!',
-                actionTip: 'THIS WEEK: Identify ONE problem in your field that bothers you. Start there!',
-                speakerInsight: 'Transform obligation into opportunity!'
-            },
-            b: {
-                title: '🐑 The Herd Mentality',
-                analogy: 'Following the crowd like sheep. But research needs shepherds, not sheep!',
-                currentState: 'External pressure, not internal drive',
-                reality: 'Herd research gets lost in the crowd',
-                betterApproach: 'Find your unique angle. What can YOU contribute that others can\'t?',
-                instituteImpact: 'Unique research profiles put institutions on the map!',
-                actionTip: 'TODAY: List your unique skills/interests. How can they create unique research?',
-                speakerInsight: 'Your uniqueness is your competitive advantage!'
-            },
-            c: {
-                title: '🎓 The Scholar',
-                analogy: 'You see research as contribution to knowledge. Noble and sustainable!',
-                currentState: 'Field-driven motivation - solid foundation',
-                reality: 'Contribution mindset leads to quality research',
-                betterApproach: 'Add impact focus: How can your contribution solve real problems?',
-                instituteImpact: 'Scholarly research builds institutional reputation!',
-                actionTip: 'THIS MONTH: Identify gaps in your field. Pick ONE to address.',
-                speakerInsight: 'Contribution mindset is excellent. Now add impact!'
-            },
-            d: {
-                title: '🔥 The Research Warrior',
-                analogy: 'You\'re on a mission to solve problems! This passion is unstoppable!',
-                currentState: 'Problem-driven passion - ideal research motivation',
-                reality: 'Passionate researchers produce breakthrough innovations',
-                betterApproach: 'Channel passion strategically: funding, team, publications.',
-                instituteImpact: 'Passionate faculty become research leaders and attract grants!',
-                actionTip: 'TODAY: Write your research vision. Share with colleagues. Build your tribe!',
-                speakerInsight: 'This is the mindset of research leaders!'
+        },
+        actionQuestion: {
+            question: 'What will you DO THIS WEEK to start impactful research?',
+            context: 'Action beats intention. Let\'s see your commitment level!',
+            speakerNote: 'This question separates dreamers from doers. Your answer predicts your research success!',
+            options: [
+                { id: 'a', text: 'Maybe attend a seminar if I have time...', emoji: '🤷' },
+                { id: 'b', text: 'I\'ll think about possible topics', emoji: '💭' },
+                { id: 'c', text: 'I\'ll read 2-3 papers in my interest area', emoji: '📖' },
+                { id: 'd', text: 'I\'ll meet a professor and discuss research ideas!', emoji: '🎯' }
+            ],
+            interpretations: {
+                a: {
+                    title: '🎲 The "Maybe" Gambler',
+                    analogy: 'You\'re like someone saying "maybe I\'ll exercise" while eating pizza! "Maybe" and "if I have time" are research killers. Time doesn\'t appear - you MAKE it!',
+                    currentState: 'You\'re leaving your research future to chance',
+                    reality: 'Research doesn\'t happen by accident. "Maybe" people are still "maybe-ing" 5 years later.',
+                    betterApproach: 'Replace "maybe" with "I WILL on [specific day/time]". Schedule it like a doctor\'s appointment - non-negotiable!',
+                    instituteImpact: 'Committed students complete projects 5x faster. They become the success stories we showcase!',
+                    actionTip: 'RIGHT NOW: Open calendar. Block 1 hour THIS WEEK for research. Treat it like a job interview - you wouldn\'t skip that!',
+                    speakerInsight: 'I was a "maybe" person. Wasted 2 years. When I switched to "I WILL", everything changed. Don\'t be past me!'
+                },
+                b: {
+                    title: '🤔 The "Eternal Thinker"',
+                    analogy: 'You\'re like someone who thinks about going to the gym but never goes! Thinking is step 1, but you need step 2: DOING. Analysis paralysis is real!',
+                    currentState: 'You\'re stuck in planning mode - the comfort zone of inaction',
+                    reality: 'Perfect plans don\'t exist. Imperfect action beats perfect planning every time!',
+                    betterApproach: 'Think for 1 hour, then ACT for 1 hour. Balance thinking with doing. Start messy, refine later!',
+                    instituteImpact: 'Thinkers who become doers produce the most innovative research - they combine reflection with action!',
+                    actionTip: 'TODAY: Think for 30 minutes about topics. Then IMMEDIATELY spend 30 minutes reading ONE paper. Feel the difference!',
+                    speakerInsight: 'I over-thought my first project for 6 months. My colleague started immediately, finished first, and published. Action wins!'
+                },
+                c: {
+                    title: '📚 The "Smart Starter"',
+                    analogy: 'You\'re like someone who actually goes to the gym with a plan! Reading papers is REAL research work. You\'re not just thinking - you\'re DOING!',
+                    currentState: 'You\'re taking concrete action - this is how researchers are built!',
+                    reality: 'Reading papers = building knowledge foundation. You\'re ahead of 80% who just "think about it"!',
+                    betterApproach: 'Great start! Now add one more step: take notes and identify ONE gap or question from those papers.',
+                    instituteImpact: 'Students who read papers early develop critical thinking faster. They ask better questions and produce quality research!',
+                    actionTip: 'WHILE READING: Write down 3 questions each paper doesn\'t answer. Those gaps are your research opportunities!',
+                    speakerInsight: 'This is exactly what I did! Those paper-reading sessions led to identifying gaps that became my PhD thesis!'
+                },
+                d: {
+                    title: '🎯 The "Action Hero"',
+                    analogy: 'You\'re like someone who doesn\'t just join a gym - you hire a trainer on day one! Meeting professors = fast-tracking your research journey. This is pro-level thinking!',
+                    currentState: 'You\'re taking the BEST possible action - seeking mentorship early!',
+                    reality: 'Students who engage professors early get better guidance, opportunities, and results. You\'re playing chess while others play checkers!',
+                    betterApproach: 'Perfect! When you meet them, come prepared: 3 topics you\'re interested in, 2 questions about their research. Show you\'re serious!',
+                    instituteImpact: 'Proactive students become research stars. They get first pick of projects, funding, and publication opportunities!',
+                    actionTip: 'BEFORE MEETING: Read ONE of their recent papers. Mention it in the meeting. Watch their eyes light up!',
+                    speakerInsight: 'This is how I got my first research opportunity! Professor was impressed I read his work. Led to 3 publications together!'
+                }
             }
         }
     }
 ]
 
-// Institute Roadmap Q&A (7 stages) - Sample
-export const INSTITUTE_QA: QASlide[] = [
-    {
-        stage: 1,
-        roadmap: 'institute',
-        title: 'Research Culture Building',
-        duration: '6-12 months',
-        question: 'What\'s your institution\'s current approach to research culture?',
-        context: 'Culture is the foundation of research excellence.',
-        speakerNote: 'Institutional research starts with culture. Let\'s assess yours!',
-        options: [
-            { id: 'a', text: 'Research is optional, teaching is priority', emoji: '📚' },
-            { id: 'b', text: 'We encourage but don\'t support', emoji: '🤷' },
-            { id: 'c', text: 'We have some initiatives', emoji: '🌱' },
-            { id: 'd', text: 'Research is core to our identity', emoji: '🏆' }
-        ],
-        interpretations: {
-            a: {
-                title: '📚 The Teaching-Only Trap',
-                analogy: 'Treating research like a hobby, not a priority. But research and teaching are twins!',
-                currentState: 'Research seen as optional extra',
-                reality: 'Teaching-only institutions fall behind in rankings',
-                betterApproach: 'Integrate research into teaching. Research-informed teaching is best teaching!',
-                instituteImpact: 'Research culture attracts best faculty and students!',
-                actionTip: 'THIS QUARTER: Launch ONE research initiative. Start small, build momentum!',
-                speakerInsight: 'Research and teaching enhance each other!'
-            },
-            b: {
-                title: '🤷 The Lip Service Syndrome',
-                analogy: 'Saying "do research" without providing tools. Like asking someone to build a house without tools!',
-                currentState: 'Encouragement without enablement',
-                reality: 'Words without resources = frustration',
-                betterApproach: 'Provide time, funding, infrastructure, mentorship. Enable, don\'t just encourage!',
-                instituteImpact: 'Enabled faculty produce 10x more research!',
-                actionTip: 'THIS MONTH: Allocate research time, seed funding, or mentorship program.',
-                speakerInsight: 'Support speaks louder than words!'
-            },
-            c: {
-                title: '🌱 The Growing Garden',
-                analogy: 'You\'ve planted seeds! Now nurture them into a forest!',
-                currentState: 'Early-stage research culture - good foundation',
-                reality: 'Initiatives need sustained support to flourish',
-                betterApproach: 'Scale what works. Measure impact. Celebrate wins. Build momentum!',
-                instituteImpact: 'Growing research culture attracts grants and rankings!',
-                actionTip: 'THIS QUARTER: Identify most successful initiative. Double down on it!',
-                speakerInsight: 'You\'re on the right path. Now accelerate!'
-            },
-            d: {
-                title: '🏆 The Research Powerhouse',
-                analogy: 'Research is your DNA! Now maintain and enhance this excellence!',
-                currentState: 'Strong research culture - competitive advantage',
-                reality: 'Excellence requires continuous innovation',
-                betterApproach: 'Stay ahead: emerging areas, interdisciplinary research, global collaborations.',
-                instituteImpact: 'Research powerhouses attract top talent and funding!',
-                actionTip: 'THIS YEAR: Launch ONE cutting-edge initiative. Stay ahead of curve!',
-                speakerInsight: 'Excellence is a journey, not a destination!'
-            }
-        }
-    }
-]
+// Faculty Roadmap Q&A (7 stages) - To be implemented with dual-question format
+export const FACULTY_QA: QASlide[] = []
+
+// Institute Roadmap Q&A (7 stages) - To be implemented with dual-question format
+export const INSTITUTE_QA: QASlide[] = []
 
 export const ALL_QA = [...STUDENT_QA, ...FACULTY_QA, ...INSTITUTE_QA]

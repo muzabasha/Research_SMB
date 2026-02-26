@@ -27,34 +27,27 @@ export default function InteractivePresentationHome() {
     slides.push({ type: 'roadmap-intro', roadmap: 'student' })
     STUDENT_QA.forEach((qa) => {
       slides.push({ type: 'stage-intro', data: qa })
-      slides.push({ type: 'question', data: qa })
-      // Add interpretation slides for each option (A, B, C, D)
-      qa.options.forEach((option) => {
-        slides.push({ type: 'answer', data: qa, optionId: option.id })
+      // Current State Question
+      slides.push({ type: 'question', data: qa, questionType: 'currentState' })
+      // Current State Interpretations (A, B, C, D)
+      qa.currentStateQuestion.options.forEach((option) => {
+        slides.push({ type: 'answer', data: qa, questionType: 'currentState', optionId: option.id })
+      })
+      // Action Question
+      slides.push({ type: 'question', data: qa, questionType: 'action' })
+      // Action Interpretations (A, B, C, D)
+      qa.actionQuestion.options.forEach((option) => {
+        slides.push({ type: 'answer', data: qa, questionType: 'action', optionId: option.id })
       })
     })
 
     // Faculty Roadmap
     slides.push({ type: 'roadmap-intro', roadmap: 'faculty' })
-    FACULTY_QA.forEach((qa) => {
-      slides.push({ type: 'stage-intro', data: qa })
-      slides.push({ type: 'question', data: qa })
-      // Add interpretation slides for each option (A, B, C, D)
-      qa.options.forEach((option) => {
-        slides.push({ type: 'answer', data: qa, optionId: option.id })
-      })
-    })
+    // Faculty uses old format for now - will be updated
 
     // Institute Roadmap
     slides.push({ type: 'roadmap-intro', roadmap: 'institute' })
-    INSTITUTE_QA.forEach((qa) => {
-      slides.push({ type: 'stage-intro', data: qa })
-      slides.push({ type: 'question', data: qa })
-      // Add interpretation slides for each option (A, B, C, D)
-      qa.options.forEach((option) => {
-        slides.push({ type: 'answer', data: qa, optionId: option.id })
-      })
-    })
+    // Institute uses old format for now - will be updated
 
     // Closing
     slides.push({ type: 'closing' })
@@ -110,17 +103,17 @@ export default function InteractivePresentationHome() {
     switch (slide.type) {
       case 'welcome':
         return (
-          <div className="text-center animate-fadeIn">
-            <Sparkles className="w-24 h-24 mx-auto mb-8 text-yellow-400 animate-pulse" />
-            <h1 className="text-7xl font-bold mb-6 animate-slideUp">Research Excellence Orientation</h1>
-            <p className="text-3xl text-gray-300 mb-8 animate-slideUp" style={{ animationDelay: '0.2s' }}>
+          <div className="text-center animate-fadeIn max-w-6xl mx-auto">
+            <Sparkles className="w-20 h-20 mx-auto mb-6 text-yellow-400 animate-pulse" />
+            <h1 className="text-6xl font-bold mb-4 animate-slideUp">Research Excellence Orientation</h1>
+            <p className="text-2xl text-gray-300 mb-6 animate-slideUp" style={{ animationDelay: '0.2s' }}>
               Interactive Journey from Zero to Impactful Research
             </p>
-            <div className="bg-white/10 backdrop-blur rounded-2xl p-8 max-w-3xl mx-auto animate-slideUp" style={{ animationDelay: '0.4s' }}>
-              <p className="text-2xl text-gray-200 mb-4">
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-6 max-w-3xl mx-auto animate-slideUp" style={{ animationDelay: '0.4s' }}>
+              <p className="text-xl text-gray-200 mb-3">
                 This is NOT a lecture - it's an interactive experience!
               </p>
-              <p className="text-xl text-gray-300">
+              <p className="text-lg text-gray-300">
                 You'll answer questions, reflect on your mindset, and discover your research path
               </p>
             </div>
@@ -130,28 +123,29 @@ export default function InteractivePresentationHome() {
       case 'speaker':
         return (
           <div className="max-w-5xl mx-auto animate-fadeIn">
-            <div className="text-center mb-8">
-              <div className="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Mic className="w-16 h-16 text-white" />
+            <div className="text-center mb-6">
+              <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mic className="w-12 h-12 text-white" />
               </div>
-              <h2 className="text-5xl font-bold mb-4">{SPEAKER_PROFILE.name}</h2>
-              <p className="text-2xl text-gray-300 mb-6">{SPEAKER_PROFILE.role}</p>
+              <h2 className="text-4xl font-bold mb-2">{SPEAKER_PROFILE.name}</h2>
+              <p className="text-xl text-gray-300 mb-1">{SPEAKER_PROFILE.role}</p>
+              <p className="text-lg text-blue-300 font-semibold">{SPEAKER_PROFILE.institution}</p>
             </div>
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="grid md:grid-cols-2 gap-4 mb-6">
               {SPEAKER_PROFILE.credentials.map((cred, idx) => (
-                <div key={idx} className="bg-white/10 backdrop-blur rounded-xl p-6 flex items-center gap-4">
-                  <CheckCircle className="w-8 h-8 text-green-400 flex-shrink-0" />
-                  <span className="text-xl">{cred}</span>
+                <div key={idx} className="bg-white/10 backdrop-blur rounded-xl p-4 flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0" />
+                  <span className="text-lg">{cred}</span>
                 </div>
               ))}
             </div>
-            <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border-2 border-yellow-500 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                <Lightbulb className="w-8 h-8 text-yellow-400" />
+            <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border-2 border-yellow-500 rounded-2xl p-6">
+              <h3 className="text-xl font-bold mb-3 flex items-center gap-3">
+                <Lightbulb className="w-6 h-6 text-yellow-400" />
                 Philosophy
               </h3>
-              <p className="text-2xl text-gray-200 mb-6">{SPEAKER_PROFILE.philosophy}</p>
-              <p className="text-xl text-gray-300 italic">{SPEAKER_PROFILE.welcomeMessage}</p>
+              <p className="text-xl text-gray-200 mb-4">{SPEAKER_PROFILE.philosophy}</p>
+              <p className="text-lg text-gray-300 italic">{SPEAKER_PROFILE.welcomeMessage}</p>
             </div>
           </div>
         )
@@ -159,31 +153,31 @@ export default function InteractivePresentationHome() {
       case 'overview':
         return (
           <div className="max-w-6xl mx-auto animate-fadeIn">
-            <h2 className="text-6xl font-bold text-center mb-12">What We'll Cover Today</h2>
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8">
-                <GraduationCap className="w-16 h-16 text-blue-400 mb-4" />
-                <h3 className="text-3xl font-bold mb-4">Student Journey</h3>
-                <p className="text-xl text-gray-300 mb-4">7 Stages</p>
-                <p className="text-lg text-gray-400">From curious beginner to published researcher</p>
+            <h2 className="text-5xl font-bold text-center mb-8">What We'll Cover Today</h2>
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-white/10 backdrop-blur rounded-2xl p-6">
+                <GraduationCap className="w-12 h-12 text-blue-400 mb-3" />
+                <h3 className="text-2xl font-bold mb-3">Student Journey</h3>
+                <p className="text-lg text-gray-300 mb-2">7 Stages</p>
+                <p className="text-base text-gray-400">From curious beginner to published researcher</p>
               </div>
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8">
-                <Users className="w-16 h-16 text-purple-400 mb-4" />
-                <h3 className="text-3xl font-bold mb-4">Faculty Excellence</h3>
-                <p className="text-xl text-gray-300 mb-4">7 Stages</p>
-                <p className="text-lg text-gray-400">From profile building to research leadership</p>
+              <div className="bg-white/10 backdrop-blur rounded-2xl p-6">
+                <Users className="w-12 h-12 text-purple-400 mb-3" />
+                <h3 className="text-2xl font-bold mb-3">Faculty Excellence</h3>
+                <p className="text-lg text-gray-300 mb-2">7 Stages</p>
+                <p className="text-base text-gray-400">From profile building to research leadership</p>
               </div>
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8">
-                <Building2 className="w-16 h-16 text-green-400 mb-4" />
-                <h3 className="text-3xl font-bold mb-4">Institutional Strategy</h3>
-                <p className="text-xl text-gray-300 mb-4">7 Stages</p>
-                <p className="text-lg text-gray-400">From culture building to ranking excellence</p>
+              <div className="bg-white/10 backdrop-blur rounded-2xl p-6">
+                <Building2 className="w-12 h-12 text-green-400 mb-3" />
+                <h3 className="text-2xl font-bold mb-3">Institutional Strategy</h3>
+                <p className="text-lg text-gray-300 mb-2">7 Stages</p>
+                <p className="text-base text-gray-400">From culture building to ranking excellence</p>
               </div>
             </div>
-            <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-2 border-blue-500 rounded-2xl p-8 text-center">
-              <p className="text-3xl font-bold mb-4">21 Interactive Q&A Sessions</p>
-              <p className="text-xl text-gray-300 mb-2">Duration: 90-120 minutes</p>
-              <p className="text-lg text-gray-400">Format: Question → Reflection → Interpretation → Action</p>
+            <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-2 border-blue-500 rounded-2xl p-6 text-center">
+              <p className="text-2xl font-bold mb-3">21 Interactive Q&A Sessions</p>
+              <p className="text-lg text-gray-300 mb-1">Duration: 90-120 minutes</p>
+              <p className="text-base text-gray-400">Format: Question → Reflection → Interpretation → Action</p>
             </div>
           </div>
         )
@@ -200,12 +194,12 @@ export default function InteractivePresentationHome() {
 
         return (
           <div className="max-w-5xl mx-auto animate-fadeIn text-center">
-            <Icon className="w-24 h-24 mx-auto mb-8 animate-bounce" />
-            <h2 className="text-6xl font-bold mb-6">{roadmap.title}</h2>
-            <p className="text-3xl text-gray-300 mb-12">{roadmap.subtitle}</p>
-            <div className={`bg-gradient-to-r ${colors.bg} rounded-2xl p-8 text-white`}>
-              <p className="text-2xl mb-4">7 Transformative Stages</p>
-              <p className="text-xl opacity-90">Each with interactive Q&A to assess and transform your mindset</p>
+            <Icon className="w-20 h-20 mx-auto mb-6 animate-bounce" />
+            <h2 className="text-5xl font-bold mb-4">{roadmap.title}</h2>
+            <p className="text-2xl text-gray-300 mb-8">{roadmap.subtitle}</p>
+            <div className={`bg-gradient-to-r ${colors.bg} rounded-2xl p-6 text-white`}>
+              <p className="text-xl mb-3">7 Transformative Stages</p>
+              <p className="text-lg opacity-90">Each with interactive Q&A to assess and transform your mindset</p>
             </div>
           </div>
         )
@@ -214,26 +208,26 @@ export default function InteractivePresentationHome() {
         const stageColors = getRoadmapColor(slide.data.roadmap)
         return (
           <div className="max-w-5xl mx-auto animate-fadeIn">
-            <div className="text-center mb-8">
-              <div className={`inline-block bg-gradient-to-r ${stageColors.bg} text-white px-8 py-3 rounded-full text-2xl font-bold mb-6`}>
+            <div className="text-center mb-6">
+              <div className={`inline-block bg-gradient-to-r ${stageColors.bg} text-white px-6 py-2 rounded-full text-xl font-bold mb-4`}>
                 Stage {slide.data.stage}
               </div>
-              <h2 className="text-5xl font-bold mb-4">{slide.data.title}</h2>
-              <p className="text-2xl text-gray-300 mb-2">⏱️ Duration: {slide.data.duration}</p>
+              <h2 className="text-4xl font-bold mb-3">{slide.data.title}</h2>
+              <p className="text-xl text-gray-300 mb-2">⏱️ Duration: {slide.data.duration}</p>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-2xl p-8 mb-8">
-              <h3 className="text-3xl font-bold mb-4 flex items-center gap-3">
-                <Target className="w-8 h-8 text-yellow-400" />
-                Objective
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-6 mb-6">
+              <h3 className="text-2xl font-bold mb-3 flex items-center gap-3">
+                <Target className="w-6 h-6 text-yellow-400" />
+                What We'll Explore
               </h3>
-              <p className="text-2xl text-gray-200">{slide.data.question}</p>
+              <p className="text-xl text-gray-200">Two key questions: Where you are NOW and what you can DO for impact</p>
             </div>
-            <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-2 border-blue-500 rounded-2xl p-8">
-              <div className="flex items-start gap-4">
-                <Mic className="w-8 h-8 text-blue-400 flex-shrink-0 mt-1" />
+            <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-2 border-blue-500 rounded-2xl p-6">
+              <div className="flex items-start gap-3">
+                <Mic className="w-6 h-6 text-blue-400 flex-shrink-0 mt-1" />
                 <div>
-                  <h4 className="text-xl font-bold mb-2">Speaker Note:</h4>
-                  <p className="text-xl text-gray-200 italic">{slide.data.speakerNote}</p>
+                  <h4 className="text-lg font-bold mb-2">Speaker Note:</h4>
+                  <p className="text-lg text-gray-200 italic">These questions help you understand your current position and chart your path to impactful research!</p>
                 </div>
               </div>
             </div>
@@ -241,44 +235,48 @@ export default function InteractivePresentationHome() {
         )
 
       case 'question':
+        const questionData = slide.questionType === 'currentState' ? slide.data.currentStateQuestion : slide.data.actionQuestion
+        const questionTitle = slide.questionType === 'currentState' ? '📍 Where Are You Now?' : '🎯 What Will You Do?'
+        const questionColor = slide.questionType === 'currentState' ? 'from-orange-500/20 to-red-500/20 border-orange-400' : 'from-green-500/20 to-blue-500/20 border-green-400'
+
         return (
-          <div className="w-full h-full flex items-center justify-center px-8 animate-fadeIn">
+          <div className="w-full h-full flex items-center justify-center px-6 animate-fadeIn">
             <div className="max-w-6xl w-full">
-              <div className="text-center mb-12">
-                <Lightbulb className="w-24 h-24 mx-auto mb-6 text-yellow-400 animate-pulse" />
-                <h2 className="text-5xl font-bold mb-6">💭 Reflection Time</h2>
-                <p className="text-2xl text-gray-300 mb-4">{slide.data.context}</p>
+              <div className="text-center mb-6">
+                <Lightbulb className="w-16 h-16 mx-auto mb-4 text-yellow-400 animate-pulse" />
+                <h2 className="text-4xl font-bold mb-3">{questionTitle}</h2>
+                <p className="text-lg text-gray-300 mb-3">{questionData.context}</p>
               </div>
 
-              <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-2 border-blue-400 rounded-2xl p-10 mb-10">
-                <h3 className="text-4xl font-bold text-center leading-relaxed">{slide.data.question}</h3>
+              <div className={`bg-gradient-to-r ${questionColor} border-2 rounded-2xl p-6 mb-6`}>
+                <h3 className="text-3xl font-bold text-center leading-relaxed">{questionData.question}</h3>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {slide.data.options.map((option: any, idx: number) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {questionData.options.map((option: any, idx: number) => (
                   <div
                     key={option.id}
-                    className="bg-white/10 backdrop-blur border-2 border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all hover:scale-105 hover:border-white/40 animate-slideUp"
+                    className="bg-white/10 backdrop-blur border-2 border-white/20 rounded-xl p-5 hover:bg-white/15 transition-all hover:scale-105 hover:border-white/40 animate-slideUp"
                     style={{ animationDelay: `${idx * 0.1}s` }}
                   >
-                    <div className="flex items-start gap-4">
-                      <div className="text-6xl flex-shrink-0">{option.emoji}</div>
+                    <div className="flex items-start gap-3">
+                      <div className="text-5xl flex-shrink-0">{option.emoji}</div>
                       <div className="flex-1">
-                        <div className="text-3xl font-bold mb-3 text-blue-300">
+                        <div className="text-2xl font-bold mb-2 text-blue-300">
                           {option.id.toUpperCase()}.
                         </div>
-                        <p className="text-2xl leading-relaxed">{option.text}</p>
+                        <p className="text-lg leading-relaxed">{option.text}</p>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-10 text-center">
-                <div className="bg-white/10 backdrop-blur rounded-xl p-6 inline-block">
-                  <p className="text-xl text-gray-300">
-                    <Mic className="w-6 h-6 inline mr-2 text-purple-400" />
-                    <span className="italic">{slide.data.speakerNote}</span>
+              <div className="mt-6 text-center">
+                <div className="bg-white/10 backdrop-blur rounded-xl p-4 inline-block">
+                  <p className="text-base text-gray-300">
+                    <Mic className="w-5 h-5 inline mr-2 text-purple-400" />
+                    <span className="italic">{questionData.speakerNote}</span>
                   </p>
                 </div>
               </div>
@@ -288,59 +286,61 @@ export default function InteractivePresentationHome() {
 
       case 'answer':
         const optionId = slide.optionId
-        const interpretation = slide.data.interpretations[optionId]
-        const optionData = slide.data.options.find((opt: any) => opt.id === optionId)
+        const questionDataForAnswer = slide.questionType === 'currentState' ? slide.data.currentStateQuestion : slide.data.actionQuestion
+        const interpretation = questionDataForAnswer.interpretations[optionId]
+        const optionData = questionDataForAnswer.options.find((opt: any) => opt.id === optionId)
+        const answerTitle = slide.questionType === 'currentState' ? '📍 Your Current State' : '🎯 Your Action Plan'
 
         return (
           <div className="max-w-6xl mx-auto animate-fadeIn">
-            <div className="bg-white/10 backdrop-blur rounded-2xl p-10">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-4 rounded-full text-2xl font-bold mb-6">
-                  <span className="text-4xl">{optionData.emoji}</span>
-                  <span>Option {optionId.toUpperCase()}</span>
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-8">
+              <div className="text-center mb-6">
+                <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-full text-xl font-bold mb-4">
+                  <span className="text-3xl">{optionData.emoji}</span>
+                  <span>{answerTitle}: Option {optionId.toUpperCase()}</span>
                 </div>
-                <h2 className="text-5xl font-bold mb-4">{interpretation.title}</h2>
+                <h2 className="text-4xl font-bold mb-3">{interpretation.title}</h2>
               </div>
 
-              <div className="space-y-6">
-                <div className="bg-yellow-500/20 border-2 border-yellow-500 rounded-xl p-8">
-                  <h3 className="text-3xl font-bold mb-4">😄 Funny Analogy</h3>
-                  <p className="text-2xl text-gray-200 leading-relaxed">{interpretation.analogy}</p>
+              <div className="space-y-4">
+                <div className="bg-yellow-500/20 border-2 border-yellow-500 rounded-xl p-6">
+                  <h3 className="text-2xl font-bold mb-3">😄 Funny Analogy</h3>
+                  <p className="text-xl text-gray-200 leading-relaxed">{interpretation.analogy}</p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-white/5 rounded-xl p-6">
-                    <h3 className="text-2xl font-bold mb-3">📍 Where You Are</h3>
-                    <p className="text-lg text-gray-200">{interpretation.currentState}</p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-white/5 rounded-xl p-5">
+                    <h3 className="text-xl font-bold mb-2">📍 Where You Are</h3>
+                    <p className="text-base text-gray-200">{interpretation.currentState}</p>
                   </div>
 
-                  <div className="bg-white/5 rounded-xl p-6">
-                    <h3 className="text-2xl font-bold mb-3">💡 Reality Check</h3>
-                    <p className="text-lg text-gray-200">{interpretation.reality}</p>
+                  <div className="bg-white/5 rounded-xl p-5">
+                    <h3 className="text-xl font-bold mb-2">💡 Reality Check</h3>
+                    <p className="text-base text-gray-200">{interpretation.reality}</p>
                   </div>
                 </div>
 
-                <div className="bg-blue-500/20 border-2 border-blue-500 rounded-xl p-8">
-                  <h3 className="text-3xl font-bold mb-4">✨ Better Approach</h3>
-                  <p className="text-2xl text-gray-200 leading-relaxed">{interpretation.betterApproach}</p>
+                <div className="bg-blue-500/20 border-2 border-blue-500 rounded-xl p-6">
+                  <h3 className="text-2xl font-bold mb-3">✨ Better Approach</h3>
+                  <p className="text-xl text-gray-200 leading-relaxed">{interpretation.betterApproach}</p>
                 </div>
 
-                <div className="bg-green-500/20 border-2 border-green-500 rounded-xl p-8">
-                  <h3 className="text-3xl font-bold mb-4">🏛️ Institute Impact</h3>
-                  <p className="text-2xl text-gray-200 leading-relaxed">{interpretation.instituteImpact}</p>
+                <div className="bg-green-500/20 border-2 border-green-500 rounded-xl p-6">
+                  <h3 className="text-2xl font-bold mb-3">🏛️ Institute Impact</h3>
+                  <p className="text-xl text-gray-200 leading-relaxed">{interpretation.instituteImpact}</p>
                 </div>
 
-                <div className="bg-orange-500/20 border-2 border-orange-500 rounded-xl p-8">
-                  <h3 className="text-3xl font-bold mb-4">🎯 Action Tip</h3>
-                  <p className="text-2xl text-gray-200 leading-relaxed">{interpretation.actionTip}</p>
+                <div className="bg-orange-500/20 border-2 border-orange-500 rounded-xl p-6">
+                  <h3 className="text-2xl font-bold mb-3">🎯 Action Tip</h3>
+                  <p className="text-xl text-gray-200 leading-relaxed">{interpretation.actionTip}</p>
                 </div>
 
-                <div className="bg-purple-500/20 border-2 border-purple-500 rounded-xl p-8">
-                  <div className="flex items-start gap-4">
-                    <Mic className="w-10 h-10 text-purple-400 flex-shrink-0 mt-1" />
+                <div className="bg-purple-500/20 border-2 border-purple-500 rounded-xl p-6">
+                  <div className="flex items-start gap-3">
+                    <Mic className="w-8 h-8 text-purple-400 flex-shrink-0 mt-1" />
                     <div>
-                      <h3 className="text-2xl font-bold mb-3">Speaker Insight</h3>
-                      <p className="text-xl text-gray-200 italic leading-relaxed">{interpretation.speakerInsight}</p>
+                      <h3 className="text-xl font-bold mb-2">Speaker Insight</h3>
+                      <p className="text-lg text-gray-200 italic leading-relaxed">{interpretation.speakerInsight}</p>
                     </div>
                   </div>
                 </div>
@@ -431,7 +431,7 @@ export default function InteractivePresentationHome() {
         </button>
 
         {/* Content */}
-        <div className="h-screen flex items-center justify-center p-12">
+        <div className="h-screen flex items-center justify-center p-8 overflow-hidden">
           {renderSlide()}
         </div>
 

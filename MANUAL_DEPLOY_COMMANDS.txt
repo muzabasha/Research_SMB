@@ -1,0 +1,91 @@
+========================================
+MANUAL DEPLOYMENT COMMANDS
+========================================
+
+Copy and paste these commands one by one into your terminal:
+
+1. Navigate to the project folder:
+   cd research-navigator
+
+2. Build the application:
+   npm run build
+
+3. Check git status:
+   git status
+
+4. Add all files:
+   git add .
+
+5. Commit changes:
+   git commit -m "Deploy Q&A system with Student and Faculty roadmaps complete"
+
+6. Push to GitHub:
+   git push origin main
+
+7. Check Vercel dashboard:
+   Open: https://vercel.com/dashboard
+   Wait for deployment to complete (1-2 minutes)
+   Click on deployment to get live URL
+
+========================================
+EXPECTED OUTPUT
+========================================
+
+After "npm run build":
+✓ Compiled successfully
+✓ Collecting page data
+✓ Generating static pages
+✓ Finalizing page optimization
+✓ Export successful
+
+After "git push":
+Enumerating objects: X, done.
+Counting objects: 100% (X/X), done.
+Writing objects: 100% (X/X), done.
+To https://github.com/[your-username]/[your-repo].git
+   [commit-hash]  main -> main
+
+========================================
+TROUBLESHOOTING
+========================================
+
+If "npm run build" fails:
+- Run: npm install
+- Check for error messages
+- Verify Node.js is installed: node --version
+
+If "git push" fails:
+- Check git credentials
+- Verify remote: git remote -v
+- Try: git pull origin main first
+
+If Vercel doesn't deploy:
+- Check Vercel dashboard
+- Verify GitHub connection in Settings
+- Manually trigger deployment if needed
+
+========================================
+VERIFICATION
+========================================
+
+After deployment:
+1. Open your Vercel URL
+2. Click "Start Presentation"
+3. Test fullscreen mode
+4. Verify Student roadmap (7 stages)
+5. Verify Faculty roadmap (7 stages)
+6. Check auto-advance works
+
+========================================
+SUCCESS!
+========================================
+
+Your presentation is now live and ready to use!
+
+Share your URL with:
+- Dr. Syed Muzamil Basha
+- Faculty members
+- Students
+- Institutional leadership
+
+Enjoy your presentation! 🎉

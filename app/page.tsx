@@ -28,6 +28,9 @@ export default function Home() {
             <Link href="/student" className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl">
               Start Learning Now
             </Link>
+            <Link href="/roadmap" className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-purple-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl">
+              View Roadmap
+            </Link>
             <Link href="/faculty" className="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all border-2 border-blue-600">
               Explore Funding
             </Link>

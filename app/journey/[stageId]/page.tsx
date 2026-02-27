@@ -1,20 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, CheckCircle, Clock, Target, AlertCircle, Lightbulb, XCircle, Play, BookOpen } from 'lucide-react'
-import { getStageById, JOURNEY_STAGES } from '@/lib/journey-data'
+import { getStageById } from '@/lib/journey-data'
 import { getAssessmentsByStage } from '@/lib/assessments-data'
 
 type ActivityStep = 'overview' | 'pre-assessment' | 'orientation' | 'activity' | 'reflection' | 'post-assessment' | 'complete'
-
-// Generate static params for all 15 stages
-export function generateStaticParams() {
-    return JOURNEY_STAGES.map((stage) => ({
-        stageId: stage.id.toString(),
-    }))
-}
 
 export default function StageDetailPage() {
     const params = useParams()

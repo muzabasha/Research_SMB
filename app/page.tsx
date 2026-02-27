@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Play, Users, Lightbulb, ArrowRight, Sparkles, Award, Target, BookOpen, Rocket, Zap, Calendar, CheckCircle } from 'lucide-react'
+import ResourceLibrary from '@/components/ResourceLibrary'
 
 export default function Home() {
   return (
@@ -350,6 +351,11 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Resource Library Section - NEW */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <ResourceLibrary />
       </div>
 
       {/* CTA Section */}

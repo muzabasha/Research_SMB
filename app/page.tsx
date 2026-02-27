@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Play, Users, GraduationCap, Building2, Lightbulb, ArrowRight, Sparkles, Award, Target, BookOpen, Rocket, CheckCircle, Zap } from 'lucide-react'
+import { Play, Users, Lightbulb, ArrowRight, Sparkles, Award, Target, BookOpen, Rocket, Zap, Calendar, CheckCircle } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -30,6 +30,13 @@ export default function Home() {
               >
                 <Play className="w-5 h-5" />
                 Start Your Journey
+              </Link>
+              <Link
+                href="/timeline"
+                className="px-8 py-4 bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2 text-lg"
+              >
+                <Calendar className="w-5 h-5" />
+                View Timeline
               </Link>
               <Link
                 href="/roadmap"

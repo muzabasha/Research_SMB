@@ -290,26 +290,275 @@ export default function StageDetailPage() {
                         </div>
                     )}
 
-                    {/* Orientation, Activity, Reflection steps - Coming in next part */}
-                    {(currentStep === 'orientation' || currentStep === 'activity' || currentStep === 'reflection') && (
-                        <div className="text-center py-12">
-                            <div className="text-6xl mb-4">🚧</div>
-                            <h2 className="text-2xl font-bold text-gray-900 mb-2">Activity Content Coming Soon</h2>
-                            <p className="text-gray-600 mb-6">
-                                This section will contain the interactive {currentStep} content.
-                            </p>
-                            <div className="flex justify-center gap-4">
+                    {/* Orientation Step */}
+                    {currentStep === 'orientation' && (
+                        <div className="space-y-6">
+                            <div>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Orientation: {stage.title}</h2>
+                                <p className="text-gray-600">Let's understand what this stage is all about and how to approach it effectively.</p>
+                            </div>
+
+                            <div className="bg-blue-50 rounded-lg p-6">
+                                <h3 className="text-xl font-semibold text-gray-900 mb-4">What You'll Learn</h3>
+                                <ul className="space-y-3">
+                                    {stage.learningObjectives.map((obj, index) => (
+                                        <li key={index} className="flex items-start gap-3">
+                                            <Lightbulb className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                                            <span className="text-gray-700">{obj}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6">
+                                <h3 className="text-xl font-semibold text-gray-900 mb-4">Why This Stage Matters</h3>
+                                <p className="text-gray-700 leading-relaxed mb-4">{stage.description}</p>
+                                <div className="bg-white/50 rounded-lg p-4">
+                                    <p className="text-sm font-semibold text-gray-700 mb-2">Your Transformation Journey:</p>
+                                    <div className="flex items-center gap-3">
+                                        <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">{stage.transformation.from}</span>
+                                        <ArrowRight className="w-5 h-5 text-gray-400" />
+                                        <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">{stage.transformation.to}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div className="bg-green-50 rounded-lg p-6">
+                                    <h3 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
+                                        <CheckCircle className="w-5 h-5" />
+                                        Success Strategies
+                                    </h3>
+                                    <ul className="space-y-2">
+                                        {stage.dosList.slice(0, 4).map((item, index) => (
+                                            <li key={index} className="flex items-start gap-2 text-sm text-green-800">
+                                                <span className="text-green-600 font-bold">✓</span>
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="bg-orange-50 rounded-lg p-6">
+                                    <h3 className="font-semibold text-orange-900 mb-3 flex items-center gap-2">
+                                        <AlertCircle className="w-5 h-5" />
+                                        Common Pitfalls to Avoid
+                                    </h3>
+                                    <ul className="space-y-2">
+                                        {stage.dontsList.slice(0, 4).map((item, index) => (
+                                            <li key={index} className="flex items-start gap-2 text-sm text-orange-800">
+                                                <span className="text-orange-600 font-bold">!</span>
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between">
                                 <button
                                     onClick={handlePrevious}
-                                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
                                 >
+                                    <ArrowLeft className="w-5 h-5" />
                                     Previous
                                 </button>
                                 <button
                                     onClick={handleNext}
-                                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
                                 >
-                                    Continue
+                                    Start Activity
+                                    <ArrowRight className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Activity Step */}
+                    {currentStep === 'activity' && (
+                        <div className="space-y-6">
+                            <div>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Activity: {stage.activityType}</h2>
+                                <p className="text-gray-600">Time to put learning into action! Complete this hands-on activity.</p>
+                            </div>
+
+                            <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg p-6">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="bg-white/20 p-3 rounded-lg">
+                                        <Play className="w-8 h-8" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-bold">{stage.activityType}</h3>
+                                        <p className="text-white/90">Duration: {stage.activityDuration}</p>
+                                    </div>
+                                </div>
+                                <p className="text-white/90 text-lg">{stage.description}</p>
+                            </div>
+
+                            <div className="bg-white border-2 border-blue-200 rounded-lg p-6">
+                                <h3 className="text-xl font-semibold text-gray-900 mb-4">Activity Instructions</h3>
+
+                                <div className="space-y-6">
+                                    {/* Step-by-step instructions based on stage */}
+                                    <div className="bg-blue-50 rounded-lg p-4">
+                                        <h4 className="font-semibold text-gray-900 mb-3">📋 What You'll Do:</h4>
+                                        <ol className="space-y-3">
+                                            {stage.outcomes.map((outcome, index) => (
+                                                <li key={index} className="flex items-start gap-3">
+                                                    <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                                                        {index + 1}
+                                                    </span>
+                                                    <span className="text-gray-700 pt-0.5">{outcome}</span>
+                                                </li>
+                                            ))}
+                                        </ol>
+                                    </div>
+
+                                    <div className="bg-green-50 rounded-lg p-4">
+                                        <h4 className="font-semibold text-gray-900 mb-3">✅ Success Checklist:</h4>
+                                        <div className="space-y-2">
+                                            {stage.dosList.map((item, index) => (
+                                                <label key={index} className="flex items-start gap-3 cursor-pointer hover:bg-green-100 p-2 rounded transition-colors">
+                                                    <input type="checkbox" className="mt-1 w-4 h-4 text-green-600 rounded" />
+                                                    <span className="text-sm text-gray-700">{item}</span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                                        <h4 className="font-semibold text-yellow-900 mb-2 flex items-center gap-2">
+                                            <AlertCircle className="w-5 h-5" />
+                                            Remember:
+                                        </h4>
+                                        <p className="text-yellow-800 text-sm">
+                                            {stage.dontsList[0]}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-6">
+                                <h3 className="font-semibold text-gray-900 mb-3">💡 Pro Tip from Experience</h3>
+                                <blockquote className="text-gray-700 italic mb-3">
+                                    "{stage.successStory.quote}"
+                                </blockquote>
+                                <div className="text-sm text-gray-600">
+                                    <div className="font-semibold">{stage.successStory.author}</div>
+                                    <div>{stage.successStory.role}</div>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between">
+                                <button
+                                    onClick={handlePrevious}
+                                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
+                                >
+                                    <ArrowLeft className="w-5 h-5" />
+                                    Previous
+                                </button>
+                                <button
+                                    onClick={handleNext}
+                                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
+                                >
+                                    Complete Activity
+                                    <ArrowRight className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Reflection Step */}
+                    {currentStep === 'reflection' && (
+                        <div className="space-y-6">
+                            <div>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Reflection: What Did You Learn?</h2>
+                                <p className="text-gray-600">Take a moment to reflect on your experience and consolidate your learning.</p>
+                            </div>
+
+                            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6">
+                                <h3 className="text-xl font-semibold text-gray-900 mb-4">Reflection Questions</h3>
+                                <p className="text-gray-600 mb-6">Think deeply about these questions. Write your answers or discuss with a peer.</p>
+
+                                <div className="space-y-4">
+                                    <div className="bg-white rounded-lg p-4">
+                                        <p className="font-semibold text-gray-900 mb-2">1. What was your biggest insight from this activity?</p>
+                                        <textarea
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            rows={3}
+                                            placeholder="Write your reflection here..."
+                                        />
+                                    </div>
+
+                                    <div className="bg-white rounded-lg p-4">
+                                        <p className="font-semibold text-gray-900 mb-2">2. What challenges did you face? How did you overcome them?</p>
+                                        <textarea
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            rows={3}
+                                            placeholder="Write your reflection here..."
+                                        />
+                                    </div>
+
+                                    <div className="bg-white rounded-lg p-4">
+                                        <p className="font-semibold text-gray-900 mb-2">3. How will you apply what you learned in your research?</p>
+                                        <textarea
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            rows={3}
+                                            placeholder="Write your reflection here..."
+                                        />
+                                    </div>
+
+                                    <div className="bg-white rounded-lg p-4">
+                                        <p className="font-semibold text-gray-900 mb-2">4. What's your next concrete action step?</p>
+                                        <textarea
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            rows={2}
+                                            placeholder="Be specific: What will you do this week?"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-blue-50 rounded-lg p-6">
+                                <h3 className="font-semibold text-gray-900 mb-3">🎯 Key Takeaways</h3>
+                                <ul className="space-y-2">
+                                    {stage.learningObjectives.map((obj, index) => (
+                                        <li key={index} className="flex items-start gap-3">
+                                            <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                                            <span className="text-gray-700">{obj}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-6">
+                                <h3 className="font-semibold text-gray-900 mb-3">📝 Action Commitment</h3>
+                                <p className="text-gray-700 mb-4">
+                                    Based on your reflection, commit to one specific action you'll take this week:
+                                </p>
+                                <div className="bg-white rounded-lg p-4">
+                                    <input
+                                        type="text"
+                                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                        placeholder="I will..."
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between">
+                                <button
+                                    onClick={handlePrevious}
+                                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
+                                >
+                                    <ArrowLeft className="w-5 h-5" />
+                                    Previous
+                                </button>
+                                <button
+                                    onClick={handleNext}
+                                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
+                                >
+                                    Continue to Assessment
+                                    <ArrowRight className="w-5 h-5" />
                                 </button>
                             </div>
                         </div>

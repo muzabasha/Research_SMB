@@ -101,26 +101,31 @@ export default function TimelinePage() {
 
                 {/* Gantt Chart */}
                 <div className="bg-white rounded-xl shadow-lg p-6 overflow-x-auto">
-                    <h2 className="text-xl font-bold text-gray-900 mb-6">Gantt Chart</h2>
+                    <h2 className="text-xl font-bold text-gray-900 mb-6">Gantt Chart - Quarterly View</h2>
 
                     {/* Chart Container */}
-                    <div className="min-w-[1200px]">
-                        {/* Timeline Header */}
+                    <div className="min-w-full">
+                        {/* Timeline Header - Quarters */}
                         <div className="flex mb-4">
-                            <div className="w-80 flex-shrink-0"></div>
+                            <div className="w-64 flex-shrink-0"></div>
                             <div className="flex-1 flex">
                                 {Array.from({ length: totalYears }, (_, yearIndex) => (
-                                    <div key={yearIndex} className="flex-1 border-l border-gray-300">
-                                        <div className="text-center font-semibold text-gray-700 mb-2 bg-blue-50 py-2">
+                                    <div key={yearIndex} className="flex-1 border-l-2 border-gray-400">
+                                        <div className="text-center font-bold text-gray-800 mb-2 bg-gradient-to-r from-blue-100 to-blue-50 py-2 border-b-2 border-blue-300">
                                             Year {yearIndex + 1}
                                         </div>
                                         <div className="flex">
-                                            {Array.from({ length: 12 }, (_, monthIndex) => {
-                                                const absoluteMonth = yearIndex * 12 + monthIndex
-                                                if (absoluteMonth >= totalMonths) return null
+                                            {['Q1', 'Q2', 'Q3', 'Q4'].map((quarter, qIndex) => {
+                                                const quarterStartMonth = yearIndex * 12 + qIndex * 3
+                                                if (quarterStartMonth >= totalMonths) return null
                                                 return (
-                                                    <div key={monthIndex} className="flex-1 border-l border-gray-200 text-center">
-                                                        <div className="text-xs text-gray-500 py-1">M{monthIndex + 1}</div>
+                                                    <div key={qIndex} className="flex-1 border-l border-gray-300 text-center bg-gray-50">
+                                                        <div className="text-sm font-semibold text-gray-700 py-2 border-b border-gray-200">
+                                                            {quarter}
+                                                        </div>
+                                                        <div className="text-xs text-gray-500 py-1">
+                                                            M{qIndex * 3 + 1}-{qIndex * 3 + 3}
+                                                        </div>
                                                     </div>
                                                 )
                                             })}
@@ -137,11 +142,11 @@ export default function TimelinePage() {
                                 const colors = phaseColors[phase.name]
 
                                 return (
-                                    <div key={phase.id} className="mb-6">
+                                    <div key={phase.id} className="mb-4">
                                         {/* Phase Header */}
                                         <div className="flex items-center mb-2">
-                                            <div className="w-80 flex-shrink-0">
-                                                <div className={`font-bold text-lg ${colors.text} bg-gradient-to-r from-gray-50 to-white px-4 py-2 rounded-lg border-l-4 ${colors.border}`}>
+                                            <div className="w-64 flex-shrink-0">
+                                                <div className={`font-bold text-base ${colors.text} bg-gradient-to-r from-gray-100 to-white px-3 py-2 rounded-lg border-l-4 ${colors.border} shadow-sm`}>
                                                     Phase {phase.id}: {phase.name}
                                                 </div>
                                             </div>
@@ -153,23 +158,38 @@ export default function TimelinePage() {
                                             const widthPercent = (stage.durationMonths / totalMonths) * 100
 
                                             return (
-                                                <div key={stage.id} className="flex items-center mb-2 hover:bg-gray-50 transition-colors rounded-lg">
-                                                    <div className="w-80 flex-shrink-0 px-4 py-2">
-                                                        <div className="font-semibold text-gray-900 text-sm">
-                                                            Stage {stage.id}: {stage.title}
+                                                <div key={stage.id} className="flex items-center mb-1 hover:bg-blue-50 transition-colors rounded-lg group">
+                                                    <div className="w-64 flex-shrink-0 px-3 py-2">
+                                                        <div className="font-semibold text-gray-900 text-sm leading-tight">
+                                                            {stage.id}. {stage.title}
                                                         </div>
-                                                        <div className="text-xs text-gray-600 mt-1">
+                                                        <div className="text-xs text-gray-600 mt-0.5">
                                                             {stage.duration}
                                                         </div>
                                                     </div>
-                                                    <div className="flex-1 relative h-12 border-l border-gray-200">
+                                                    <div className="flex-1 relative h-10 border-l-2 border-gray-300">
+                                                        {/* Grid lines for quarters */}
+                                                        {Array.from({ length: Math.ceil(totalMonths / 3) }, (_, qIndex) => {
+                                                            const quarterMonth = qIndex * 3
+                                                            const quarterPercent = (quarterMonth / totalMonths) * 100
+                                                            return (
+                                                                <div
+                                                                    key={qIndex}
+                                                                    className="absolute h-full border-l border-gray-200"
+                                                                    style={{ left: `${quarterPercent}%` }}
+                                                                />
+                                                            )
+                                                        })}
+
+                                                        {/* Stage bar */}
                                                         <div
-                                                            className={`absolute ${colors.bg} rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer h-10 top-1 flex items-center justify-center text-white text-xs font-semibold px-2`}
+                                                            className={`absolute ${colors.bg} rounded-md shadow-md hover:shadow-xl transition-all cursor-pointer h-8 top-1 flex items-center justify-center text-white text-xs font-semibold px-2 group-hover:scale-105 group-hover:z-10`}
                                                             style={{
                                                                 left: `${leftPercent}%`,
-                                                                width: `${widthPercent}%`
+                                                                width: `${widthPercent}%`,
+                                                                minWidth: '40px'
                                                             }}
-                                                            title={`${stage.title} (${stage.duration})`}
+                                                            title={`${stage.title} (${stage.duration}) - ${stage.subtitle}`}
                                                         >
                                                             <span className="truncate">{stage.subtitle}</span>
                                                         </div>
@@ -183,13 +203,13 @@ export default function TimelinePage() {
                         </div>
 
                         {/* Timeline Footer */}
-                        <div className="flex mt-4 border-t pt-4">
-                            <div className="w-80 flex-shrink-0 flex items-center justify-end pr-4">
-                                <span className="text-sm font-semibold text-gray-700">Total Duration:</span>
+                        <div className="flex mt-6 border-t-2 border-gray-300 pt-4">
+                            <div className="w-64 flex-shrink-0 flex items-center justify-end pr-4">
+                                <span className="text-sm font-bold text-gray-800">Total Duration:</span>
                             </div>
                             <div className="flex-1 flex items-center">
-                                <div className="bg-gradient-to-r from-blue-500 to-red-500 h-8 rounded-lg shadow-md flex items-center justify-center text-white font-bold text-sm px-4" style={{ width: '100%' }}>
-                                    {totalMonths} Months ({totalYears} Years) - Complete Research Journey
+                                <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 h-10 rounded-lg shadow-lg flex items-center justify-center text-white font-bold text-sm px-4" style={{ width: '100%' }}>
+                                    {totalMonths} Months ≈ {totalYears} Years - Complete Research Journey
                                 </div>
                             </div>
                         </div>

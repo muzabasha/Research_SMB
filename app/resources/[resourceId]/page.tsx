@@ -1,11 +1,11 @@
 import Link from 'next/link'
-import { ArrowLeft, Download, CheckCircle, ExternalLink, Play, BookOpen } from 'lucide-react'
+import { ArrowLeft, Download, CheckCircle, ExternalLink, BookOpen, AlertCircle, Lightbulb, XCircle } from 'lucide-react'
 import { getResourceById, RESOURCE_LIBRARY } from '@/lib/resource-library'
 
 // Import guide data
-import { PAPER_COMPONENTS } from '@/lib/paper-writing-guide'
-import { DESK_REJECTION_REASONS, SUBMISSION_TIMELINE } from '@/lib/desk-rejection-guide'
-import { REVIEWER_COMMENT_TYPES, RESPONSE_STRATEGIES } from '@/lib/reviewer-response-guide'
+import { PAPER_COMPONENTS, WRITING_TIPS, REVIEWER_CONCERNS } from '@/lib/paper-writing-guide'
+import { DESK_REJECTION_REASONS, SUBMISSION_TIMELINE, REJECTION_SCENARIOS } from '@/lib/desk-rejection-guide'
+import { REVIEWER_COMMENT_TYPES, RESPONSE_STRATEGIES, REVISION_PROCESS } from '@/lib/reviewer-response-guide'
 import { PROPOSAL_COMPONENTS } from '@/lib/proposal-drafting-guide'
 import { INDUSTRY_PROPOSAL_COMPONENTS } from '@/lib/industry-proposal-guide'
 import { PATENT_TYPES, PATENT_FILING_PROCESS } from '@/lib/patent-drafting-guide'
@@ -19,8 +19,8 @@ export function generateStaticParams() {
     }))
 }
 
-export default function ResourceDetailPage({ params }: { params: { resourceId: string } }) {
-    const resourceId = params.resourceId
+export default async function ResourceDetailPage({ params }: { params: Promise<{ resourceId: string }> }) {
+    const { resourceId } = await params
     const resource = getResourceById(resourceId)
 
     if (!resource) {
@@ -50,15 +50,15 @@ export default function ResourceDetailPage({ params }: { params: { resourceId: s
     const getResourceContent = () => {
         switch (resourceId) {
             case 'paper-writing-guide':
-                return { type: 'components', data: PAPER_COMPONENTS }
+                return { type: 'paper-guide', data: PAPER_COMPONENTS, tips: WRITING_TIPS, concerns: REVIEWER_CONCERNS }
             case 'desk-rejection-guide':
-                return { type: 'reasons', data: DESK_REJECTION_REASONS, timeline: SUBMISSION_TIMELINE }
+                return { type: 'desk-rejection', data: DESK_REJECTION_REASONS, timeline: SUBMISSION_TIMELINE, scenarios: REJECTION_SCENARIOS }
             case 'reviewer-response-guide':
-                return { type: 'comments', data: REVIEWER_COMMENT_TYPES, strategies: RESPONSE_STRATEGIES }
+                return { type: 'reviewer-response', data: REVIEWER_COMMENT_TYPES, strategies: RESPONSE_STRATEGIES, process: REVISION_PROCESS }
             case 'proposal-drafting-guide':
-                return { type: 'components', data: PROPOSAL_COMPONENTS }
+                return { type: 'proposal-guide', data: PROPOSAL_COMPONENTS }
             case 'industry-proposal-guide':
-                return { type: 'components', data: INDUSTRY_PROPOSAL_COMPONENTS }
+                return { type: 'industry-proposal', data: INDUSTRY_PROPOSAL_COMPONENTS }
             case 'patent-drafting-guide':
                 return { type: 'patent', types: PATENT_TYPES, process: PATENT_FILING_PROCESS }
             case 'templates-library':
@@ -153,59 +153,211 @@ export default function ResourceDetailPage({ params }: { params: { resourceId: s
                     </div>
                 </div>
 
-                {/* Content Display */}
-                {content.type === 'components' && content.data && (
-                    <div className="space-y-6">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Components</h2>
-                        {content.data.map((component: any, idx: number) => (
-                            <div key={idx} className="bg-white rounded-xl shadow-lg p-8">
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">{component.title}</h3>
-                                <p className="text-gray-600 mb-4">{component.description}</p>
+                {/* Comprehensive Content Display - All resource types shown with complete details */}
+                <div className="bg-white rounded-xl shadow-lg p-8">
+                    <h2 className="text-3xl font-bold text-gray-900 mb-8">Complete Resource Content</h2>
 
-                                {component.goodExample && (
-                                    <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
-                                        <h4 className="font-semibold text-green-900 mb-2">{component.goodExample.title}</h4>
-                                        <p className="text-sm text-green-800 mb-2">{component.goodExample.content}</p>
-                                        <p className="text-xs text-green-700 italic">{component.goodExample.why}</p>
-                                    </div>
-                                )}
-
-                                {component.badExample && (
-                                    <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
-                                        <h4 className="font-semibold text-red-900 mb-2">{component.badExample.title}</h4>
-                                        <p className="text-sm text-red-800 mb-2">{component.badExample.content}</p>
-                                        <p className="text-xs text-red-700 italic">{component.badExample.why}</p>
-                                    </div>
-                                )}
-
-                                {component.tips && component.tips.length > 0 && (
-                                    <div className="bg-blue-50 rounded-lg p-4">
-                                        <h4 className="font-semibold text-blue-900 mb-2">Tips:</h4>
-                                        <ul className="space-y-1">
-                                            {component.tips.map((tip: string, tipIdx: number) => (
-                                                <li key={tipIdx} className="text-sm text-blue-800 flex items-start gap-2">
-                                                    <span className="text-blue-600">•</span>
-                                                    <span>{tip}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-                            </div>
-                        ))}
+                    {/* Display message about comprehensive content */}
+                    <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
+                        <p className="text-blue-900 font-medium">
+                            This resource contains comprehensive, detailed content to guide you through every aspect.
+                            All components include examples, tips, common mistakes, and step-by-step instructions.
+                        </p>
                     </div>
-                )}
 
-                {content.type === 'templates' && content.data && (
-                    <div className="space-y-6">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Available Templates</h2>
+                    {/* Render content based on type */}
+                    {content.data && Array.isArray(content.data) && content.data.map((item: any, idx: number) => (
+                        <div key={idx} className="mb-8 pb-8 border-b border-gray-200 last:border-0">
+                            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                                {item.title || item.reason || item.commentType || item.type || `Item ${idx + 1}`}
+                            </h3>
+
+                            {item.description && (
+                                <p className="text-gray-700 mb-4">{item.description}</p>
+                            )}
+
+                            {item.purpose && (
+                                <p className="text-blue-600 mb-4"><strong>Purpose:</strong> {item.purpose}</p>
+                            )}
+
+                            {item.wordCount && (
+                                <p className="text-gray-600 mb-4"><strong>Word Count:</strong> {item.wordCount}</p>
+                            )}
+
+                            {/* Good Example */}
+                            {item.goodExample && (
+                                <div className="bg-green-50 border-l-4 border-green-500 p-6 mb-4 rounded-r-lg">
+                                    <h4 className="font-bold text-green-900 mb-2 flex items-center gap-2">
+                                        <CheckCircle className="w-5 h-5" />
+                                        {item.goodExample.title}
+                                    </h4>
+                                    <p className="text-sm text-green-800 mb-2 whitespace-pre-wrap">{item.goodExample.content}</p>
+                                    <p className="text-xs text-green-700 italic"><strong>Why:</strong> {item.goodExample.why}</p>
+                                </div>
+                            )}
+
+                            {/* Bad Example */}
+                            {item.badExample && (
+                                <div className="bg-red-50 border-l-4 border-red-500 p-6 mb-4 rounded-r-lg">
+                                    <h4 className="font-bold text-red-900 mb-2 flex items-center gap-2">
+                                        <XCircle className="w-5 h-5" />
+                                        {item.badExample.title}
+                                    </h4>
+                                    <p className="text-sm text-red-800 mb-2 whitespace-pre-wrap">{item.badExample.content}</p>
+                                    <p className="text-xs text-red-700 italic"><strong>Why:</strong> {item.badExample.why}</p>
+                                </div>
+                            )}
+
+                            {/* Tips */}
+                            {item.tips && item.tips.length > 0 && (
+                                <div className="bg-blue-50 rounded-lg p-5 mb-4">
+                                    <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                                        <Lightbulb className="w-5 h-5" />
+                                        Tips:
+                                    </h4>
+                                    <ul className="space-y-2">
+                                        {item.tips.map((tip: string, tipIdx: number) => (
+                                            <li key={tipIdx} className="text-sm text-blue-800 flex items-start gap-2">
+                                                <span className="text-blue-600">•</span>
+                                                <span>{tip}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {/* Common Mistakes */}
+                            {item.commonMistakes && item.commonMistakes.length > 0 && (
+                                <div className="bg-orange-50 rounded-lg p-5 mb-4">
+                                    <h4 className="font-semibold text-orange-900 mb-3 flex items-center gap-2">
+                                        <AlertCircle className="w-5 h-5" />
+                                        Common Mistakes:
+                                    </h4>
+                                    <ul className="space-y-2">
+                                        {item.commonMistakes.map((mistake: string, mIdx: number) => (
+                                            <li key={mIdx} className="text-sm text-orange-800 flex items-start gap-2">
+                                                <span className="text-orange-600">✗</span>
+                                                <span>{mistake}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {/* Structure */}
+                            {item.structure && item.structure.length > 0 && (
+                                <div className="bg-gray-50 rounded-lg p-5 mb-4">
+                                    <h4 className="font-semibold text-gray-900 mb-3">Structure:</h4>
+                                    <ul className="space-y-1">
+                                        {item.structure.map((struct: string, sIdx: number) => (
+                                            <li key={sIdx} className="text-sm text-gray-700 flex items-start gap-2">
+                                                <span className="text-blue-600">▸</span>
+                                                <span>{struct}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {/* How to Avoid (for desk rejection) */}
+                            {item.howToAvoid && item.howToAvoid.length > 0 && (
+                                <div className="bg-blue-50 rounded-lg p-5 mb-4">
+                                    <h4 className="font-semibold text-blue-900 mb-3">How to Avoid:</h4>
+                                    <ul className="space-y-2">
+                                        {item.howToAvoid.map((avoid: string, aIdx: number) => (
+                                            <li key={aIdx} className="text-sm text-blue-800 flex items-start gap-2">
+                                                <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                                                <span>{avoid}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {/* How to Respond (for reviewer comments) */}
+                            {item.howToRespond && item.howToRespond.length > 0 && (
+                                <div className="bg-purple-50 rounded-lg p-5 mb-4">
+                                    <h4 className="font-semibold text-purple-900 mb-3">How to Respond:</h4>
+                                    <ul className="space-y-2">
+                                        {item.howToRespond.map((respond: string, rIdx: number) => (
+                                            <li key={rIdx} className="text-sm text-purple-800 flex items-start gap-2">
+                                                <span className="text-purple-600">→</span>
+                                                <span>{respond}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {/* Examples (for reviewer response) */}
+                            {item.examples && (
+                                <div className="space-y-4 mb-4">
+                                    {item.examples.reviewerComment && (
+                                        <div className="bg-gray-50 rounded-lg p-4">
+                                            <p className="text-sm font-semibold text-gray-900 mb-2">Reviewer Comment:</p>
+                                            <p className="text-sm text-gray-700 italic">"{item.examples.reviewerComment}"</p>
+                                        </div>
+                                    )}
+                                    {item.examples.badResponse && (
+                                        <div className="bg-red-50 rounded-lg p-4">
+                                            <p className="text-sm font-semibold text-red-900 mb-2">❌ Bad Response:</p>
+                                            <p className="text-sm text-red-800">"{item.examples.badResponse}"</p>
+                                        </div>
+                                    )}
+                                    {item.examples.goodResponse && (
+                                        <div className="bg-green-50 rounded-lg p-4">
+                                            <p className="text-sm font-semibold text-green-900 mb-2">✅ Good Response:</p>
+                                            <p className="text-sm text-green-800 mb-2">"{item.examples.goodResponse}"</p>
+                                            {item.examples.why && (
+                                                <p className="text-xs text-green-700 italic"><strong>Why:</strong> {item.examples.why}</p>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Steps (for activities) */}
+                            {item.steps && item.steps.length > 0 && (
+                                <div className="bg-orange-50 rounded-lg p-6 mb-4">
+                                    <h4 className="font-semibold text-gray-900 mb-4">Steps:</h4>
+                                    <div className="space-y-4">
+                                        {item.steps.map((step: any, sIdx: number) => (
+                                            <div key={sIdx} className="flex items-start gap-4">
+                                                <div className="flex-shrink-0 w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold">
+                                                    {step.id || sIdx + 1}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <h5 className="font-bold text-gray-900 mb-1">{step.title}</h5>
+                                                    <p className="text-sm text-gray-700 mb-2">{step.instruction}</p>
+                                                    {step.action && (
+                                                        <p className="text-sm text-gray-600"><strong>Action:</strong> {step.action}</p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Deliverable (for activities) */}
+                            {item.deliverable && (
+                                <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+                                    <p className="text-sm font-semibold text-green-900 mb-1">Deliverable:</p>
+                                    <p className="text-sm text-green-800">{item.deliverable}</p>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+
+                    {/* Templates Display */}
+                    {content.type === 'templates' && content.data && (
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {content.data.map((template: any) => (
-                                <div key={template.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow">
-                                    <div className="text-3xl mb-3">{template.icon}</div>
+                                <div key={template.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow border-t-4 border-green-500">
+                                    <div className="text-4xl mb-3">{template.icon}</div>
                                     <h3 className="font-bold text-gray-900 mb-2">{template.title}</h3>
                                     <p className="text-sm text-gray-600 mb-3">{template.description}</p>
-                                    <div className="flex items-center gap-2 mb-3">
+                                    <div className="flex items-center gap-2 mb-3 flex-wrap">
                                         <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">
                                             {template.type.toUpperCase()}
                                         </span>
@@ -220,65 +372,37 @@ export default function ResourceDetailPage({ params }: { params: { resourceId: s
                                 </div>
                             ))}
                         </div>
-                    </div>
-                )}
+                    )}
 
-                {content.type === 'activities' && content.data && (
-                    <div className="space-y-6">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Interactive Activities</h2>
-                        {content.data.map((activity: any) => (
-                            <div key={activity.id} className="bg-white rounded-xl shadow-lg p-8">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-3">{activity.title}</h3>
-                                <p className="text-gray-600 mb-4">{activity.description}</p>
-                                <div className="flex items-center gap-4 mb-6">
-                                    <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
-                                        {activity.type}
-                                    </span>
-                                    <span className="text-gray-600">⏱️ {activity.duration}</span>
-                                </div>
-
-                                <div className="bg-purple-50 rounded-lg p-6 mb-4">
-                                    <h4 className="font-semibold text-gray-900 mb-3">Steps:</h4>
-                                    <div className="space-y-3">
-                                        {activity.steps.map((step: any, idx: number) => (
-                                            <div key={idx} className="flex items-start gap-3">
-                                                <div className="flex-shrink-0 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
-                                                    {idx + 1}
-                                                </div>
-                                                <div>
-                                                    <h5 className="font-semibold text-gray-900">{step.title}</h5>
-                                                    <p className="text-sm text-gray-600">{step.instruction}</p>
-                                                </div>
-                                            </div>
-                                        ))}
+                    {/* Patent Types Display */}
+                    {content.type === 'patent' && content.types && (
+                        <div className="space-y-6">
+                            <h3 className="text-2xl font-bold text-gray-900 mb-4">Patent Types</h3>
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {content.types.map((patentType: any, idx: number) => (
+                                    <div key={idx} className="bg-indigo-50 rounded-lg p-6 border border-indigo-200">
+                                        <h4 className="text-xl font-bold text-indigo-900 mb-2">{patentType.type}</h4>
+                                        <p className="text-sm text-gray-700 mb-4">{patentType.description}</p>
+                                        <div className="space-y-2">
+                                            <p className="text-sm"><strong>Protects:</strong> {patentType.protects}</p>
+                                            <p className="text-sm"><strong>Duration:</strong> {patentType.duration}</p>
+                                            <p className="text-sm"><strong>Cost:</strong> {patentType.cost}</p>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div className="bg-green-50 border-l-4 border-green-500 p-4">
-                                    <h4 className="font-semibold text-green-900 mb-1">Deliverable:</h4>
-                                    <p className="text-green-800">{activity.deliverable}</p>
-                                </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                )}
+                        </div>
+                    )}
 
-                {content.type === 'info' && (
-                    <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-                        <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Content Coming Soon</h3>
-                        <p className="text-gray-600 mb-6">
-                            Detailed content for this resource is being prepared. Check back soon!
-                        </p>
-                        <Link
-                            href="/resources"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                        >
-                            <ArrowLeft className="w-4 h-4" />
-                            Back to Resources
-                        </Link>
-                    </div>
-                )}
+                    {/* No content message */}
+                    {!content.data && content.type === 'info' && (
+                        <div className="text-center py-12">
+                            <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                            <h3 className="text-xl font-bold text-gray-900 mb-2">Content Coming Soon</h3>
+                            <p className="text-gray-600">Detailed content for this resource is being prepared.</p>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )

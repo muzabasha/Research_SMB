@@ -11,7 +11,6 @@ type ActivityStep = 'overview' | 'pre-assessment' | 'orientation' | 'activity' |
 
 export default function StageDetailPage() {
     const params = useParams()
-    const router = useRouter()
     const stageId = parseInt(params.stageId as string)
     const stage = getStageById(stageId)
 

@@ -1,0 +1,234 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    DEPLOYMENT FIX - VISUAL GUIDE                             ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  THE PROBLEM                                                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   ❌ BEFORE (BROKEN)
+   
+   📄 app/journey/[stageId]/page.tsx
+   ┌────────────────────────────────────┐
+   │ 'use client'                       │ ← Client Component
+   │                                    │
+   │ export function                    │
+   │   generateStaticParams() {         │ ← ❌ NOT ALLOWED!
+   │   return JOURNEY_STAGES.map(...)   │
+   │ }                                  │
+   │                                    │
+   │ export default function            │
+   │   StageDetailPage() {              │
+   │   const [state] = useState()       │ ← Needs "use client"
+   │   ...                              │
+   │ }                                  │
+   └────────────────────────────────────┘
+   
+   🚫 ERROR: "Cannot use generateStaticParams with 'use client'"
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  THE SOLUTION                                                                │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   ✅ AFTER (FIXED)
+   
+   📄 app/journey/[stageId]/layout.tsx
+   ┌────────────────────────────────────┐
+   │ // No "use client"                 │ ← Server Component
+   │                                    │
+   │ export function                    │
+   │   generateStaticParams() {         │ ← ✅ ALLOWED!
+   │   return JOURNEY_STAGES.map(...)   │
+   │ }                                  │
+   │                                    │
+   │ export default function            │
+   │   StageLayout({ children }) {      │
+   │   return <>{children}</>           │
+   │ }                                  │
+   └────────────────────────────────────┘
+   
+   📄 app/journey/[stageId]/page.tsx
+   ┌────────────────────────────────────┐
+   │ 'use client'                       │ ← Client Component
+   │                                    │
+   │ // No generateStaticParams!        │ ← ✅ Removed
+   │                                    │
+   │ export default function            │
+   │   StageDetailPage() {              │
+   │   const [state] = useState()       │ ← ✅ Can use hooks
+   │   ...                              │
+   │ }                                  │
+   └────────────────────────────────────┘
+   
+   ✅ SUCCESS: Build completes, all pages generated!
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  HOW IT WORKS                                                                │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   🏗️ BUILD TIME (Server)
+   
+   1. Next.js reads layout.tsx
+      └─> Finds generateStaticParams()
+          └─> Generates 15 static pages
+   
+   2. For each stage (1-15):
+      └─> Creates /journey/[stageId] route
+          └─> Wraps page.tsx with layout.tsx
+   
+   
+   🌐 RUNTIME (Browser)
+   
+   1. User visits /journey/1
+      └─> Layout wraps the page
+          └─> Page component runs with "use client"
+              └─> React hooks work perfectly!
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  FILE STRUCTURE                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   app/journey/[stageId]/
+   │
+   ├─ layout.tsx          ← Server Component
+   │  ├─ generateStaticParams()  ← Generates routes
+   │  └─ StageLayout()           ← Wraps children
+   │
+   └─ page.tsx            ← Client Component
+      └─ StageDetailPage()       ← Uses hooks
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  COMPONENT TYPES                                                             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   SERVER COMPONENT (layout.tsx)
+   ┌────────────────────────────────────┐
+   │ ✅ Can export generateStaticParams │
+   │ ✅ Runs at build time              │
+   │ ✅ No JavaScript sent to browser   │
+   │ ❌ Cannot use hooks                │
+   │ ❌ Cannot use browser APIs         │
+   └────────────────────────────────────┘
+   
+   CLIENT COMPONENT (page.tsx)
+   ┌────────────────────────────────────┐
+   │ ❌ Cannot export generateStaticParams │
+   │ ✅ Runs in browser                 │
+   │ ✅ Can use hooks (useState, etc)   │
+   │ ✅ Can use browser APIs            │
+   │ ✅ Interactive and dynamic         │
+   └────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  STATIC GENERATION FLOW                                                      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   📦 Build Process
+   
+   1. Read layout.tsx
+      │
+      ├─> Execute generateStaticParams()
+      │   │
+      │   └─> Returns: [
+      │         { stageId: "1" },
+      │         { stageId: "2" },
+      │         ...
+      │         { stageId: "15" }
+      │       ]
+      │
+   2. For each stageId:
+      │
+      ├─> Generate HTML for /journey/1
+      ├─> Generate HTML for /journey/2
+      ├─> ...
+      └─> Generate HTML for /journey/15
+   
+   3. Output:
+      │
+      └─> out/
+          ├─ journey/
+          │  ├─ 1.html
+          │  ├─ 2.html
+          │  ├─ ...
+          │  └─ 15.html
+          └─ ...
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  DEPLOYMENT STEPS                                                            │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   Step 1: Push to GitHub
+   ┌────────────────────────────────────┐
+   │ git add .                          │
+   │ git commit -m "Fix deployment"     │
+   │ git push origin main               │
+   └────────────────────────────────────┘
+   
+   Step 2: Vercel Auto-Deploys
+   ┌────────────────────────────────────┐
+   │ 🔄 Detecting changes...            │
+   │ 📦 Installing dependencies...      │
+   │ 🏗️  Building application...        │
+   │ ✅ Build successful!               │
+   │ 🚀 Deploying to production...      │
+   │ ✅ Deployment complete!            │
+   └────────────────────────────────────┘
+   
+   Step 3: Verify
+   ┌────────────────────────────────────┐
+   │ ✅ Visit /journey                  │
+   │ ✅ Click Stage 1                   │
+   │ ✅ All 15 stages accessible        │
+   │ ✅ Assessments work                │
+   │ ✅ Navigation smooth               │
+   └────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  QUICK REFERENCE                                                             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   ✅ DO:
+   • Put generateStaticParams in layout.tsx (Server Component)
+   • Use "use client" in page.tsx for interactivity
+   • Keep components separated by concern
+   
+   ❌ DON'T:
+   • Put generateStaticParams in Client Components
+   • Mix "use client" with generateStaticParams
+   • Try to use hooks in Server Components
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  SUCCESS INDICATORS                                                          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   Build Output:
+   ✓ Compiled successfully
+   ✓ Generating static pages (15/15)
+   ✓ Finalizing page optimization
+   
+   Vercel Dashboard:
+   ✓ Build Status: Success
+   ✓ Deployment: Live
+   ✓ Pages: 15 generated
+   
+   Live Site:
+   ✓ /journey loads
+   ✓ /journey/1 through /journey/15 accessible
+   ✓ Assessments functional
+   ✓ Navigation working
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  READY TO DEPLOY! 🚀                                                         ║
+║                                                                              ║
+║  Run: git-commit-push.bat                                                    ║
+║  Or:  git add . && git commit -m "Fix" && git push                          ║
+╚══════════════════════════════════════════════════════════════════════════════╝

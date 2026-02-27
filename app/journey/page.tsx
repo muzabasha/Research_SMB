@@ -32,10 +32,8 @@ export default function JourneyPage() {
     }
 
     const isStageUnlocked = (stageId: number) => {
-        // Stage 1 is always unlocked
-        if (stageId === 1) return true
-        // Other stages unlock when previous stage is completed
-        return completedStages.includes(stageId - 1)
+        // All stages are unlocked for exploration
+        return true
     }
 
     const progress = (completedStages.length / JOURNEY_STAGES.length) * 100
@@ -164,8 +162,8 @@ export default function JourneyPage() {
                                                     <Link
                                                         href={`/journey/${stage.id}`}
                                                         className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${isCompleted
-                                                                ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                                                : 'bg-blue-600 text-white hover:bg-blue-700'
+                                                            ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                                            : 'bg-blue-600 text-white hover:bg-blue-700'
                                                             }`}
                                                     >
                                                         {isCompleted ? (

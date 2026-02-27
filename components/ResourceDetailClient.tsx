@@ -97,52 +97,52 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
             {isPresentationMode && (
                 <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 z-50 flex flex-col">
                     {/* Presentation Header */}
-                    <div className="bg-black/30 backdrop-blur-sm px-8 py-4 flex items-center justify-between border-b border-white/10">
-                        <div className="flex items-center gap-4">
-                            <span className="text-6xl">{resource.icon}</span>
+                    <div className="bg-black/30 backdrop-blur-sm px-6 py-3 flex items-center justify-between border-b border-white/10 flex-shrink-0">
+                        <div className="flex items-center gap-3">
+                            <span className="text-4xl">{resource.icon}</span>
                             <div>
-                                <h1 className="text-3xl font-bold text-white">{resource.title}</h1>
-                                <p className="text-white/70 text-lg">Presentation Mode</p>
+                                <h1 className="text-2xl font-bold text-white">{resource.title}</h1>
+                                <p className="text-white/70 text-sm">Presentation Mode</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <span className="text-white/70 text-xl font-mono">
+                        <div className="flex items-center gap-3">
+                            <span className="text-white/70 text-lg font-mono">
                                 {currentSlide + 1} / {totalSlides}
                             </span>
                             <button
                                 onClick={togglePresentationMode}
-                                className="p-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                                className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
                             >
-                                <Minimize2 className="w-6 h-6 text-white" />
+                                <Minimize2 className="w-5 h-5 text-white" />
                             </button>
                         </div>
                     </div>
 
                     {/* Slide Content */}
-                    <div className="flex-1 flex items-center justify-center p-12 overflow-auto">
-                        <div className="w-full max-w-7xl">
+                    <div className="flex-1 overflow-y-auto p-8">
+                        <div className="w-full max-w-7xl mx-auto h-full flex items-center justify-center">
                             {slides[currentSlide]?.type === 'title' && (
-                                <div className="text-center space-y-8">
-                                    <div className="text-9xl mb-8">{slides[currentSlide].icon}</div>
-                                    <h1 className="text-7xl font-bold text-white mb-6">
+                                <div className="text-center space-y-6 py-8">
+                                    <div className="text-8xl mb-6">{slides[currentSlide].icon}</div>
+                                    <h1 className="text-6xl font-bold text-white mb-4 leading-tight">
                                         {slides[currentSlide].title}
                                     </h1>
-                                    <p className="text-3xl text-white/80 leading-relaxed max-w-5xl mx-auto">
+                                    <p className="text-2xl text-white/80 leading-relaxed max-w-4xl mx-auto">
                                         {slides[currentSlide].description}
                                     </p>
                                 </div>
                             )}
 
                             {slides[currentSlide]?.type === 'features' && (
-                                <div className="space-y-8">
-                                    <h2 className="text-6xl font-bold text-white mb-12 text-center">
+                                <div className="space-y-6 w-full py-8">
+                                    <h2 className="text-5xl font-bold text-white mb-8 text-center">
                                         {slides[currentSlide].title}
                                     </h2>
-                                    <div className="grid grid-cols-2 gap-8">
+                                    <div className="grid grid-cols-1 gap-6 max-h-[60vh] overflow-y-auto pr-4">
                                         {slides[currentSlide].features.map((feature: string, idx: number) => (
-                                            <div key={idx} className="flex items-start gap-6 p-8 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-                                                <CheckCircle className="w-12 h-12 text-green-400 flex-shrink-0 mt-2" />
-                                                <span className="text-3xl text-white leading-relaxed">{feature}</span>
+                                            <div key={idx} className="flex items-start gap-4 p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+                                                <CheckCircle className="w-10 h-10 text-green-400 flex-shrink-0 mt-1" />
+                                                <span className="text-2xl text-white leading-relaxed">{feature}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -150,8 +150,8 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
                             )}
 
                             {slides[currentSlide]?.type === 'content' && (
-                                <div className="space-y-8">
-                                    <h2 className="text-6xl font-bold text-white mb-8">
+                                <div className="space-y-6 w-full py-4 max-h-[calc(100vh-280px)] overflow-y-auto pr-4">
+                                    <h2 className="text-5xl font-bold text-white mb-6 sticky top-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pb-4 z-10">
                                         {slides[currentSlide].data.title ||
                                             slides[currentSlide].data.reason ||
                                             slides[currentSlide].data.commentType ||
@@ -160,59 +160,59 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
                                     </h2>
 
                                     {slides[currentSlide].data.description && (
-                                        <p className="text-3xl text-white/90 leading-relaxed mb-8">
+                                        <p className="text-2xl text-white/90 leading-relaxed mb-6">
                                             {slides[currentSlide].data.description}
                                         </p>
                                     )}
 
                                     {slides[currentSlide].data.purpose && (
-                                        <div className="bg-blue-500/20 border-l-8 border-blue-400 p-8 rounded-r-2xl mb-8">
-                                            <p className="text-3xl text-blue-200">
+                                        <div className="bg-blue-500/20 border-l-8 border-blue-400 p-6 rounded-r-xl mb-6">
+                                            <p className="text-2xl text-blue-200">
                                                 <strong className="text-blue-100">Purpose:</strong> {slides[currentSlide].data.purpose}
                                             </p>
                                         </div>
                                     )}
 
                                     {slides[currentSlide].data.goodExample && (
-                                        <div className="bg-green-500/20 border-l-8 border-green-400 p-8 rounded-r-2xl mb-8">
-                                            <h3 className="text-4xl font-bold text-green-100 mb-4 flex items-center gap-4">
-                                                <CheckCircle className="w-10 h-10" />
+                                        <div className="bg-green-500/20 border-l-8 border-green-400 p-6 rounded-r-xl mb-6">
+                                            <h3 className="text-3xl font-bold text-green-100 mb-3 flex items-center gap-3">
+                                                <CheckCircle className="w-8 h-8" />
                                                 {slides[currentSlide].data.goodExample.title}
                                             </h3>
-                                            <p className="text-2xl text-green-100 mb-4 whitespace-pre-wrap leading-relaxed">
+                                            <p className="text-xl text-green-100 mb-3 whitespace-pre-wrap leading-relaxed">
                                                 {slides[currentSlide].data.goodExample.content}
                                             </p>
-                                            <p className="text-xl text-green-200 italic">
+                                            <p className="text-lg text-green-200 italic">
                                                 <strong>Why:</strong> {slides[currentSlide].data.goodExample.why}
                                             </p>
                                         </div>
                                     )}
 
                                     {slides[currentSlide].data.badExample && (
-                                        <div className="bg-red-500/20 border-l-8 border-red-400 p-8 rounded-r-2xl mb-8">
-                                            <h3 className="text-4xl font-bold text-red-100 mb-4 flex items-center gap-4">
-                                                <XCircle className="w-10 h-10" />
+                                        <div className="bg-red-500/20 border-l-8 border-red-400 p-6 rounded-r-xl mb-6">
+                                            <h3 className="text-3xl font-bold text-red-100 mb-3 flex items-center gap-3">
+                                                <XCircle className="w-8 h-8" />
                                                 {slides[currentSlide].data.badExample.title}
                                             </h3>
-                                            <p className="text-2xl text-red-100 mb-4 whitespace-pre-wrap leading-relaxed">
+                                            <p className="text-xl text-red-100 mb-3 whitespace-pre-wrap leading-relaxed">
                                                 {slides[currentSlide].data.badExample.content}
                                             </p>
-                                            <p className="text-xl text-red-200 italic">
+                                            <p className="text-lg text-red-200 italic">
                                                 <strong>Why:</strong> {slides[currentSlide].data.badExample.why}
                                             </p>
                                         </div>
                                     )}
 
                                     {slides[currentSlide].data.tips && slides[currentSlide].data.tips.length > 0 && (
-                                        <div className="bg-blue-500/20 rounded-2xl p-8 border border-blue-400/30">
-                                            <h3 className="text-4xl font-bold text-blue-100 mb-6 flex items-center gap-4">
-                                                <Lightbulb className="w-10 h-10" />
+                                        <div className="bg-blue-500/20 rounded-xl p-6 border border-blue-400/30 mb-6">
+                                            <h3 className="text-3xl font-bold text-blue-100 mb-4 flex items-center gap-3">
+                                                <Lightbulb className="w-8 h-8" />
                                                 Tips
                                             </h3>
-                                            <ul className="space-y-4">
+                                            <ul className="space-y-3">
                                                 {slides[currentSlide].data.tips.slice(0, 4).map((tip: string, idx: number) => (
-                                                    <li key={idx} className="text-2xl text-blue-100 flex items-start gap-4 leading-relaxed">
-                                                        <span className="text-blue-300 text-3xl">•</span>
+                                                    <li key={idx} className="text-xl text-blue-100 flex items-start gap-3 leading-relaxed">
+                                                        <span className="text-blue-300 text-2xl">•</span>
                                                         <span>{tip}</span>
                                                     </li>
                                                 ))}
@@ -221,15 +221,15 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
                                     )}
 
                                     {slides[currentSlide].data.commonMistakes && slides[currentSlide].data.commonMistakes.length > 0 && (
-                                        <div className="bg-orange-500/20 rounded-2xl p-8 border border-orange-400/30 mt-8">
-                                            <h3 className="text-4xl font-bold text-orange-100 mb-6 flex items-center gap-4">
-                                                <AlertCircle className="w-10 h-10" />
+                                        <div className="bg-orange-500/20 rounded-xl p-6 border border-orange-400/30">
+                                            <h3 className="text-3xl font-bold text-orange-100 mb-4 flex items-center gap-3">
+                                                <AlertCircle className="w-8 h-8" />
                                                 Common Mistakes
                                             </h3>
-                                            <ul className="space-y-4">
+                                            <ul className="space-y-3">
                                                 {slides[currentSlide].data.commonMistakes.slice(0, 4).map((mistake: string, idx: number) => (
-                                                    <li key={idx} className="text-2xl text-orange-100 flex items-start gap-4 leading-relaxed">
-                                                        <span className="text-orange-300 text-3xl">✗</span>
+                                                    <li key={idx} className="text-xl text-orange-100 flex items-start gap-3 leading-relaxed">
+                                                        <span className="text-orange-300 text-2xl">✗</span>
                                                         <span>{mistake}</span>
                                                     </li>
                                                 ))}
@@ -242,28 +242,28 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
                     </div>
 
                     {/* Navigation Controls */}
-                    <div className="bg-black/30 backdrop-blur-sm px-8 py-6 flex items-center justify-between border-t border-white/10">
+                    <div className="bg-black/30 backdrop-blur-sm px-6 py-4 flex items-center justify-between border-t border-white/10 flex-shrink-0">
                         <button
                             onClick={prevSlide}
                             disabled={currentSlide === 0}
-                            className="flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl transition-colors"
+                            className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed rounded-lg transition-colors"
                         >
-                            <ChevronLeft className="w-8 h-8 text-white" />
-                            <span className="text-2xl text-white font-semibold">Previous</span>
+                            <ChevronLeft className="w-6 h-6 text-white" />
+                            <span className="text-xl text-white font-semibold">Previous</span>
                         </button>
 
                         <div className="text-center">
-                            <p className="text-white/70 text-lg mb-2">Navigation</p>
-                            <p className="text-white/50 text-base">← → Arrow Keys | Space | ESC to Exit</p>
+                            <p className="text-white/70 text-base mb-1">Navigation</p>
+                            <p className="text-white/50 text-sm">← → Arrow Keys | Space | ESC to Exit</p>
                         </div>
 
                         <button
                             onClick={nextSlide}
                             disabled={currentSlide === totalSlides - 1}
-                            className="flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl transition-colors"
+                            className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed rounded-lg transition-colors"
                         >
-                            <span className="text-2xl text-white font-semibold">Next</span>
-                            <ChevronRight className="w-8 h-8 text-white" />
+                            <span className="text-xl text-white font-semibold">Next</span>
+                            <ChevronRight className="w-6 h-6 text-white" />
                         </button>
                     </div>
                 </div>

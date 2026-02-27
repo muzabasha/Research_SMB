@@ -1,24 +1,13 @@
 # PowerShell script to push changes to GitHub
-Write-Host "Starting Git push process..." -ForegroundColor Cyan
-Write-Host ""
-
-# Check git status
-Write-Host "Checking git status..." -ForegroundColor Yellow
-git status
-
-Write-Host ""
-Write-Host "Adding all changes..." -ForegroundColor Yellow
+Write-Host "Adding files to git..." -ForegroundColor Cyan
 git add .
 
-Write-Host ""
-Write-Host "Committing changes..." -ForegroundColor Yellow
-git commit -m "Fix: Move generateStaticParams to layout.tsx for static export compatibility"
+Write-Host "`nCommitting changes..." -ForegroundColor Cyan
+git commit -m "Complete comprehensive audit: Added sub-stages and activities for stages 8-15 (48 sub-stages, 24 activities) - All 15 stages now complete with experiential learning content"
 
-Write-Host ""
-Write-Host "Pushing to GitHub..." -ForegroundColor Yellow
+Write-Host "`nPushing to GitHub..." -ForegroundColor Cyan
 git push origin main
 
-Write-Host ""
-Write-Host "Done! Check Vercel dashboard for deployment status." -ForegroundColor Green
-Write-Host ""
-Read-Host "Press Enter to exit"
+Write-Host "`nDone! Check Vercel dashboard for deployment status." -ForegroundColor Green
+Write-Host "Press any key to continue..."
+$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")

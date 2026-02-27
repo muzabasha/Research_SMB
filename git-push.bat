@@ -4,7 +4,7 @@ git add .
 
 echo.
 echo Committing changes...
-git commit -m "Deploy Q&A system with Student and Faculty roadmaps complete - 71%% implementation"
+git commit -m "Complete comprehensive audit: Added sub-stages and activities for stages 8-15 (48 sub-stages, 24 activities) - All 15 stages now complete with experiential learning content"
 
 echo.
 echo Pushing to GitHub...

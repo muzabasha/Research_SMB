@@ -4,10 +4,17 @@ import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, CheckCircle, Clock, Target, AlertCircle, Lightbulb, XCircle, Play, BookOpen } from 'lucide-react'
-import { getStageById } from '@/lib/journey-data'
+import { getStageById, JOURNEY_STAGES } from '@/lib/journey-data'
 import { getAssessmentsByStage } from '@/lib/assessments-data'
 
 type ActivityStep = 'overview' | 'pre-assessment' | 'orientation' | 'activity' | 'reflection' | 'post-assessment' | 'complete'
+
+// Generate static params for all 15 stages
+export function generateStaticParams() {
+    return JOURNEY_STAGES.map((stage) => ({
+        stageId: stage.id.toString(),
+    }))
+}
 
 export default function StageDetailPage() {
     const params = useParams()
@@ -106,8 +113,8 @@ export default function StageDetailPage() {
                                 <div key={step.id} className="flex items-center flex-1">
                                     <div className="flex flex-col items-center flex-1">
                                         <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${isCompleted ? 'bg-green-500 text-white' :
-                                                isActive ? 'bg-blue-600 text-white' :
-                                                    'bg-gray-200 text-gray-400'
+                                            isActive ? 'bg-blue-600 text-white' :
+                                                'bg-gray-200 text-gray-400'
                                             }`}>
                                             <Icon className="w-5 h-5" />
                                         </div>
@@ -247,8 +254,8 @@ export default function StageDetailPage() {
                                             key={option.id}
                                             onClick={() => handlePreAssessment(option.id, option.score)}
                                             className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedPreOption === option.id
-                                                    ? 'border-blue-600 bg-blue-100'
-                                                    : 'border-gray-200 hover:border-blue-300 bg-white'
+                                                ? 'border-blue-600 bg-blue-100'
+                                                : 'border-gray-200 hover:border-blue-300 bg-white'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">
@@ -332,8 +339,8 @@ export default function StageDetailPage() {
                                             key={option.id}
                                             onClick={() => handlePostAssessment(option.id, option.score)}
                                             className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedPostOption === option.id
-                                                    ? 'border-purple-600 bg-purple-100'
-                                                    : 'border-gray-200 hover:border-purple-300 bg-white'
+                                                ? 'border-purple-600 bg-purple-100'
+                                                : 'border-gray-200 hover:border-purple-300 bg-white'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">

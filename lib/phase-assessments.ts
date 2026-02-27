@@ -229,4 +229,35 @@ export const PHASE_ASSESSMENTS: PhaseAssessment[] = [
                             feedback: "Perfect balance! You're thinking like a successful researcher."
                         }
                     ]
+                }
+            ],
+            interpretation: [
+                {
+                    range: "5-10",
+                    title: "Research Beginner - Welcome!",
+                    description: "You're at the starting line, and that's perfectly okay! Everyone begins here.",
+                    advice: "Focus on building curiosity and comfort with the unknown. Take it one step at a time."
                 },
+                {
+                    range: "11-15",
+                    title: "Emerging Researcher",
+                    description: "You have some foundation but need structure and guidance.",
+                    advice: "Work on systematic learning approaches and building persistence. You're on the right track!"
+                },
+                {
+                    range: "16-20",
+                    title: "Ready Researcher",
+                    description: "You have a good mindset and are ready to dive into research!",
+                    advice: "Channel your enthusiasm into structured activities. You'll excel in this phase!"
+                }
+            ]
+        },
+        outcome: {
+            title: "Foundation Phase Completion",
+            description: "Reflect on what you've learned and achieved in the Foundation Phase",
+            checklistItems: [],
+            funnyQuestions: [],
+            celebrationMessage: "Congratulations on completing the Foundation Phase!"
+        }
+    }
+]

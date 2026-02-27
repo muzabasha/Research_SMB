@@ -311,9 +311,7 @@ export const PROPOSAL_COMPONENTS: ProposalComponent[] = [
             'Risk mitigation plan',
             'Ethics compliance'
         ]
-    }
-]
-    ,
+    },
     {
         id: 'budget',
         title: '7. Budget & Justification',
@@ -321,41 +319,41 @@ export const PROPOSAL_COMPONENTS: ProposalComponent[] = [
         purpose: 'Provide detailed, justified budget that reviewers can approve',
         wordCount: '500-800 words + budget table',
         structure: [
-                            'Budget Summary Table',
-        'Personnel Costs (with justification)',
-        'Equipment Costs (with justification)',
-        'Consumables & Supplies',
-        'Travel & Fieldwork',
-        'Other Costs',
-        'Indirect Costs (if applicable)'
-                        ],
-goodExample: {
-    title: '✅ GOOD Example',
-        content: 'BUDGET SUMMARY (Total: ₹35,00,000 for 24 months)\n\n1. Personnel (₹15,00,000 - 43%)\n   - Research Associate (1): ₹40,000/month × 24 months = ₹9,60,000\n     Justification: Full-time RA with MSc in CS for data collection, annotation coordination, and model development\n   - Data Annotators (2 part-time): ₹15,000/month × 24 months = ₹7,20,000\n     Justification: Medical graduates for image annotation and quality control\n   - Project Assistant (1): ₹20,000/month × 12 months = ₹2,40,000\n     Justification: For deployment phase, training healthcare workers\n\n2. Equipment (₹12,00,000 - 34%)\n   - Workstation with GPU (NVIDIA RTX 3090): ₹3,50,000 × 2 = ₹7,00,000\n     Justification: Required for deep learning model training and validation\n   - Fundus Camera (portable): ₹4,50,000 × 1 = ₹4,50,000\n     Justification: For pilot deployment in primary health centers\n   - Laptops for field work: ₹50,000 × 1 = ₹50,000\n\n3. Consumables & Cloud Services (₹3,00,000 - 9%)\n   - Cloud computing (AWS/GCP): ₹50,000/month × 6 months = ₹3,00,000\n     Justification: For large-scale model training and storage\n\n4. Travel & Fieldwork (₹3,00,000 - 9%)\n   - Data collection visits (5 hospitals): ₹30,000 × 5 = ₹1,50,000\n   - Deployment visits (10 PHCs): ₹15,000 × 10 = ₹1,50,000\n\n5. Training & Workshops (₹1,00,000 - 3%)\n   - Healthcare worker training: ₹10,000 × 10 sessions = ₹1,00,000\n\n6. Miscellaneous (₹1,00,000 - 3%)\n   - Publication charges, software licenses, contingency\n\nTotal: ₹35,00,000',
+            'Budget Summary Table',
+            'Personnel Costs (with justification)',
+            'Equipment Costs (with justification)',
+            'Consumables & Supplies',
+            'Travel & Fieldwork',
+            'Other Costs',
+            'Indirect Costs (if applicable)'
+        ],
+        goodExample: {
+            title: '✅ GOOD Example',
+            content: 'BUDGET SUMMARY (Total: ₹35,00,000 for 24 months)\n\n1. Personnel (₹15,00,000 - 43%)\n   - Research Associate (1): ₹40,000/month × 24 months = ₹9,60,000\n     Justification: Full-time RA with MSc in CS for data collection, annotation coordination, and model development\n   - Data Annotators (2 part-time): ₹15,000/month × 24 months = ₹7,20,000\n     Justification: Medical graduates for image annotation and quality control\n   - Project Assistant (1): ₹20,000/month × 12 months = ₹2,40,000\n     Justification: For deployment phase, training healthcare workers\n\n2. Equipment (₹12,00,000 - 34%)\n   - Workstation with GPU (NVIDIA RTX 3090): ₹3,50,000 × 2 = ₹7,00,000\n     Justification: Required for deep learning model training and validation\n   - Fundus Camera (portable): ₹4,50,000 × 1 = ₹4,50,000\n     Justification: For pilot deployment in primary health centers\n   - Laptops for field work: ₹50,000 × 1 = ₹50,000\n\n3. Consumables & Cloud Services (₹3,00,000 - 9%)\n   - Cloud computing (AWS/GCP): ₹50,000/month × 6 months = ₹3,00,000\n     Justification: For large-scale model training and storage\n\n4. Travel & Fieldwork (₹3,00,000 - 9%)\n   - Data collection visits (5 hospitals): ₹30,000 × 5 = ₹1,50,000\n   - Deployment visits (10 PHCs): ₹15,000 × 10 = ₹1,50,000\n\n5. Training & Workshops (₹1,00,000 - 3%)\n   - Healthcare worker training: ₹10,000 × 10 sessions = ₹1,00,000\n\n6. Miscellaneous (₹1,00,000 - 3%)\n   - Publication charges, software licenses, contingency\n\nTotal: ₹35,00,000',
             why: 'Detailed breakdown with quantities, unit costs, and clear justifications. Shows careful planning. Reviewers can verify every line item. Realistic and justified!'
-},
-badExample: {
-    title: '❌ BAD Example',
-        content: 'Budget:\n- Personnel: ₹10,00,000\n- Equipment: ₹15,00,000\n- Other: ₹5,00,000\nTotal: ₹30,00,000',
+        },
+        badExample: {
+            title: '❌ BAD Example',
+            content: 'Budget:\n- Personnel: ₹10,00,000\n- Equipment: ₹15,00,000\n- Other: ₹5,00,000\nTotal: ₹30,00,000',
             why: 'No details! How many people? What equipment? Why these amounts? No justification. Reviewers will reject this immediately!'
-},
-tips: [
-    'Provide line-item details with quantities',
-    'Justify every major expense',
-    'Get vendor quotations for equipment',
-    'Be realistic - not too high or too low',
-    'Include contingency (5-10%)',
-    'Match budget to objectives',
-    'Follow funder budget format'
-],
-    commonMistakes: [
-        'No justifications',
-        'Unrealistic costs',
-        'Missing line items',
-        'No vendor quotes',
-        'Budget not matching objectives',
-        'Ignoring funder limits'
-    ],
+        },
+        tips: [
+            'Provide line-item details with quantities',
+            'Justify every major expense',
+            'Get vendor quotations for equipment',
+            'Be realistic - not too high or too low',
+            'Include contingency (5-10%)',
+            'Match budget to objectives',
+            'Follow funder budget format'
+        ],
+        commonMistakes: [
+            'No justifications',
+            'Unrealistic costs',
+            'Missing line items',
+            'No vendor quotes',
+            'Budget not matching objectives',
+            'Ignoring funder limits'
+        ],
         reviewerLooksFor: [
             'Detailed breakdown',
             'Clear justifications',
@@ -364,38 +362,38 @@ tips: [
             'Value for money',
             'Compliance with funder rules'
         ]
-},
-{
-    id: 'expected-outcomes',
+    },
+    {
+        id: 'expected-outcomes',
         title: '8. Expected Outcomes & Deliverables',
-            description: 'What will you produce?',
-                purpose: 'Show tangible outputs that justify the investment',
-                    wordCount: '400-600 words (1-2 pages)',
-                        structure: [
-                            'Academic Outputs (publications, presentations)',
-                            'Technical Outputs (software, datasets, models)',
-                            'Capacity Building (trained personnel, infrastructure)',
-                            'Societal Impact (patients served, lives improved)',
-                            'Timeline for each deliverable'
-                        ],
-                            goodExample: {
-        title: '✅ GOOD Example',
+        description: 'What will you produce?',
+        purpose: 'Show tangible outputs that justify the investment',
+        wordCount: '400-600 words (1-2 pages)',
+        structure: [
+            'Academic Outputs (publications, presentations)',
+            'Technical Outputs (software, datasets, models)',
+            'Capacity Building (trained personnel, infrastructure)',
+            'Societal Impact (patients served, lives improved)',
+            'Timeline for each deliverable'
+        ],
+        goodExample: {
+            title: '✅ GOOD Example',
             content: 'Expected Outcomes:\n\n1. Academic Outputs:\n   - 3 peer-reviewed journal publications in Q1 journals (Months 12, 18, 24)\n   - 2 conference presentations at international venues (Months 15, 21)\n   - 1 PhD thesis chapter (Month 24)\n\n2. Technical Outputs:\n   - Validated AI model achieving >95% accuracy (Month 15)\n   - Open-source code repository on GitHub (Month 16)\n   - Annotated dataset of 50,000 images (publicly available, Month 12)\n   - Mobile application for Android/iOS (Month 20)\n   - Technical documentation and user manual (Month 22)\n\n3. Capacity Building:\n   - 2 Research Associates trained in AI/ML (Months 1-24)\n   - 100 healthcare workers trained in DR screening (Months 18-24)\n   - 10 primary health centers equipped with screening capability (Month 24)\n   - Established collaboration with 5 hospitals (Ongoing)\n\n4. Societal Impact:\n   - 10,000 patients screened in rural areas (Months 18-24)\n   - Estimated 500 early-stage DR cases detected (preventing blindness)\n   - Cost savings: ₹4.25 crores (₹8.5L per blindness case prevented × 500)\n   - Model for scaling to other states and diseases\n\n5. Policy Impact:\n   - Policy brief for National Health Mission (Month 24)\n   - Recommendations for national DR screening program\n   - Evidence for AI integration in primary healthcare',
-                why: 'Specific, measurable outputs with timelines. Mix of academic, technical, and societal impact. Shows value beyond publications. Reviewers can track progress!'
-    },
-    badExample: {
-        title: '❌ BAD Example',
+            why: 'Specific, measurable outputs with timelines. Mix of academic, technical, and societal impact. Shows value beyond publications. Reviewers can track progress!'
+        },
+        badExample: {
+            title: '❌ BAD Example',
             content: 'Outcomes:\n- We will publish papers\n- We will develop a system\n- We will help patients\n- We will train people',
-                why: 'No specifics! How many papers? What system? How many patients? When? Impossible to evaluate success!'
-    },
-    tips: [
-        'Be specific with numbers',
-        'Include timeline for each output',
-        'Mix academic and practical outputs',
-        'Show societal impact',
-        'Make outputs measurable',
-        'Align with objectives'
-    ],
+            why: 'No specifics! How many papers? What system? How many patients? When? Impossible to evaluate success!'
+        },
+        tips: [
+            'Be specific with numbers',
+            'Include timeline for each output',
+            'Mix academic and practical outputs',
+            'Show societal impact',
+            'Make outputs measurable',
+            'Align with objectives'
+        ],
         commonMistakes: [
             'Vague outputs ("improve healthcare")',
             'No numbers or timeline',
@@ -404,47 +402,47 @@ tips: [
             'Not measurable',
             'Not aligned with objectives'
         ],
-            reviewerLooksFor: [
-                'Specific deliverables',
-                'Measurable outcomes',
-                'Timeline for outputs',
-                'Mix of outputs',
-                'Societal impact',
-                'Value for investment'
-            ]
-},
-{
-    id: 'impact',
+        reviewerLooksFor: [
+            'Specific deliverables',
+            'Measurable outcomes',
+            'Timeline for outputs',
+            'Mix of outputs',
+            'Societal impact',
+            'Value for investment'
+        ]
+    },
+    {
+        id: 'impact',
         title: '9. Broader Impact & Sustainability',
-            description: 'Why does this matter beyond your project?',
-                purpose: 'Show long-term value and scalability',
-                    wordCount: '400-600 words (1-2 pages)',
-                        structure: [
-                            'Scientific Impact (advancing knowledge)',
-                            'Societal Impact (improving lives)',
-                            'Economic Impact (cost savings, jobs)',
-                            'Policy Impact (informing decisions)',
-                            'Sustainability Plan (beyond funding period)',
-                            'Scalability (to other regions/problems)'
-                        ],
-                            goodExample: {
-        title: '✅ GOOD Example',
+        description: 'Why does this matter beyond your project?',
+        purpose: 'Show long-term value and scalability',
+        wordCount: '400-600 words (1-2 pages)',
+        structure: [
+            'Scientific Impact (advancing knowledge)',
+            'Societal Impact (improving lives)',
+            'Economic Impact (cost savings, jobs)',
+            'Policy Impact (informing decisions)',
+            'Sustainability Plan (beyond funding period)',
+            'Scalability (to other regions/problems)'
+        ],
+        goodExample: {
+            title: '✅ GOOD Example',
             content: 'Broader Impact:\n\n1. Scientific Impact: This project will advance AI-for-healthcare by demonstrating that attention mechanisms can improve early-stage disease detection. The open-source dataset and code will enable 100+ researchers globally to build upon our work. Our findings will inform design of AI systems for other screening programs (cervical cancer, tuberculosis).\n\n2. Societal Impact: By screening 10,000 patients in year 1 and detecting ~500 early-stage DR cases, we will prevent an estimated 500 cases of blindness over 5 years. This translates to 500 people maintaining their livelihood and quality of life. The system will particularly benefit rural populations with limited access to ophthalmologists.\n\n3. Economic Impact: Preventing 500 blindness cases saves ₹4.25 crores in lifetime productivity loss and healthcare costs. The system costs ₹350 per screening vs. ₹1,500 for traditional screening - 77% cost reduction. This makes universal screening economically feasible. The project will create 10 jobs (RAs, annotators, field staff).\n\n4. Policy Impact: We will provide evidence-based recommendations to National Health Mission for integrating AI screening in primary healthcare. Our pilot will serve as model for national scale-up, potentially reaching 77 million diabetic patients. Policy brief will be shared with Ministry of Health.\n\n5. Sustainability: After funding period, the system will be maintained through: (a) Partnership with state health departments for operational costs, (b) Revenue from screening fees (₹50/patient), (c) Follow-up grants for expansion. We have letters of intent from 3 state governments for adoption.\n\n6. Scalability: The methodology can be adapted for: (a) Other eye diseases (glaucoma, AMD), (b) Other screening programs (cervical cancer, TB), (c) Other countries with similar challenges. We will create toolkit for replication.',
-                why: 'Comprehensive impact across multiple dimensions with specific numbers. Shows thinking beyond project. Demonstrates sustainability and scalability. Reviewers see long-term value!'
-    },
-    badExample: {
-        title: '❌ BAD Example',
+            why: 'Comprehensive impact across multiple dimensions with specific numbers. Shows thinking beyond project. Demonstrates sustainability and scalability. Reviewers see long-term value!'
+        },
+        badExample: {
+            title: '❌ BAD Example',
             content: 'Impact: This project will help many people. It will improve healthcare. It will save money. It will be useful for other diseases. It will continue after the project ends.',
-                why: 'No specifics! How many people? How much money? How will it continue? Vague promises without evidence!'
-    },
-    tips: [
-        'Quantify impact with numbers',
-        'Show multiple types of impact',
-        'Provide sustainability plan',
-        'Demonstrate scalability',
-        'Include letters of support',
-        'Connect to national priorities'
-    ],
+            why: 'No specifics! How many people? How much money? How will it continue? Vague promises without evidence!'
+        },
+        tips: [
+            'Quantify impact with numbers',
+            'Show multiple types of impact',
+            'Provide sustainability plan',
+            'Demonstrate scalability',
+            'Include letters of support',
+            'Connect to national priorities'
+        ],
         commonMistakes: [
             'Vague impact statements',
             'No sustainability plan',
@@ -453,46 +451,46 @@ tips: [
             'Unrealistic claims',
             'Only academic impact'
         ],
-            reviewerLooksFor: [
-                'Quantified impact',
-                'Multiple impact dimensions',
-                'Sustainability plan',
-                'Scalability potential',
-                'Letters of support',
-                'Alignment with national goals'
-            ]
-},
-{
-    id: 'team',
+        reviewerLooksFor: [
+            'Quantified impact',
+            'Multiple impact dimensions',
+            'Sustainability plan',
+            'Scalability potential',
+            'Letters of support',
+            'Alignment with national goals'
+        ]
+    },
+    {
+        id: 'team',
         title: '10. Team & Institutional Support',
-            description: 'Who will do the work and why are they qualified?',
-                purpose: 'Demonstrate team capability and institutional commitment',
-                    wordCount: '400-600 words (1-2 pages)',
-                        structure: [
-                            'Principal Investigator (qualifications, relevant experience)',
-                            'Co-Investigators (expertise, roles)',
-                            'Collaborators (letters of support)',
-                            'Institutional Facilities',
-                            'Institutional Commitment'
-                        ],
-                            goodExample: {
-        title: '✅ GOOD Example',
+        description: 'Who will do the work and why are they qualified?',
+        purpose: 'Demonstrate team capability and institutional commitment',
+        wordCount: '400-600 words (1-2 pages)',
+        structure: [
+            'Principal Investigator (qualifications, relevant experience)',
+            'Co-Investigators (expertise, roles)',
+            'Collaborators (letters of support)',
+            'Institutional Facilities',
+            'Institutional Commitment'
+        ],
+        goodExample: {
+            title: '✅ GOOD Example',
             content: 'Research Team:\n\nPrincipal Investigator: Dr. Rajesh Kumar, Associate Professor, Department of Computer Science, IIT Delhi. Dr. Kumar has 10 years of experience in AI/ML with 45 publications (h-index: 18) including 12 papers on medical image analysis. He has successfully completed 3 funded projects (total ₹85L) and graduated 8 PhD students. Relevant publications: [1] Kumar et al., "Attention mechanisms for medical imaging," Nature Machine Intelligence, 2022. [2] Kumar et al., "Multi-center validation of AI systems," JAMA, 2021.\n\nCo-Investigator 1: Dr. Priya Sharma, Professor of Ophthalmology, AIIMS Delhi. Dr. Sharma is a certified retina specialist with 20 years of clinical experience and 60 publications. She will lead clinical validation and provide medical expertise. She has access to 50,000+ patient records at AIIMS.\n\nCo-Investigator 2: Dr. Amit Patel, Assistant Professor, Public Health, IIPH Hyderabad. Dr. Patel specializes in health systems and has led 5 community health projects. He will lead deployment and training activities.\n\nCollaborators:\n- Dr. Sarah Johnson, MIT (AI expert) - Letter of support attached\n- Dr. Venkat Reddy, L V Prasad Eye Institute (clinical validation)\n- Mr. Suresh Iyer, National Health Mission (policy integration)\n\nInstitutional Support:\n- High-performance computing cluster (100 GPUs)\n- Dedicated lab space (500 sq ft)\n- Access to 5 partner hospitals\n- Administrative support for project management\n- Commitment letter from Dean attached\n\nThe team combines AI expertise (Kumar), clinical knowledge (Sharma), and public health experience (Patel) - ideal for this interdisciplinary project.',
-                why: 'Specific qualifications with numbers, clear roles, relevant experience, strong collaborators, institutional commitment. Reviewers see capable team!'
-    },
-    badExample: {
-        title: '❌ BAD Example',
+            why: 'Specific qualifications with numbers, clear roles, relevant experience, strong collaborators, institutional commitment. Reviewers see capable team!'
+        },
+        badExample: {
+            title: '❌ BAD Example',
             content: 'Team: Dr. Kumar is a professor with experience in AI. Dr. Sharma is a doctor. We have good facilities. The institution supports this project.',
-                why: 'No specifics! What experience? What facilities? How does institution support? No evidence of capability!'
-    },
-    tips: [
-        'Highlight relevant experience',
-        'Include publication metrics',
-        'Show track record of completed projects',
-        'Attach letters of support',
-        'Describe institutional facilities',
-        'Show team complementarity'
-    ],
+            why: 'No specifics! What experience? What facilities? How does institution support? No evidence of capability!'
+        },
+        tips: [
+            'Highlight relevant experience',
+            'Include publication metrics',
+            'Show track record of completed projects',
+            'Attach letters of support',
+            'Describe institutional facilities',
+            'Show team complementarity'
+        ],
         commonMistakes: [
             'Generic descriptions',
             'No relevant experience',
@@ -501,15 +499,15 @@ tips: [
             'Unclear roles',
             'Weak team composition'
         ],
-            reviewerLooksFor: [
-                'Relevant expertise',
-                'Track record',
-                'Team complementarity',
-                'Institutional support',
-                'Letters of commitment',
-                'Access to resources'
-            ]
-}
+        reviewerLooksFor: [
+            'Relevant expertise',
+            'Track record',
+            'Team complementarity',
+            'Institutional support',
+            'Letters of commitment',
+            'Access to resources'
+        ]
+    }
 ]
 
 // Proposal writing timeline

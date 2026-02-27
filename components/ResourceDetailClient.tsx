@@ -43,8 +43,28 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
             features: resource.features
         })
 
-        // Content slides
-        if (content.data && Array.isArray(content.data)) {
+        // Content slides based on type
+        if (content.type === 'patent' && content.types) {
+            // Patent types slides
+            content.types.forEach((patentType: any) => {
+                slides.push({
+                    type: 'patent-type',
+                    data: patentType
+                })
+            })
+        } else if (content.type === 'templates' && content.data) {
+            // Group templates by category
+            const categories = [...new Set(content.data.map((t: any) => t.category))]
+            categories.forEach((category: string) => {
+                const categoryTemplates = content.data.filter((t: any) => t.category === category)
+                slides.push({
+                    type: 'templates',
+                    category: category,
+                    templates: categoryTemplates
+                })
+            })
+        } else if (content.data && Array.isArray(content.data)) {
+            // Regular content slides
             content.data.forEach((item: any) => {
                 slides.push({
                     type: 'content',
@@ -210,7 +230,7 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
                                                 Tips
                                             </h3>
                                             <ul className="space-y-3">
-                                                {slides[currentSlide].data.tips.slice(0, 4).map((tip: string, idx: number) => (
+                                                {slides[currentSlide].data.tips.map((tip: string, idx: number) => (
                                                     <li key={idx} className="text-xl text-blue-100 flex items-start gap-3 leading-relaxed">
                                                         <span className="text-blue-300 text-2xl">•</span>
                                                         <span>{tip}</span>
@@ -221,13 +241,13 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
                                     )}
 
                                     {slides[currentSlide].data.commonMistakes && slides[currentSlide].data.commonMistakes.length > 0 && (
-                                        <div className="bg-orange-500/20 rounded-xl p-6 border border-orange-400/30">
+                                        <div className="bg-orange-500/20 rounded-xl p-6 border border-orange-400/30 mb-6">
                                             <h3 className="text-3xl font-bold text-orange-100 mb-4 flex items-center gap-3">
                                                 <AlertCircle className="w-8 h-8" />
                                                 Common Mistakes
                                             </h3>
                                             <ul className="space-y-3">
-                                                {slides[currentSlide].data.commonMistakes.slice(0, 4).map((mistake: string, idx: number) => (
+                                                {slides[currentSlide].data.commonMistakes.map((mistake: string, idx: number) => (
                                                     <li key={idx} className="text-xl text-orange-100 flex items-start gap-3 leading-relaxed">
                                                         <span className="text-orange-300 text-2xl">✗</span>
                                                         <span>{mistake}</span>
@@ -236,6 +256,192 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
                                             </ul>
                                         </div>
                                     )}
+
+                                    {/* Word Count */}
+                                    {slides[currentSlide].data.wordCount && (
+                                        <div className="bg-purple-500/20 border-l-8 border-purple-400 p-6 rounded-r-xl mb-6">
+                                            <p className="text-2xl text-purple-200">
+                                                <strong className="text-purple-100">Word Count:</strong> {slides[currentSlide].data.wordCount}
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {/* Structure */}
+                                    {slides[currentSlide].data.structure && slides[currentSlide].data.structure.length > 0 && (
+                                        <div className="bg-indigo-500/20 rounded-xl p-6 border border-indigo-400/30 mb-6">
+                                            <h3 className="text-3xl font-bold text-indigo-100 mb-4">Structure</h3>
+                                            <ul className="space-y-2">
+                                                {slides[currentSlide].data.structure.map((struct: string, idx: number) => (
+                                                    <li key={idx} className="text-xl text-indigo-100 flex items-start gap-3 leading-relaxed">
+                                                        <span className="text-indigo-300 text-2xl">▸</span>
+                                                        <span>{struct}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+
+                                    {/* How to Avoid (for desk rejection) */}
+                                    {slides[currentSlide].data.howToAvoid && slides[currentSlide].data.howToAvoid.length > 0 && (
+                                        <div className="bg-green-500/20 rounded-xl p-6 border border-green-400/30 mb-6">
+                                            <h3 className="text-3xl font-bold text-green-100 mb-4 flex items-center gap-3">
+                                                <CheckCircle className="w-8 h-8" />
+                                                How to Avoid
+                                            </h3>
+                                            <ul className="space-y-3">
+                                                {slides[currentSlide].data.howToAvoid.map((avoid: string, idx: number) => (
+                                                    <li key={idx} className="text-xl text-green-100 flex items-start gap-3 leading-relaxed">
+                                                        <CheckCircle className="w-6 h-6 text-green-300 flex-shrink-0 mt-1" />
+                                                        <span>{avoid}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+
+                                    {/* How to Respond (for reviewer comments) */}
+                                    {slides[currentSlide].data.howToRespond && slides[currentSlide].data.howToRespond.length > 0 && (
+                                        <div className="bg-purple-500/20 rounded-xl p-6 border border-purple-400/30 mb-6">
+                                            <h3 className="text-3xl font-bold text-purple-100 mb-4">How to Respond</h3>
+                                            <ul className="space-y-3">
+                                                {slides[currentSlide].data.howToRespond.map((respond: string, idx: number) => (
+                                                    <li key={idx} className="text-xl text-purple-100 flex items-start gap-3 leading-relaxed">
+                                                        <span className="text-purple-300 text-2xl">→</span>
+                                                        <span>{respond}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+
+                                    {/* Examples (for reviewer response) */}
+                                    {slides[currentSlide].data.examples && (
+                                        <div className="space-y-4 mb-6">
+                                            {slides[currentSlide].data.examples.reviewerComment && (
+                                                <div className="bg-gray-500/20 rounded-xl p-6 border border-gray-400/30">
+                                                    <p className="text-xl font-semibold text-gray-100 mb-3">Reviewer Comment:</p>
+                                                    <p className="text-lg text-gray-200 italic leading-relaxed">"{slides[currentSlide].data.examples.reviewerComment}"</p>
+                                                </div>
+                                            )}
+                                            {slides[currentSlide].data.examples.badResponse && (
+                                                <div className="bg-red-500/20 rounded-xl p-6 border border-red-400/30">
+                                                    <p className="text-xl font-semibold text-red-100 mb-3 flex items-center gap-2">
+                                                        <XCircle className="w-6 h-6" />
+                                                        Bad Response:
+                                                    </p>
+                                                    <p className="text-lg text-red-200 leading-relaxed">"{slides[currentSlide].data.examples.badResponse}"</p>
+                                                </div>
+                                            )}
+                                            {slides[currentSlide].data.examples.goodResponse && (
+                                                <div className="bg-green-500/20 rounded-xl p-6 border border-green-400/30">
+                                                    <p className="text-xl font-semibold text-green-100 mb-3 flex items-center gap-2">
+                                                        <CheckCircle className="w-6 h-6" />
+                                                        Good Response:
+                                                    </p>
+                                                    <p className="text-lg text-green-200 mb-3 leading-relaxed">"{slides[currentSlide].data.examples.goodResponse}"</p>
+                                                    {slides[currentSlide].data.examples.why && (
+                                                        <p className="text-base text-green-300 italic">
+                                                            <strong>Why:</strong> {slides[currentSlide].data.examples.why}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* Steps (for activities) */}
+                                    {slides[currentSlide].data.steps && slides[currentSlide].data.steps.length > 0 && (
+                                        <div className="bg-orange-500/20 rounded-xl p-6 border border-orange-400/30 mb-6">
+                                            <h3 className="text-3xl font-bold text-orange-100 mb-6">Steps</h3>
+                                            <div className="space-y-5">
+                                                {slides[currentSlide].data.steps.map((step: any, idx: number) => (
+                                                    <div key={idx} className="flex items-start gap-4">
+                                                        <div className="flex-shrink-0 w-10 h-10 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                                                            {step.id || idx + 1}
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <h4 className="text-2xl font-bold text-orange-100 mb-2">{step.title}</h4>
+                                                            <p className="text-lg text-orange-200 mb-2 leading-relaxed">{step.instruction}</p>
+                                                            {step.action && (
+                                                                <p className="text-base text-orange-300">
+                                                                    <strong>Action:</strong> {step.action}
+                                                                </p>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Deliverable (for activities) */}
+                                    {slides[currentSlide].data.deliverable && (
+                                        <div className="bg-green-500/20 border-l-8 border-green-400 p-6 rounded-r-xl">
+                                            <p className="text-xl font-semibold text-green-100 mb-2">Deliverable:</p>
+                                            <p className="text-lg text-green-200 leading-relaxed">{slides[currentSlide].data.deliverable}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Patent Type Slide */}
+                            {slides[currentSlide]?.type === 'patent-type' && (
+                                <div className="space-y-6 w-full py-8">
+                                    <h2 className="text-5xl font-bold text-white mb-6 text-center">
+                                        {slides[currentSlide].data.type}
+                                    </h2>
+                                    <div className="bg-indigo-500/20 rounded-xl p-8 border border-indigo-400/30">
+                                        <p className="text-2xl text-indigo-100 mb-6 leading-relaxed">
+                                            {slides[currentSlide].data.description}
+                                        </p>
+                                        <div className="space-y-4">
+                                            <div className="bg-indigo-600/20 rounded-lg p-6">
+                                                <p className="text-xl text-indigo-100">
+                                                    <strong className="text-indigo-50">Protects:</strong> {slides[currentSlide].data.protects}
+                                                </p>
+                                            </div>
+                                            <div className="bg-indigo-600/20 rounded-lg p-6">
+                                                <p className="text-xl text-indigo-100">
+                                                    <strong className="text-indigo-50">Duration:</strong> {slides[currentSlide].data.duration}
+                                                </p>
+                                            </div>
+                                            <div className="bg-indigo-600/20 rounded-lg p-6">
+                                                <p className="text-xl text-indigo-100">
+                                                    <strong className="text-indigo-50">Cost:</strong> {slides[currentSlide].data.cost}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Templates Slide */}
+                            {slides[currentSlide]?.type === 'templates' && (
+                                <div className="space-y-6 w-full py-4 max-h-[calc(100vh-280px)] overflow-y-auto pr-4">
+                                    <h2 className="text-5xl font-bold text-white mb-6 sticky top-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pb-4 z-10">
+                                        {slides[currentSlide].category.charAt(0).toUpperCase() + slides[currentSlide].category.slice(1)} Templates
+                                    </h2>
+                                    <div className="grid grid-cols-1 gap-6">
+                                        {slides[currentSlide].templates.map((template: any, idx: number) => (
+                                            <div key={idx} className="bg-green-500/20 rounded-xl p-6 border border-green-400/30">
+                                                <div className="flex items-start gap-4">
+                                                    <div className="text-5xl">{template.icon}</div>
+                                                    <div className="flex-1">
+                                                        <h3 className="text-3xl font-bold text-green-100 mb-3">{template.title}</h3>
+                                                        <p className="text-xl text-green-200 mb-4 leading-relaxed">{template.description}</p>
+                                                        <div className="flex items-center gap-3 flex-wrap">
+                                                            <span className="px-4 py-2 bg-green-600/30 text-green-100 rounded-lg text-lg font-semibold">
+                                                                {template.type.toUpperCase()}
+                                                            </span>
+                                                            <span className="px-4 py-2 bg-white/10 text-white rounded-lg text-lg">
+                                                                {template.category}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
                         </div>

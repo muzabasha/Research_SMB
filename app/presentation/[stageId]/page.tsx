@@ -18,6 +18,7 @@ export default function PresentationMode() {
     const [showMindMap, setShowMindMap] = useState(true)
     const [currentSlide, setCurrentSlide] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
+    const [showHelp, setShowHelp] = useState(false)
 
     // Auto-advance slides
     useEffect(() => {
@@ -30,6 +31,44 @@ export default function PresentationMode() {
         }, 8000) // 8 seconds per slide
         return () => clearInterval(timer)
     }, [isPlaying, stage])
+
+    // Keyboard navigation
+    useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowLeft') {
+                if (e.shiftKey) {
+                    prevStage()
+                } else {
+                    prevSlide()
+                }
+            } else if (e.key === 'ArrowRight') {
+                if (e.shiftKey) {
+                    nextStage()
+                } else {
+                    nextSlide()
+                }
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen()
+            } else if (e.key === 'm' || e.key === 'M') {
+                setShowMindMap(prev => !prev)
+            } else if (e.key === ' ') {
+                e.preventDefault()
+                setIsPlaying(prev => !prev)
+            } else if (e.key === 'Escape') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen()
+                    setIsFullscreen(false)
+                } else if (showHelp) {
+                    setShowHelp(false)
+                }
+            } else if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+                setShowHelp(prev => !prev)
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyPress)
+        return () => window.removeEventListener('keydown', handleKeyPress)
+    }, [currentSlide, stageId])
 
     if (!stage) {
         return <div className="min-h-screen flex items-center justify-center bg-white">
@@ -377,10 +416,10 @@ export default function PresentationMode() {
                                                 key={s.id}
                                                 onClick={() => goToStage(s.id)}
                                                 className={`w-full text-left px-4 py-3 rounded-lg transition-all flex items-center gap-3 ${isCurrent
-                                                        ? 'bg-blue-600 text-white shadow-lg scale-105'
-                                                        : isCompleted
-                                                            ? 'bg-green-50 text-green-700 hover:bg-green-100'
-                                                            : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                                    ? 'bg-blue-600 text-white shadow-lg scale-105'
+                                                    : isCompleted
+                                                        ? 'bg-green-50 text-green-700 hover:bg-green-100'
+                                                        : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                                                     }`}
                                             >
                                                 {isCompleted ? (
@@ -431,15 +470,24 @@ export default function PresentationMode() {
                             Slide {currentSlide + 1} of {getSlideCount()}
                         </div>
                         <button
+                            onClick={() => setShowHelp(true)}
+                            className="p-3 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors"
+                            title="Keyboard Shortcuts (?)"
+                        >
+                            <span className="text-xl font-bold">?</span>
+                        </button>
+                        <button
                             onClick={() => setIsPlaying(!isPlaying)}
                             className={`p-3 rounded-lg transition-colors ${isPlaying ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
                                 }`}
+                            title={isPlaying ? 'Pause Auto-play (Space)' : 'Start Auto-play (Space)'}
                         >
                             {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
                         </button>
                         <button
                             onClick={toggleFullscreen}
                             className="p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                            title={isFullscreen ? 'Exit Fullscreen (F)' : 'Enter Fullscreen (F)'}
                         >
                             {isFullscreen ? <Minimize className="w-6 h-6" /> : <Maximize className="w-6 h-6" />}
                         </button>
@@ -447,52 +495,187 @@ export default function PresentationMode() {
                 </div>
 
                 {/* Presentation Content */}
-                <div className="p-12 min-h-[calc(100vh-80px)]">
+                <div className="p-12 pb-32 min-h-[calc(100vh-80px)]">
                     <div className="max-w-7xl mx-auto">
                         {renderSlide()}
                     </div>
                 </div>
 
-                {/* Bottom Navigation */}
-                <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg px-8 py-6 flex items-center justify-between">
-                    <button
-                        onClick={prevStage}
-                        disabled={stageId === 1}
-                        className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-lg"
-                    >
-                        <ChevronLeft className="w-6 h-6" />
-                        Previous Stage
-                    </button>
+                {/* Floating Navigation Buttons - Left & Right Arrows */}
+                <button
+                    onClick={prevSlide}
+                    disabled={currentSlide === 0}
+                    className="fixed left-4 top-1/2 -translate-y-1/2 z-40 p-4 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 border-2 border-blue-200"
+                    title="Previous Slide"
+                >
+                    <ChevronLeft className="w-8 h-8" />
+                </button>
 
-                    <div className="flex items-center gap-4">
+                <button
+                    onClick={nextSlide}
+                    disabled={currentSlide === getSlideCount() - 1}
+                    className="fixed right-4 top-1/2 -translate-y-1/2 z-40 p-4 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 border-2 border-blue-200"
+                    title="Next Slide"
+                >
+                    <ChevronRight className="w-8 h-8" />
+                </button>
+
+                {/* Bottom Navigation Bar - Compact & Elegant */}
+                <div className={`fixed bottom-0 right-0 bg-gradient-to-r from-white/95 to-blue-50/95 backdrop-blur-md shadow-2xl transition-all duration-300 z-40 border-t-2 border-blue-100 ${showMindMap ? 'left-96' : 'left-0'}`}>
+                    <div className="px-6 py-4 flex items-center justify-between gap-4">
+                        {/* Previous Stage Button */}
                         <button
-                            onClick={prevSlide}
-                            disabled={currentSlide === 0}
-                            className="px-6 py-3 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-lg"
+                            onClick={prevStage}
+                            disabled={stageId === 1}
+                            className="group px-5 py-2.5 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 rounded-xl hover:from-gray-200 hover:to-gray-300 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 text-base font-medium shadow-md hover:shadow-lg disabled:hover:shadow-md"
+                            title={stageId > 1 ? `Go to Stage ${stageId - 1}` : 'First stage'}
                         >
-                            <ChevronLeft className="w-6 h-6" />
-                            Previous Slide
+                            <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                            <span className="hidden sm:inline">Prev Stage</span>
                         </button>
+
+                        {/* Center Info */}
+                        <div className="flex items-center gap-4">
+                            {/* Slide Counter */}
+                            <div className="px-4 py-2 bg-white/80 rounded-lg shadow-md border border-blue-100">
+                                <div className="text-sm font-semibold text-gray-700">
+                                    <span className="text-blue-600">{currentSlide + 1}</span>
+                                    <span className="text-gray-400 mx-1">/</span>
+                                    <span className="text-gray-500">{getSlideCount()}</span>
+                                </div>
+                            </div>
+
+                            {/* Slide Navigation Buttons */}
+                            <div className="hidden md:flex items-center gap-2">
+                                <button
+                                    onClick={prevSlide}
+                                    disabled={currentSlide === 0}
+                                    className="p-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                                    title="Previous Slide (←)"
+                                >
+                                    <ChevronLeft className="w-5 h-5" />
+                                </button>
+                                <button
+                                    onClick={nextSlide}
+                                    disabled={currentSlide === getSlideCount() - 1}
+                                    className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                                    title="Next Slide (→)"
+                                >
+                                    <ChevronRight className="w-5 h-5" />
+                                </button>
+                            </div>
+
+                            {/* Stage Info */}
+                            <div className="hidden lg:block px-4 py-2 bg-white/80 rounded-lg shadow-md border border-blue-100">
+                                <div className="text-sm font-medium text-gray-700">
+                                    Stage {stageId}: <span className="text-blue-600">{stage.title}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Next Stage Button */}
                         <button
-                            onClick={nextSlide}
-                            disabled={currentSlide === getSlideCount() - 1}
-                            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-lg"
+                            onClick={nextStage}
+                            disabled={stageId === 15}
+                            className="group px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 text-base font-medium shadow-md hover:shadow-lg disabled:hover:shadow-md"
+                            title={stageId < 15 ? `Go to Stage ${stageId + 1}` : 'Last stage'}
                         >
-                            Next Slide
-                            <ChevronRight className="w-6 h-6" />
+                            <span className="hidden sm:inline">Next Stage</span>
+                            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </button>
                     </div>
 
-                    <button
-                        onClick={nextStage}
-                        disabled={stageId === 15}
-                        className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-lg"
-                    >
-                        Next Stage
-                        <ChevronRight className="w-6 h-6" />
-                    </button>
+                    {/* Progress Bar */}
+                    <div className="h-1 bg-gray-200">
+                        <div
+                            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300"
+                            style={{ width: `${((currentSlide + 1) / getSlideCount()) * 100}%` }}
+                        />
+                    </div>
                 </div>
             </div>
+
+            {/* Keyboard Shortcuts Help Overlay */}
+            {showHelp && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-8 animate-scaleIn">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-3xl font-bold text-gray-900">⌨️ Keyboard Shortcuts</h2>
+                            <button
+                                onClick={() => setShowHelp(false)}
+                                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <div className="space-y-4">
+                                <h3 className="text-lg font-semibold text-gray-700 mb-3">Navigation</h3>
+                                <div className="space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">Next Slide</span>
+                                        <kbd className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-mono">→</kbd>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">Previous Slide</span>
+                                        <kbd className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-mono">←</kbd>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">Next Stage</span>
+                                        <kbd className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-mono">Shift + →</kbd>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">Previous Stage</span>
+                                        <kbd className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-mono">Shift + ←</kbd>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
+                                <h3 className="text-lg font-semibold text-gray-700 mb-3">Controls</h3>
+                                <div className="space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">Play/Pause</span>
+                                        <kbd className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-mono">Space</kbd>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">Fullscreen</span>
+                                        <kbd className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-mono">F</kbd>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">Toggle Mind Map</span>
+                                        <kbd className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-mono">M</kbd>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">Show Help</span>
+                                        <kbd className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-mono">?</kbd>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">Close/Exit</span>
+                                        <kbd className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-mono">Esc</kbd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-8 p-4 bg-blue-50 rounded-lg">
+                            <p className="text-sm text-blue-800">
+                                💡 <strong>Pro Tip:</strong> Use arrow keys for quick navigation, or click the floating arrows on the sides!
+                            </p>
+                        </div>
+
+                        <div className="mt-6 text-center">
+                            <button
+                                onClick={() => setShowHelp(false)}
+                                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                            >
+                                Got it!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <style jsx global>{`
                 @keyframes fadeIn {

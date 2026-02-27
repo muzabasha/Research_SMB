@@ -182,6 +182,169 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Resource Person Section - NEW */}
+      <div className="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-4">
+              <Sparkles className="w-4 h-4" />
+              AI-Powered Research Assistant
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Meet Your Resource Person</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Get personalized guidance, instant answers, and expert support throughout your research journey
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div className="grid md:grid-cols-2 gap-0">
+              {/* Left Side - Features */}
+              <div className="p-10 bg-gradient-to-br from-purple-600 to-indigo-600 text-white">
+                <h3 className="text-3xl font-bold mb-6">Scholar Sparkle</h3>
+                <p className="text-lg mb-8 text-purple-100">
+                  Your AI-powered research companion that understands your journey and provides contextual support at every stage.
+                </p>
+
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <Lightbulb className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg mb-1">Instant Answers</h4>
+                      <p className="text-purple-100 text-sm">Get immediate responses to your research questions, 24/7</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <Target className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg mb-1">Personalized Guidance</h4>
+                      <p className="text-purple-100 text-sm">Tailored advice based on your stage and research area</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <BookOpen className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg mb-1">Research Resources</h4>
+                      <p className="text-purple-100 text-sm">Access curated papers, tools, and templates instantly</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <Users className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg mb-1">Mentor Connection</h4>
+                      <p className="text-purple-100 text-sm">Connect with experts and get feedback on your work</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10">
+                  <a
+                    href="https://scholar-sparkle-web.lovable.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 px-8 py-4 bg-white text-purple-600 rounded-xl font-semibold hover:shadow-2xl transition-all text-lg group"
+                  >
+                    <Sparkles className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+                    Launch Scholar Sparkle
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Side - Preview/Demo */}
+              <div className="p-10 bg-gradient-to-br from-gray-50 to-white">
+                <div className="space-y-6">
+                  <div className="bg-white rounded-xl p-6 shadow-lg border-l-4 border-purple-500">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-purple-600 font-bold text-sm">Q</span>
+                      </div>
+                      <p className="text-gray-700 font-medium">How do I identify a good research gap?</p>
+                    </div>
+                    <div className="flex items-start gap-3 ml-11">
+                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Sparkles className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <p className="text-gray-600 text-sm">
+                        Great question! Use the NIFI framework: Novel, Important, Feasible, Interesting. Let me guide you through each criterion...
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl p-6 shadow-lg border-l-4 border-blue-500">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-purple-600 font-bold text-sm">Q</span>
+                      </div>
+                      <p className="text-gray-700 font-medium">Can you suggest papers on AI in healthcare?</p>
+                    </div>
+                    <div className="flex items-start gap-3 ml-11">
+                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Sparkles className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <p className="text-gray-600 text-sm">
+                        Here are 5 highly-cited recent papers in AI for healthcare diagnostics, along with their key contributions...
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6">
+                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                      What You Can Ask
+                    </h4>
+                    <ul className="space-y-2 text-sm text-gray-600">
+                      <li className="flex items-center gap-2">
+                        <span className="text-purple-600">•</span>
+                        Research methodology questions
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-purple-600">•</span>
+                        Paper recommendations
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-purple-600">•</span>
+                        Writing and formatting help
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-purple-600">•</span>
+                        Tool and software suggestions
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-purple-600">•</span>
+                        Career guidance and opportunities
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="text-center pt-4">
+                    <p className="text-sm text-gray-500 mb-3">Available 24/7 • Free for all students</p>
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="flex -space-x-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full border-2 border-white"></div>
+                        <div className="w-8 h-8 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full border-2 border-white"></div>
+                        <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full border-2 border-white"></div>
+                      </div>
+                      <span className="text-sm text-gray-600 font-medium">Join 500+ researchers</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

@@ -323,6 +323,39 @@ export default function StageDetailPage() {
                                 </div>
                             </div>
 
+                            {/* Sub-Stages */}
+                            {stage.subStages && stage.subStages.length > 0 && (
+                                <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-6">
+                                    <h3 className="text-xl font-semibold text-gray-900 mb-4">Stage Breakdown</h3>
+                                    <p className="text-gray-600 mb-4">This stage is divided into {stage.subStages.length} sub-stages for clarity:</p>
+                                    <div className="space-y-3">
+                                        {stage.subStages.map((subStage, index) => (
+                                            <div key={subStage.id} className="bg-white rounded-lg p-4 border-l-4 border-blue-500">
+                                                <div className="flex items-start gap-3">
+                                                    <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                                                        {index + 1}
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <h4 className="font-semibold text-gray-900 mb-1">{subStage.title}</h4>
+                                                        <p className="text-sm text-gray-600 mb-2">{subStage.description}</p>
+                                                        <div className="flex items-center gap-4 text-xs text-gray-500">
+                                                            <span className="flex items-center gap-1">
+                                                                <Clock className="w-3 h-3" />
+                                                                {subStage.duration}
+                                                            </span>
+                                                            <span className="flex items-center gap-1">
+                                                                <Target className="w-3 h-3" />
+                                                                {subStage.deliverable}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="bg-green-50 rounded-lg p-6">
                                     <h3 className="font-semibold text-green-900 mb-3 flex items-center gap-2">

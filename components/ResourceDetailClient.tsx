@@ -844,188 +844,221 @@ ${prompt.limitations.map((l: string, i: number) => `${i + 1}. ${l}`).join('\n')}
                         )}
 
                         {/* Render content based on type */}
-                        {content.data && Array.isArray(content.data) && content.data.map((item: any, idx: number) => (
-                            <div key={idx} className="mb-8 pb-8 border-b border-gray-200 last:border-0">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                                    {item.title || item.reason || item.commentType || item.type || `Item ${idx + 1}`}
-                                </h3>
+                        {content.data && Array.isArray(content.data) && content.data.map((item: any, idx: number) => {
+                            // Generate meaningful title based on content
+                            const getItemTitle = () => {
+                                if (item.title) return item.title
+                                if (item.reason) return item.reason
+                                if (item.commentType) return item.commentType
+                                if (item.type) return item.type
+                                if (item.stageName) return `Stage ${item.stage}: ${item.stageName}`
 
-                                {item.description && (
-                                    <p className="text-gray-700 mb-4">{item.description}</p>
-                                )}
+                                // Category-specific fallbacks
+                                if (resource.category === 'guide') return `Component ${idx + 1}`
+                                if (resource.category === 'template') return `Template ${idx + 1}`
+                                if (resource.category === 'activity') return `Activity ${idx + 1}`
+                                if (resource.category === 'tool') return `Section ${idx + 1}`
 
-                                {item.purpose && (
-                                    <p className="text-blue-600 mb-4"><strong>Purpose:</strong> {item.purpose}</p>
-                                )}
+                                return `Item ${idx + 1}`
+                            }
 
-                                {item.wordCount && (
-                                    <p className="text-gray-600 mb-4"><strong>Word Count:</strong> {item.wordCount}</p>
-                                )}
-
-                                {/* Good Example */}
-                                {item.goodExample && (
-                                    <div className="bg-green-50 border-l-4 border-green-500 p-6 mb-4 rounded-r-lg">
-                                        <h4 className="font-bold text-green-900 mb-2 flex items-center gap-2">
-                                            <CheckCircle className="w-5 h-5" />
-                                            {item.goodExample.title}
-                                        </h4>
-                                        <p className="text-sm text-green-800 mb-2 whitespace-pre-wrap">{item.goodExample.content}</p>
-                                        <p className="text-xs text-green-700 italic"><strong>Why:</strong> {item.goodExample.why}</p>
+                            return (
+                                <div key={idx} className="group mb-10 pb-10 border-b-2 border-gray-200 last:border-0 hover:bg-gray-50 rounded-xl p-6 transition-colors">
+                                    {/* Item Header with Number Badge */}
+                                    <div className="flex items-start gap-4 mb-6">
+                                        <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                                            {idx + 1}
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                                                {getItemTitle()}
+                                            </h3>
+                                            {item.description && (
+                                                <p className="text-gray-700 leading-relaxed">{item.description}</p>
+                                            )}
+                                        </div>
                                     </div>
-                                )}
 
-                                {/* Bad Example */}
-                                {item.badExample && (
-                                    <div className="bg-red-50 border-l-4 border-red-500 p-6 mb-4 rounded-r-lg">
-                                        <h4 className="font-bold text-red-900 mb-2 flex items-center gap-2">
-                                            <XCircle className="w-5 h-5" />
-                                            {item.badExample.title}
-                                        </h4>
-                                        <p className="text-sm text-red-800 mb-2 whitespace-pre-wrap">{item.badExample.content}</p>
-                                        <p className="text-xs text-red-700 italic"><strong>Why:</strong> {item.badExample.why}</p>
-                                    </div>
-                                )}
-
-                                {/* Tips */}
-                                {item.tips && item.tips.length > 0 && (
-                                    <div className="bg-blue-50 rounded-lg p-5 mb-4">
-                                        <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
-                                            <Lightbulb className="w-5 h-5" />
-                                            Tips:
-                                        </h4>
-                                        <ul className="space-y-2">
-                                            {item.tips.map((tip: string, tipIdx: number) => (
-                                                <li key={tipIdx} className="text-sm text-blue-800 flex items-start gap-2">
-                                                    <span className="text-blue-600">•</span>
-                                                    <span>{tip}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-
-                                {/* Common Mistakes */}
-                                {item.commonMistakes && item.commonMistakes.length > 0 && (
-                                    <div className="bg-orange-50 rounded-lg p-5 mb-4">
-                                        <h4 className="font-semibold text-orange-900 mb-3 flex items-center gap-2">
-                                            <AlertCircle className="w-5 h-5" />
-                                            Common Mistakes:
-                                        </h4>
-                                        <ul className="space-y-2">
-                                            {item.commonMistakes.map((mistake: string, mIdx: number) => (
-                                                <li key={mIdx} className="text-sm text-orange-800 flex items-start gap-2">
-                                                    <span className="text-orange-600">✗</span>
-                                                    <span>{mistake}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-
-                                {/* Structure */}
-                                {item.structure && item.structure.length > 0 && (
-                                    <div className="bg-gray-50 rounded-lg p-5 mb-4">
-                                        <h4 className="font-semibold text-gray-900 mb-3">Structure:</h4>
-                                        <ul className="space-y-1">
-                                            {item.structure.map((struct: string, sIdx: number) => (
-                                                <li key={sIdx} className="text-sm text-gray-700 flex items-start gap-2">
-                                                    <span className="text-blue-600">▸</span>
-                                                    <span>{struct}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-
-                                {/* How to Avoid (for desk rejection) */}
-                                {item.howToAvoid && item.howToAvoid.length > 0 && (
-                                    <div className="bg-blue-50 rounded-lg p-5 mb-4">
-                                        <h4 className="font-semibold text-blue-900 mb-3">How to Avoid:</h4>
-                                        <ul className="space-y-2">
-                                            {item.howToAvoid.map((avoid: string, aIdx: number) => (
-                                                <li key={aIdx} className="text-sm text-blue-800 flex items-start gap-2">
-                                                    <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                                                    <span>{avoid}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-
-                                {/* How to Respond (for reviewer comments) */}
-                                {item.howToRespond && item.howToRespond.length > 0 && (
-                                    <div className="bg-purple-50 rounded-lg p-5 mb-4">
-                                        <h4 className="font-semibold text-purple-900 mb-3">How to Respond:</h4>
-                                        <ul className="space-y-2">
-                                            {item.howToRespond.map((respond: string, rIdx: number) => (
-                                                <li key={rIdx} className="text-sm text-purple-800 flex items-start gap-2">
-                                                    <span className="text-purple-600">→</span>
-                                                    <span>{respond}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-
-                                {/* Examples (for reviewer response) */}
-                                {item.examples && (
-                                    <div className="space-y-4 mb-4">
-                                        {item.examples.reviewerComment && (
-                                            <div className="bg-gray-50 rounded-lg p-4">
-                                                <p className="text-sm font-semibold text-gray-900 mb-2">Reviewer Comment:</p>
-                                                <p className="text-sm text-gray-700 italic">"{item.examples.reviewerComment}"</p>
+                                    {/* Content Sections */}
+                                    <div className="space-y-4 ml-16">
+                                        {item.purpose && (
+                                            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                                                <p className="text-blue-900"><strong className="font-semibold">Purpose:</strong> {item.purpose}</p>
                                             </div>
                                         )}
-                                        {item.examples.badResponse && (
-                                            <div className="bg-red-50 rounded-lg p-4">
-                                                <p className="text-sm font-semibold text-red-900 mb-2">❌ Bad Response:</p>
-                                                <p className="text-sm text-red-800">"{item.examples.badResponse}"</p>
+
+                                        {item.wordCount && (
+                                            <div className="bg-purple-50 border-l-4 border-purple-500 p-4 rounded-r-lg">
+                                                <p className="text-purple-900"><strong className="font-semibold">Word Count:</strong> {item.wordCount}</p>
                                             </div>
                                         )}
-                                        {item.examples.goodResponse && (
-                                            <div className="bg-green-50 rounded-lg p-4">
-                                                <p className="text-sm font-semibold text-green-900 mb-2">✅ Good Response:</p>
-                                                <p className="text-sm text-green-800 mb-2">"{item.examples.goodResponse}"</p>
-                                                {item.examples.why && (
-                                                    <p className="text-xs text-green-700 italic"><strong>Why:</strong> {item.examples.why}</p>
+
+                                        {/* Good Example */}
+                                        {item.goodExample && (
+                                            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 p-6 rounded-r-xl shadow-sm">
+                                                <h4 className="font-bold text-green-900 mb-3 flex items-center gap-2 text-lg">
+                                                    <CheckCircle className="w-5 h-5" />
+                                                    {item.goodExample.title}
+                                                </h4>
+                                                <p className="text-sm text-green-800 mb-3 whitespace-pre-wrap leading-relaxed">{item.goodExample.content}</p>
+                                                <p className="text-xs text-green-700 italic bg-green-100 p-3 rounded-lg"><strong>Why it works:</strong> {item.goodExample.why}</p>
+                                            </div>
+                                        )}
+
+                                        {/* Bad Example */}
+                                        {item.badExample && (
+                                            <div className="bg-gradient-to-r from-red-50 to-rose-50 border-l-4 border-red-500 p-6 rounded-r-xl shadow-sm">
+                                                <h4 className="font-bold text-red-900 mb-3 flex items-center gap-2 text-lg">
+                                                    <XCircle className="w-5 h-5" />
+                                                    {item.badExample.title}
+                                                </h4>
+                                                <p className="text-sm text-red-800 mb-3 whitespace-pre-wrap leading-relaxed">{item.badExample.content}</p>
+                                                <p className="text-xs text-red-700 italic bg-red-100 p-3 rounded-lg"><strong>Why it fails:</strong> {item.badExample.why}</p>
+                                            </div>
+                                        )}
+
+                                        {/* Tips */}
+                                        {item.tips && item.tips.length > 0 && (
+                                            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6 border-2 border-blue-200 shadow-sm">
+                                                <h4 className="font-bold text-blue-900 mb-4 flex items-center gap-2 text-lg">
+                                                    <Lightbulb className="w-5 h-5" />
+                                                    Expert Tips
+                                                </h4>
+                                                <ul className="space-y-3">
+                                                    {item.tips.map((tip: string, tipIdx: number) => (
+                                                        <li key={tipIdx} className="text-sm text-blue-800 flex items-start gap-3 leading-relaxed">
+                                                            <span className="text-blue-600 font-bold text-lg flex-shrink-0">•</span>
+                                                            <span>{tip}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        {/* Common Mistakes */}
+                                        {item.commonMistakes && item.commonMistakes.length > 0 && (
+                                            <div className="bg-orange-50 rounded-lg p-5 mb-4">
+                                                <h4 className="font-semibold text-orange-900 mb-3 flex items-center gap-2">
+                                                    <AlertCircle className="w-5 h-5" />
+                                                    Common Mistakes:
+                                                </h4>
+                                                <ul className="space-y-2">
+                                                    {item.commonMistakes.map((mistake: string, mIdx: number) => (
+                                                        <li key={mIdx} className="text-sm text-orange-800 flex items-start gap-2">
+                                                            <span className="text-orange-600">✗</span>
+                                                            <span>{mistake}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        {/* Structure */}
+                                        {item.structure && item.structure.length > 0 && (
+                                            <div className="bg-gray-50 rounded-lg p-5 mb-4">
+                                                <h4 className="font-semibold text-gray-900 mb-3">Structure:</h4>
+                                                <ul className="space-y-1">
+                                                    {item.structure.map((struct: string, sIdx: number) => (
+                                                        <li key={sIdx} className="text-sm text-gray-700 flex items-start gap-2">
+                                                            <span className="text-blue-600">▸</span>
+                                                            <span>{struct}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        {/* How to Avoid (for desk rejection) */}
+                                        {item.howToAvoid && item.howToAvoid.length > 0 && (
+                                            <div className="bg-blue-50 rounded-lg p-5 mb-4">
+                                                <h4 className="font-semibold text-blue-900 mb-3">How to Avoid:</h4>
+                                                <ul className="space-y-2">
+                                                    {item.howToAvoid.map((avoid: string, aIdx: number) => (
+                                                        <li key={aIdx} className="text-sm text-blue-800 flex items-start gap-2">
+                                                            <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                                                            <span>{avoid}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        {/* How to Respond (for reviewer comments) */}
+                                        {item.howToRespond && item.howToRespond.length > 0 && (
+                                            <div className="bg-purple-50 rounded-lg p-5 mb-4">
+                                                <h4 className="font-semibold text-purple-900 mb-3">How to Respond:</h4>
+                                                <ul className="space-y-2">
+                                                    {item.howToRespond.map((respond: string, rIdx: number) => (
+                                                        <li key={rIdx} className="text-sm text-purple-800 flex items-start gap-2">
+                                                            <span className="text-purple-600">→</span>
+                                                            <span>{respond}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        {/* Examples (for reviewer response) */}
+                                        {item.examples && (
+                                            <div className="space-y-4 mb-4">
+                                                {item.examples.reviewerComment && (
+                                                    <div className="bg-gray-50 rounded-lg p-4">
+                                                        <p className="text-sm font-semibold text-gray-900 mb-2">Reviewer Comment:</p>
+                                                        <p className="text-sm text-gray-700 italic">"{item.examples.reviewerComment}"</p>
+                                                    </div>
+                                                )}
+                                                {item.examples.badResponse && (
+                                                    <div className="bg-red-50 rounded-lg p-4">
+                                                        <p className="text-sm font-semibold text-red-900 mb-2">❌ Bad Response:</p>
+                                                        <p className="text-sm text-red-800">"{item.examples.badResponse}"</p>
+                                                    </div>
+                                                )}
+                                                {item.examples.goodResponse && (
+                                                    <div className="bg-green-50 rounded-lg p-4">
+                                                        <p className="text-sm font-semibold text-green-900 mb-2">✅ Good Response:</p>
+                                                        <p className="text-sm text-green-800 mb-2">"{item.examples.goodResponse}"</p>
+                                                        {item.examples.why && (
+                                                            <p className="text-xs text-green-700 italic"><strong>Why:</strong> {item.examples.why}</p>
+                                                        )}
+                                                    </div>
                                                 )}
                                             </div>
                                         )}
-                                    </div>
-                                )}
 
-                                {/* Steps (for activities) */}
-                                {item.steps && item.steps.length > 0 && (
-                                    <div className="bg-orange-50 rounded-lg p-6 mb-4">
-                                        <h4 className="font-semibold text-gray-900 mb-4">Steps:</h4>
-                                        <div className="space-y-4">
-                                            {item.steps.map((step: any, sIdx: number) => (
-                                                <div key={sIdx} className="flex items-start gap-4">
-                                                    <div className="flex-shrink-0 w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold">
-                                                        {step.id || sIdx + 1}
-                                                    </div>
-                                                    <div className="flex-1">
-                                                        <h5 className="font-bold text-gray-900 mb-1">{step.title}</h5>
-                                                        <p className="text-sm text-gray-700 mb-2">{step.instruction}</p>
-                                                        {step.action && (
-                                                            <p className="text-sm text-gray-600"><strong>Action:</strong> {step.action}</p>
-                                                        )}
-                                                    </div>
+                                        {/* Steps (for activities) */}
+                                        {item.steps && item.steps.length > 0 && (
+                                            <div className="bg-orange-50 rounded-lg p-6 mb-4">
+                                                <h4 className="font-semibold text-gray-900 mb-4">Steps:</h4>
+                                                <div className="space-y-4">
+                                                    {item.steps.map((step: any, sIdx: number) => (
+                                                        <div key={sIdx} className="flex items-start gap-4">
+                                                            <div className="flex-shrink-0 w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold">
+                                                                {step.id || sIdx + 1}
+                                                            </div>
+                                                            <div className="flex-1">
+                                                                <h5 className="font-bold text-gray-900 mb-1">{step.title}</h5>
+                                                                <p className="text-sm text-gray-700 mb-2">{step.instruction}</p>
+                                                                {step.action && (
+                                                                    <p className="text-sm text-gray-600"><strong>Action:</strong> {step.action}</p>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
+                                            </div>
+                                        )}
 
-                                {/* Deliverable (for activities) */}
-                                {item.deliverable && (
-                                    <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
-                                        <p className="text-sm font-semibold text-green-900 mb-1">Deliverable:</p>
-                                        <p className="text-sm text-green-800">{item.deliverable}</p>
+                                        {/* Deliverable (for activities) */}
+                                        {item.deliverable && (
+                                            <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+                                                <p className="text-sm font-semibold text-green-900 mb-1">Deliverable:</p>
+                                                <p className="text-sm text-green-800">{item.deliverable}</p>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        ))}
+                                </div>
+                            )
+                        })}
 
                         {/* Templates Display */}
                         {content.type === 'templates' && content.data && (

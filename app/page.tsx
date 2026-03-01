@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Play, Users, Lightbulb, ArrowRight, Sparkles, Award, Target, BookOpen, Rocket, Zap, Calendar, CheckCircle, TrendingUp, Brain, Globe } from 'lucide-react'
+import { Play, Users, Lightbulb, ArrowRight, Sparkles, Award, Target, BookOpen, Rocket, Zap, Calendar, CheckCircle, TrendingUp, Brain, Globe, Beaker } from 'lucide-react'
 import ResourceLibrary from '@/components/ResourceLibrary'
 
 export default function Home() {
@@ -72,6 +72,13 @@ export default function Home() {
                 <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 Start Your Journey
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/virtual-lab"
+                className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-2xl transition-all flex items-center gap-2 text-lg hover:scale-105 transform"
+              >
+                <Beaker className="w-5 h-5" />
+                Virtual Lab
               </Link>
               <Link
                 href="/timeline"

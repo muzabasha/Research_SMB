@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Download, CheckCircle, ExternalLink, BookOpen, AlertCircle, Lightbulb, XCircle, Maximize2, Minimize2, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowLeft, Download, CheckCircle, ExternalLink, BookOpen, AlertCircle, Lightbulb, XCircle, Maximize2, Minimize2, ChevronLeft, ChevronRight, Copy, Check, Edit3, Save, RotateCcw } from 'lucide-react'
 import type { ResourceItem } from '@/lib/resource-library'
 
 interface ResourceDetailClientProps {
@@ -13,6 +13,9 @@ interface ResourceDetailClientProps {
 export default function ResourceDetailClient({ resource, content }: ResourceDetailClientProps) {
     const [isPresentationMode, setIsPresentationMode] = useState(false)
     const [currentSlide, setCurrentSlide] = useState(0)
+    const [copiedStates, setCopiedStates] = useState<{ [key: string]: boolean }>({})
+    const [editingPrompts, setEditingPrompts] = useState<{ [key: string]: string }>({})
+    const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({})
 
     const getCategoryColor = () => {
         switch (resource.category) {
@@ -90,6 +93,73 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
     const togglePresentationMode = () => {
         setIsPresentationMode(!isPresentationMode)
         setCurrentSlide(0)
+    }
+
+    // Interactive features for AI prompts
+    const copyToClipboard = async (text: string, id: string) => {
+        try {
+            await navigator.clipboard.writeText(text)
+            setCopiedStates({ ...copiedStates, [id]: true })
+            setTimeout(() => {
+                setCopiedStates({ ...copiedStates, [id]: false })
+            }, 2000)
+        } catch (err) {
+            console.error('Failed to copy:', err)
+        }
+    }
+
+    const startEditing = (id: string, originalText: string) => {
+        setEditingPrompts({ ...editingPrompts, [id]: originalText })
+        setIsEditing({ ...isEditing, [id]: true })
+    }
+
+    const saveEdit = (id: string) => {
+        setIsEditing({ ...isEditing, [id]: false })
+    }
+
+    const resetPrompt = (id: string, originalText: string) => {
+        setEditingPrompts({ ...editingPrompts, [id]: originalText })
+    }
+
+    const downloadPrompt = (prompt: any) => {
+        const content = `# ${prompt.stageName} - Stage ${prompt.stage}
+${prompt.subStage ? `## ${prompt.subStage}\n` : ''}
+## AI Prompt
+${editingPrompts[prompt.id] || prompt.prompt}
+
+## Usage Guidelines
+${prompt.guidelines.map((g: string, i: number) => `${i + 1}. ${g}`).join('\n')}
+
+## Role of Human
+${prompt.roleOfHuman.map((r: string, i: number) => `${i + 1}. ${r}`).join('\n')}
+
+## Role of AI
+${prompt.roleOfAI.map((r: string, i: number) => `${i + 1}. ${r}`).join('\n')}
+
+## Human + AI Performance
+${prompt.humanAIPerformance}
+
+## Sample Input
+${prompt.sampleInput}
+
+## Sample Output
+${prompt.sampleOutput}
+
+## Ethical Considerations
+${prompt.ethicalConsiderations.map((e: string, i: number) => `${i + 1}. ${e}`).join('\n')}
+
+## Limitations
+${prompt.limitations.map((l: string, i: number) => `${i + 1}. ${l}`).join('\n')}
+`
+        const blob = new Blob([content], { type: 'text/markdown' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `stage-${prompt.stage}-${prompt.id}.md`
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
     }
 
     useEffect(() => {
@@ -827,12 +897,79 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
 
                                         {/* AI Prompt */}
                                         <div className="bg-white rounded-lg p-6 mb-6 border-l-4 border-indigo-500">
-                                            <h4 className="text-xl font-bold text-indigo-900 mb-3 flex items-center gap-2">
-                                                🤖 AI Prompt Template
-                                            </h4>
-                                            <pre className="text-sm text-gray-800 whitespace-pre-wrap font-mono bg-gray-50 p-4 rounded-lg overflow-x-auto">
-                                                {prompt.prompt}
-                                            </pre>
+                                            <div className="flex items-center justify-between mb-3">
+                                                <h4 className="text-xl font-bold text-indigo-900 flex items-center gap-2">
+                                                    🤖 AI Prompt Template
+                                                </h4>
+                                                <div className="flex items-center gap-2">
+                                                    <button
+                                                        onClick={() => copyToClipboard(editingPrompts[prompt.id] || prompt.prompt, prompt.id)}
+                                                        className="p-2 bg-indigo-100 hover:bg-indigo-200 rounded-lg transition-colors flex items-center gap-2 text-sm"
+                                                        title="Copy to clipboard"
+                                                    >
+                                                        {copiedStates[prompt.id] ? (
+                                                            <>
+                                                                <Check className="w-4 h-4 text-green-600" />
+                                                                <span className="text-green-600">Copied!</span>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <Copy className="w-4 h-4 text-indigo-600" />
+                                                                <span className="text-indigo-600">Copy</span>
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                    {!isEditing[prompt.id] ? (
+                                                        <button
+                                                            onClick={() => startEditing(prompt.id, prompt.prompt)}
+                                                            className="p-2 bg-blue-100 hover:bg-blue-200 rounded-lg transition-colors flex items-center gap-2 text-sm"
+                                                            title="Edit prompt"
+                                                        >
+                                                            <Edit3 className="w-4 h-4 text-blue-600" />
+                                                            <span className="text-blue-600">Edit</span>
+                                                        </button>
+                                                    ) : (
+                                                        <>
+                                                            <button
+                                                                onClick={() => saveEdit(prompt.id)}
+                                                                className="p-2 bg-green-100 hover:bg-green-200 rounded-lg transition-colors flex items-center gap-2 text-sm"
+                                                                title="Save changes"
+                                                            >
+                                                                <Save className="w-4 h-4 text-green-600" />
+                                                                <span className="text-green-600">Save</span>
+                                                            </button>
+                                                            <button
+                                                                onClick={() => resetPrompt(prompt.id, prompt.prompt)}
+                                                                className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-2 text-sm"
+                                                                title="Reset to original"
+                                                            >
+                                                                <RotateCcw className="w-4 h-4 text-gray-600" />
+                                                                <span className="text-gray-600">Reset</span>
+                                                            </button>
+                                                        </>
+                                                    )}
+                                                    <button
+                                                        onClick={() => downloadPrompt(prompt)}
+                                                        className="p-2 bg-purple-100 hover:bg-purple-200 rounded-lg transition-colors flex items-center gap-2 text-sm"
+                                                        title="Download as markdown"
+                                                    >
+                                                        <Download className="w-4 h-4 text-purple-600" />
+                                                        <span className="text-purple-600">Download</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            {!isEditing[prompt.id] ? (
+                                                <pre className="text-sm text-gray-800 whitespace-pre-wrap font-mono bg-gray-50 p-4 rounded-lg overflow-x-auto">
+                                                    {editingPrompts[prompt.id] || prompt.prompt}
+                                                </pre>
+                                            ) : (
+                                                <textarea
+                                                    value={editingPrompts[prompt.id] || prompt.prompt}
+                                                    onChange={(e) => setEditingPrompts({ ...editingPrompts, [prompt.id]: e.target.value })}
+                                                    className="w-full text-sm text-gray-800 font-mono bg-gray-50 p-4 rounded-lg border-2 border-indigo-300 focus:border-indigo-500 focus:outline-none min-h-[200px]"
+                                                    placeholder="Edit your prompt here..."
+                                                />
+                                            )}
                                         </div>
 
                                         {/* Usage Guidelines */}

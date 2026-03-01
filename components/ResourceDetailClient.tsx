@@ -733,14 +733,115 @@ ${prompt.limitations.map((l: string, i: number) => `${i + 1}. ${l}`).join('\n')}
 
                     {/* Comprehensive Content Display */}
                     <div className="bg-white rounded-xl shadow-lg p-8">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-8">Complete Resource Content</h2>
+                        {/* Dynamic Header Based on Resource Type */}
+                        <div className="mb-8">
+                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                                {resource.category === 'guide' && 'Comprehensive Guide'}
+                                {resource.category === 'template' && 'Ready-to-Use Templates'}
+                                {resource.category === 'tool' && 'Interactive Tool'}
+                                {resource.category === 'activity' && 'Hands-On Activities'}
+                            </h2>
 
-                        <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
-                            <p className="text-blue-900 font-medium">
-                                This resource contains comprehensive, detailed content to guide you through every aspect.
-                                All components include examples, tips, common mistakes, and step-by-step instructions.
-                            </p>
+                            {/* Resource-Specific Info Boxes */}
+                            {resource.category === 'guide' && (
+                                <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-l-4 border-blue-500 p-6 rounded-r-xl">
+                                    <div className="flex items-start gap-4">
+                                        <div className="flex-shrink-0 w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+                                            <BookOpen className="w-6 h-6 text-white" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-bold text-blue-900 mb-2">Complete Step-by-Step Guide</h3>
+                                            <p className="text-blue-800 leading-relaxed">
+                                                This comprehensive guide includes detailed explanations, real-world examples,
+                                                common mistakes to avoid, expert tips, and actionable strategies. Each section
+                                                is designed to help you master this aspect of research.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {resource.category === 'template' && (
+                                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 p-6 rounded-r-xl">
+                                    <div className="flex items-start gap-4">
+                                        <div className="flex-shrink-0 w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+                                            <Download className="w-6 h-6 text-white" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-bold text-green-900 mb-2">Professional Templates Collection</h3>
+                                            <p className="text-green-800 leading-relaxed">
+                                                Download ready-to-use templates for various research documents. Each template
+                                                follows best practices and includes helpful annotations. Simply customize with
+                                                your content and you're ready to go!
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {resource.category === 'tool' && (
+                                <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-500 p-6 rounded-r-xl">
+                                    <div className="flex items-start gap-4">
+                                        <div className="flex-shrink-0 w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+                                            <Lightbulb className="w-6 h-6 text-white" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-bold text-purple-900 mb-2">Interactive Research Tool</h3>
+                                            <p className="text-purple-800 leading-relaxed">
+                                                Use this interactive tool to enhance your research workflow. Features include
+                                                customizable prompts, usage guidelines, sample inputs/outputs, and ethical
+                                                considerations. Copy, edit, and download for your specific needs.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {resource.category === 'activity' && (
+                                <div className="bg-gradient-to-r from-orange-50 to-red-50 border-l-4 border-orange-500 p-6 rounded-r-xl">
+                                    <div className="flex items-start gap-4">
+                                        <div className="flex-shrink-0 w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center">
+                                            <CheckCircle className="w-6 h-6 text-white" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-bold text-orange-900 mb-2">Experiential Learning Activities</h3>
+                                            <p className="text-orange-800 leading-relaxed">
+                                                Learn by doing with these hands-on activities. Each activity includes clear
+                                                objectives, step-by-step instructions, required materials, expected outcomes,
+                                                and deliverables. Perfect for individual or group learning.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
+
+                        {/* Content Stats */}
+                        {content.data && Array.isArray(content.data) && content.data.length > 0 && (
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 text-center">
+                                    <div className="text-3xl font-bold text-blue-600 mb-1">{content.data.length}</div>
+                                    <div className="text-sm text-blue-800">
+                                        {resource.category === 'guide' && 'Components'}
+                                        {resource.category === 'template' && 'Templates'}
+                                        {resource.category === 'tool' && 'Prompts'}
+                                        {resource.category === 'activity' && 'Activities'}
+                                    </div>
+                                </div>
+                                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 text-center">
+                                    <div className="text-3xl font-bold text-green-600 mb-1">✓</div>
+                                    <div className="text-sm text-green-800">Examples Included</div>
+                                </div>
+                                <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 text-center">
+                                    <div className="text-3xl font-bold text-purple-600 mb-1">💡</div>
+                                    <div className="text-sm text-purple-800">Expert Tips</div>
+                                </div>
+                                <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 text-center">
+                                    <div className="text-3xl font-bold text-orange-600 mb-1">⚠</div>
+                                    <div className="text-sm text-orange-800">Common Mistakes</div>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Render content based on type */}
                         {content.data && Array.isArray(content.data) && content.data.map((item: any, idx: number) => (

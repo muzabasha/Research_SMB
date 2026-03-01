@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Download, CheckCircle, ExternalLink, BookOpen, AlertCircle, Lightbulb, XCircle, Maximize2, Minimize2, ChevronLeft, ChevronRight, Copy, Check, Edit3, Save, RotateCcw } from 'lucide-react'
+import { ArrowLeft, Download, CheckCircle, ExternalLink, BookOpen, AlertCircle, Lightbulb, XCircle, Maximize2, Minimize2, ChevronLeft, ChevronRight, Copy, Check, Edit3, Save, RotateCcw, Sparkles } from 'lucide-react'
 import type { ResourceItem } from '@/lib/resource-library'
 
 interface ResourceDetailClientProps {
@@ -971,207 +971,251 @@ ${prompt.limitations.map((l: string, i: number) => `${i + 1}. ${l}`).join('\n')}
                             </div>
                         )}
 
-                        {/* AI Research Prompts Display */}
+                        {/* AI Research Prompts Display - Enhanced */}
                         {content.type === 'ai-prompts' && content.data && (
-                            <div className="space-y-8">
+                            <div className="space-y-12">
+                                {/* Page Header */}
+                                <div className="text-center mb-12">
+                                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-4">
+                                        <Sparkles className="w-4 h-4" />
+                                        15 Stage-Specific AI Prompts
+                                    </div>
+                                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                                        Ethical Use of <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">AI in Research</span>
+                                    </h2>
+                                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                                        Domain-specific prompts with guidelines, examples, and ethical considerations for every research stage
+                                    </p>
+                                </div>
+
+                                {/* Prompts Grid */}
                                 {content.data.map((prompt: any, idx: number) => (
-                                    <div key={idx} className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-8 border-2 border-indigo-200 shadow-lg">
-                                        {/* Header */}
-                                        <div className="mb-6">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <span className="px-3 py-1 bg-indigo-600 text-white rounded-full text-sm font-semibold">
+                                    <div
+                                        key={idx}
+                                        id={`stage-${prompt.stage}`}
+                                        className="group bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-gray-100 hover:border-indigo-300"
+                                    >
+                                        {/* Header with Gradient */}
+                                        <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-6 md:p-8">
+                                            <div className="flex flex-wrap items-center gap-3 mb-4">
+                                                <span className="px-4 py-2 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-bold border border-white/30">
                                                     Stage {prompt.stage}
                                                 </span>
-                                                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-semibold">
+                                                <span className="px-4 py-2 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-semibold border border-white/30">
                                                     {prompt.phase}
                                                 </span>
-                                            </div>
-                                            <h3 className="text-3xl font-bold text-gray-900 mb-2">{prompt.stageName}</h3>
-                                            {prompt.subStage && (
-                                                <p className="text-lg text-gray-600 italic">{prompt.subStage}</p>
-                                            )}
-                                        </div>
-
-                                        {/* AI Prompt */}
-                                        <div className="bg-white rounded-lg p-6 mb-6 border-l-4 border-indigo-500">
-                                            <div className="flex items-center justify-between mb-3">
-                                                <h4 className="text-xl font-bold text-indigo-900 flex items-center gap-2">
-                                                    🤖 AI Prompt Template
-                                                </h4>
-                                                <div className="flex items-center gap-2">
-                                                    <button
-                                                        onClick={() => copyToClipboard(editingPrompts[prompt.id] || prompt.prompt, prompt.id)}
-                                                        className="p-2 bg-indigo-100 hover:bg-indigo-200 rounded-lg transition-colors flex items-center gap-2 text-sm"
-                                                        title="Copy to clipboard"
-                                                    >
-                                                        {copiedStates[prompt.id] ? (
-                                                            <>
-                                                                <Check className="w-4 h-4 text-green-600" />
-                                                                <span className="text-green-600">Copied!</span>
-                                                            </>
-                                                        ) : (
-                                                            <>
-                                                                <Copy className="w-4 h-4 text-indigo-600" />
-                                                                <span className="text-indigo-600">Copy</span>
-                                                            </>
-                                                        )}
-                                                    </button>
-                                                    {!isEditing[prompt.id] ? (
-                                                        <button
-                                                            onClick={() => startEditing(prompt.id, prompt.prompt)}
-                                                            className="p-2 bg-blue-100 hover:bg-blue-200 rounded-lg transition-colors flex items-center gap-2 text-sm"
-                                                            title="Edit prompt"
-                                                        >
-                                                            <Edit3 className="w-4 h-4 text-blue-600" />
-                                                            <span className="text-blue-600">Edit</span>
-                                                        </button>
-                                                    ) : (
-                                                        <>
-                                                            <button
-                                                                onClick={() => saveEdit(prompt.id)}
-                                                                className="p-2 bg-green-100 hover:bg-green-200 rounded-lg transition-colors flex items-center gap-2 text-sm"
-                                                                title="Save changes"
-                                                            >
-                                                                <Save className="w-4 h-4 text-green-600" />
-                                                                <span className="text-green-600">Save</span>
-                                                            </button>
-                                                            <button
-                                                                onClick={() => resetPrompt(prompt.id, prompt.prompt)}
-                                                                className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-2 text-sm"
-                                                                title="Reset to original"
-                                                            >
-                                                                <RotateCcw className="w-4 h-4 text-gray-600" />
-                                                                <span className="text-gray-600">Reset</span>
-                                                            </button>
-                                                        </>
-                                                    )}
-                                                    <button
-                                                        onClick={() => downloadPrompt(prompt)}
-                                                        className="p-2 bg-purple-100 hover:bg-purple-200 rounded-lg transition-colors flex items-center gap-2 text-sm"
-                                                        title="Download as markdown"
-                                                    >
-                                                        <Download className="w-4 h-4 text-purple-600" />
-                                                        <span className="text-purple-600">Download</span>
-                                                    </button>
+                                                <div className="ml-auto flex items-center gap-2">
+                                                    <span className="text-white/80 text-sm">#{prompt.id}</span>
                                                 </div>
                                             </div>
-                                            {!isEditing[prompt.id] ? (
-                                                <pre className="text-sm text-gray-800 whitespace-pre-wrap font-mono bg-gray-50 p-4 rounded-lg overflow-x-auto">
-                                                    {editingPrompts[prompt.id] || prompt.prompt}
-                                                </pre>
-                                            ) : (
-                                                <textarea
-                                                    value={editingPrompts[prompt.id] || prompt.prompt}
-                                                    onChange={(e) => setEditingPrompts({ ...editingPrompts, [prompt.id]: e.target.value })}
-                                                    className="w-full text-sm text-gray-800 font-mono bg-gray-50 p-4 rounded-lg border-2 border-indigo-300 focus:border-indigo-500 focus:outline-none min-h-[200px]"
-                                                    placeholder="Edit your prompt here..."
-                                                />
+                                            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">{prompt.stageName}</h3>
+                                            {prompt.subStage && (
+                                                <p className="text-xl text-white/90 italic">{prompt.subStage}</p>
                                             )}
                                         </div>
 
-                                        {/* Usage Guidelines */}
-                                        <div className="bg-blue-50 rounded-lg p-6 mb-6">
-                                            <h4 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
-                                                📋 Usage Guidelines
-                                            </h4>
-                                            <ul className="space-y-2">
-                                                {prompt.guidelines.map((guideline: string, gIdx: number) => (
-                                                    <li key={gIdx} className="text-sm text-blue-800 flex items-start gap-2">
-                                                        <span className="text-blue-600 mt-1">✓</span>
-                                                        <span>{guideline}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
+                                        <div className="p-6 md:p-8 space-y-6">
+                                            {/* AI Prompt Section - Enhanced */}
+                                            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-6 border-2 border-indigo-200">
+                                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                                                    <h4 className="text-2xl font-bold text-indigo-900 flex items-center gap-3">
+                                                        <span className="text-3xl">🤖</span>
+                                                        AI Prompt Template
+                                                    </h4>
+                                                    <div className="flex flex-wrap items-center gap-2">
+                                                        <button
+                                                            onClick={() => copyToClipboard(editingPrompts[prompt.id] || prompt.prompt, prompt.id)}
+                                                            className="px-4 py-2 bg-white hover:bg-indigo-50 rounded-lg transition-all flex items-center gap-2 text-sm font-medium shadow-sm border border-indigo-200 hover:border-indigo-300 hover:scale-105 transform"
+                                                            title="Copy to clipboard"
+                                                        >
+                                                            {copiedStates[prompt.id] ? (
+                                                                <>
+                                                                    <Check className="w-4 h-4 text-green-600" />
+                                                                    <span className="text-green-600 font-semibold">Copied!</span>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <Copy className="w-4 h-4 text-indigo-600" />
+                                                                    <span className="text-indigo-600">Copy</span>
+                                                                </>
+                                                            )}
+                                                        </button>
+                                                        {!isEditing[prompt.id] ? (
+                                                            <button
+                                                                onClick={() => startEditing(prompt.id, prompt.prompt)}
+                                                                className="px-4 py-2 bg-white hover:bg-blue-50 rounded-lg transition-all flex items-center gap-2 text-sm font-medium shadow-sm border border-blue-200 hover:border-blue-300 hover:scale-105 transform"
+                                                                title="Edit prompt"
+                                                            >
+                                                                <Edit3 className="w-4 h-4 text-blue-600" />
+                                                                <span className="text-blue-600">Edit</span>
+                                                            </button>
+                                                        ) : (
+                                                            <>
+                                                                <button
+                                                                    onClick={() => saveEdit(prompt.id)}
+                                                                    className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-all flex items-center gap-2 text-sm font-medium shadow-sm hover:scale-105 transform"
+                                                                    title="Save changes"
+                                                                >
+                                                                    <Save className="w-4 h-4" />
+                                                                    <span>Save</span>
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => resetPrompt(prompt.id, prompt.prompt)}
+                                                                    className="px-4 py-2 bg-white hover:bg-gray-50 rounded-lg transition-all flex items-center gap-2 text-sm font-medium shadow-sm border border-gray-200 hover:border-gray-300"
+                                                                    title="Reset to original"
+                                                                >
+                                                                    <RotateCcw className="w-4 h-4 text-gray-600" />
+                                                                    <span className="text-gray-600">Reset</span>
+                                                                </button>
+                                                            </>
+                                                        )}
+                                                        <button
+                                                            onClick={() => downloadPrompt(prompt)}
+                                                            className="px-4 py-2 bg-white hover:bg-purple-50 rounded-lg transition-all flex items-center gap-2 text-sm font-medium shadow-sm border border-purple-200 hover:border-purple-300 hover:scale-105 transform"
+                                                            title="Download as markdown"
+                                                        >
+                                                            <Download className="w-4 h-4 text-purple-600" />
+                                                            <span className="text-purple-600">Download</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                {!isEditing[prompt.id] ? (
+                                                    <pre className="text-sm text-gray-800 whitespace-pre-wrap font-mono bg-white p-6 rounded-xl border-2 border-indigo-100 overflow-x-auto leading-relaxed shadow-inner">
+                                                        {editingPrompts[prompt.id] || prompt.prompt}
+                                                    </pre>
+                                                ) : (
+                                                    <textarea
+                                                        value={editingPrompts[prompt.id] || prompt.prompt}
+                                                        onChange={(e) => setEditingPrompts({ ...editingPrompts, [prompt.id]: e.target.value })}
+                                                        className="w-full text-sm text-gray-800 font-mono bg-white p-6 rounded-xl border-2 border-indigo-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none min-h-[250px] shadow-inner"
+                                                        placeholder="Edit your prompt here..."
+                                                    />
+                                                )}
+                                            </div>
 
-                                        {/* Role of Human */}
-                                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-6 mb-6 border-2 border-green-200">
-                                            <h4 className="text-xl font-bold text-green-900 mb-4 flex items-center gap-2">
-                                                👤 Role of Human
-                                            </h4>
-                                            <ul className="space-y-2">
-                                                {prompt.roleOfHuman.map((role: string, rIdx: number) => (
-                                                    <li key={rIdx} className="text-sm text-green-800 flex items-start gap-2">
-                                                        <span className="text-green-600 mt-1 font-bold">→</span>
-                                                        <span>{role}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
+                                            {/* Two Column Layout for Roles */}
+                                            <div className="grid md:grid-cols-2 gap-6">
+                                                {/* Role of Human */}
+                                                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border-2 border-green-200 hover:shadow-lg transition-shadow">
+                                                    <h4 className="text-xl font-bold text-green-900 mb-4 flex items-center gap-3">
+                                                        <span className="text-2xl">👤</span>
+                                                        Role of Human
+                                                    </h4>
+                                                    <ul className="space-y-3">
+                                                        {prompt.roleOfHuman.map((role: string, rIdx: number) => (
+                                                            <li key={rIdx} className="text-sm text-green-800 flex items-start gap-3 leading-relaxed">
+                                                                <span className="text-green-600 mt-0.5 font-bold text-lg flex-shrink-0">→</span>
+                                                                <span>{role}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
 
-                                        {/* Role of AI */}
-                                        <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-6 mb-6 border-2 border-blue-200">
-                                            <h4 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
-                                                🤖 Role of AI
-                                            </h4>
-                                            <ul className="space-y-2">
-                                                {prompt.roleOfAI.map((role: string, rIdx: number) => (
-                                                    <li key={rIdx} className="text-sm text-blue-800 flex items-start gap-2">
-                                                        <span className="text-blue-600 mt-1 font-bold">→</span>
-                                                        <span>{role}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
+                                                {/* Role of AI */}
+                                                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6 border-2 border-blue-200 hover:shadow-lg transition-shadow">
+                                                    <h4 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-3">
+                                                        <span className="text-2xl">🤖</span>
+                                                        Role of AI
+                                                    </h4>
+                                                    <ul className="space-y-3">
+                                                        {prompt.roleOfAI.map((role: string, rIdx: number) => (
+                                                            <li key={rIdx} className="text-sm text-blue-800 flex items-start gap-3 leading-relaxed">
+                                                                <span className="text-blue-600 mt-0.5 font-bold text-lg flex-shrink-0">→</span>
+                                                                <span>{role}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
 
-                                        {/* Human + AI Performance */}
-                                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 mb-6 border-2 border-purple-200">
-                                            <h4 className="text-xl font-bold text-purple-900 mb-4 flex items-center gap-2">
-                                                🚀 Human + AI Performance
-                                            </h4>
-                                            <p className="text-sm text-purple-800 leading-relaxed">
-                                                {prompt.humanAIPerformance}
-                                            </p>
-                                        </div>
+                                            {/* Human + AI Performance - Highlighted */}
+                                            <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl p-6 text-white shadow-lg">
+                                                <h4 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                                                    <span className="text-3xl">🚀</span>
+                                                    Human + AI Performance
+                                                </h4>
+                                                <p className="text-base leading-relaxed text-white/95">
+                                                    {prompt.humanAIPerformance}
+                                                </p>
+                                            </div>
 
-                                        {/* Sample Input */}
-                                        <div className="bg-green-50 rounded-lg p-6 mb-6 border-l-4 border-green-500">
-                                            <h4 className="text-xl font-bold text-green-900 mb-3 flex items-center gap-2">
-                                                📝 Sample Input
-                                            </h4>
-                                            <pre className="text-sm text-green-800 whitespace-pre-wrap bg-white p-4 rounded-lg overflow-x-auto">
-                                                {prompt.sampleInput}
-                                            </pre>
-                                        </div>
+                                            {/* Usage Guidelines */}
+                                            <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
+                                                <h4 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-3">
+                                                    <span className="text-2xl">📋</span>
+                                                    Usage Guidelines
+                                                </h4>
+                                                <ul className="space-y-3">
+                                                    {prompt.guidelines.map((guideline: string, gIdx: number) => (
+                                                        <li key={gIdx} className="text-sm text-blue-800 flex items-start gap-3 leading-relaxed">
+                                                            <span className="text-blue-600 mt-0.5 font-bold text-lg flex-shrink-0">✓</span>
+                                                            <span>{guideline}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
 
-                                        {/* Sample Output */}
-                                        <div className="bg-purple-50 rounded-lg p-6 mb-6 border-l-4 border-purple-500">
-                                            <h4 className="text-xl font-bold text-purple-900 mb-3 flex items-center gap-2">
-                                                💡 Sample Output
-                                            </h4>
-                                            <pre className="text-sm text-purple-800 whitespace-pre-wrap bg-white p-4 rounded-lg overflow-x-auto max-h-96">
-                                                {prompt.sampleOutput}
-                                            </pre>
-                                        </div>
+                                            {/* Sample Input/Output - Collapsible */}
+                                            <details className="group/details bg-gradient-to-br from-gray-50 to-white rounded-xl border-2 border-gray-200 overflow-hidden">
+                                                <summary className="cursor-pointer p-6 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                                    <h4 className="text-xl font-bold text-gray-900 flex items-center gap-3">
+                                                        <span className="text-2xl">💡</span>
+                                                        Sample Input & Output
+                                                    </h4>
+                                                    <span className="text-gray-400 group-open/details:rotate-180 transition-transform">▼</span>
+                                                </summary>
+                                                <div className="p-6 pt-0 space-y-4">
+                                                    <div className="bg-green-50 rounded-lg p-5 border-l-4 border-green-500">
+                                                        <h5 className="text-base font-bold text-green-900 mb-3 flex items-center gap-2">
+                                                            📝 Sample Input
+                                                        </h5>
+                                                        <pre className="text-sm text-green-800 whitespace-pre-wrap leading-relaxed">
+                                                            {prompt.sampleInput}
+                                                        </pre>
+                                                    </div>
+                                                    <div className="bg-purple-50 rounded-lg p-5 border-l-4 border-purple-500">
+                                                        <h5 className="text-base font-bold text-purple-900 mb-3 flex items-center gap-2">
+                                                            💡 Sample Output
+                                                        </h5>
+                                                        <pre className="text-sm text-purple-800 whitespace-pre-wrap leading-relaxed max-h-96 overflow-y-auto">
+                                                            {prompt.sampleOutput}
+                                                        </pre>
+                                                    </div>
+                                                </div>
+                                            </details>
 
-                                        {/* Ethical Considerations */}
-                                        <div className="bg-yellow-50 rounded-lg p-6 mb-6">
-                                            <h4 className="text-xl font-bold text-yellow-900 mb-4 flex items-center gap-2">
-                                                ⚖️ Ethical Considerations
-                                            </h4>
-                                            <ul className="space-y-2">
-                                                {prompt.ethicalConsiderations.map((consideration: string, cIdx: number) => (
-                                                    <li key={cIdx} className="text-sm text-yellow-800 flex items-start gap-2">
-                                                        <span className="text-yellow-600 mt-1">⚠</span>
-                                                        <span>{consideration}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
+                                            {/* Ethical Considerations & Limitations */}
+                                            <div className="grid md:grid-cols-2 gap-6">
+                                                <div className="bg-yellow-50 rounded-xl p-6 border-2 border-yellow-200">
+                                                    <h4 className="text-xl font-bold text-yellow-900 mb-4 flex items-center gap-3">
+                                                        <span className="text-2xl">⚖️</span>
+                                                        Ethical Considerations
+                                                    </h4>
+                                                    <ul className="space-y-3">
+                                                        {prompt.ethicalConsiderations.map((consideration: string, cIdx: number) => (
+                                                            <li key={cIdx} className="text-sm text-yellow-800 flex items-start gap-3 leading-relaxed">
+                                                                <span className="text-yellow-600 mt-0.5 font-bold text-lg flex-shrink-0">⚠</span>
+                                                                <span>{consideration}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
 
-                                        {/* Limitations */}
-                                        <div className="bg-red-50 rounded-lg p-6">
-                                            <h4 className="text-xl font-bold text-red-900 mb-4 flex items-center gap-2">
-                                                🚫 Limitations
-                                            </h4>
-                                            <ul className="space-y-2">
-                                                {prompt.limitations.map((limitation: string, lIdx: number) => (
-                                                    <li key={lIdx} className="text-sm text-red-800 flex items-start gap-2">
-                                                        <span className="text-red-600 mt-1">!</span>
-                                                        <span>{limitation}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
+                                                <div className="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+                                                    <h4 className="text-xl font-bold text-red-900 mb-4 flex items-center gap-3">
+                                                        <span className="text-2xl">🚫</span>
+                                                        Limitations
+                                                    </h4>
+                                                    <ul className="space-y-3">
+                                                        {prompt.limitations.map((limitation: string, lIdx: number) => (
+                                                            <li key={lIdx} className="text-sm text-red-800 flex items-start gap-3 leading-relaxed">
+                                                                <span className="text-red-600 mt-0.5 font-bold text-lg flex-shrink-0">!</span>
+                                                                <span>{limitation}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
@@ -1187,8 +1231,8 @@ ${prompt.limitations.map((l: string, i: number) => `${i + 1}. ${l}`).join('\n')}
                             </div>
                         )}
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     )
 }

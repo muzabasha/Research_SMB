@@ -38,8 +38,11 @@ export interface Experiment {
 
 export interface ExperimentStep {
     stepNumber: number
+    title: string
+    description: string
     instruction: string
     action: string
+    example?: string
     visualization?: string
     checkpoint: string
 }
@@ -159,24 +162,35 @@ export const RESEARCH_VIRTUAL_LAB: VirtualLab = {
             procedure: [
                 {
                     stepNumber: 1,
+                    title: 'Define Research Topic',
+                    description: 'Start by clearly defining your research topic and generating relevant keywords',
                     instruction: 'Define your research topic and keywords',
                     action: 'Enter your research topic and generate 10-15 search keywords using the keyword generator tool',
+                    example: 'Topic: "AI in Healthcare", Keywords: machine learning, medical diagnosis, deep learning, healthcare AI, clinical decision support, etc.',
                     checkpoint: 'List of 10-15 relevant keywords generated'
                 },
                 {
                     stepNumber: 2,
+                    title: 'Search and Collect Papers',
+                    description: 'Use integrated search tools to find relevant research papers',
                     instruction: 'Search and collect papers',
                     action: 'Use the integrated search tool to find 30 papers from Google Scholar, IEEE, ACM',
+                    example: 'Search "machine learning AND medical diagnosis" in Google Scholar, filter by year (2020-2024), select highly cited papers',
                     checkpoint: '30 papers collected with metadata'
                 },
                 {
                     stepNumber: 3,
+                    title: 'Extract Information',
+                    description: 'Systematically extract key information from each paper',
                     instruction: 'Extract and organize information',
                     action: 'Use the paper analyzer to extract: problem, method, dataset, results, limitations',
+                    example: 'Paper 1: Problem=Early cancer detection, Method=CNN, Dataset=10K images, Results=92% accuracy, Limitations=Limited to one cancer type',
                     checkpoint: 'Structured data extracted from all papers'
                 },
                 {
                     stepNumber: 4,
+                    title: 'Visualize Patterns',
+                    description: 'Create visual analytics to identify trends and patterns',
                     instruction: 'Visualize patterns',
                     action: 'Generate visualization: timeline, method distribution, citation network',
                     visualization: 'Interactive charts showing trends and connections',
@@ -184,8 +198,11 @@ export const RESEARCH_VIRTUAL_LAB: VirtualLab = {
                 },
                 {
                     stepNumber: 5,
+                    title: 'Identify Research Gaps',
+                    description: 'Analyze patterns to identify meaningful research gaps',
                     instruction: 'Identify gaps',
                     action: 'Use gap analysis tool to identify: method gaps, application gaps, dataset gaps',
+                    example: 'Gap identified: Most papers use single-modal data, opportunity for multi-modal approaches',
                     checkpoint: 'List of 5-7 research gaps identified'
                 }
             ],
@@ -223,32 +240,47 @@ export const RESEARCH_VIRTUAL_LAB: VirtualLab = {
             procedure: [
                 {
                     stepNumber: 1,
+                    title: 'Load and Explore Dataset',
+                    description: 'Import your dataset and perform initial exploration',
                     instruction: 'Load and explore dataset',
                     action: 'Import dataset, check dimensions, data types, missing values, basic statistics',
+                    example: 'Dataset: 1000 rows × 15 columns, 3 missing values in age column, mean age=45.2',
                     checkpoint: 'Dataset loaded with summary statistics'
                 },
                 {
                     stepNumber: 2,
+                    title: 'Clean and Preprocess',
+                    description: 'Handle missing values and prepare data for analysis',
                     instruction: 'Clean and preprocess data',
                     action: 'Handle missing values, remove outliers, normalize/standardize if needed',
+                    example: 'Filled missing values with median, removed 5 outliers (>3 SD), normalized features to 0-1 range',
                     checkpoint: 'Clean dataset ready for analysis'
                 },
                 {
                     stepNumber: 3,
+                    title: 'Exploratory Analysis',
+                    description: 'Create visualizations to understand data distributions',
                     instruction: 'Perform exploratory analysis',
                     action: 'Create histograms, box plots, scatter plots to understand distributions and relationships',
+                    visualization: 'Distribution plots and correlation heatmap',
                     checkpoint: 'EDA visualizations created'
                 },
                 {
                     stepNumber: 4,
+                    title: 'Statistical Testing',
+                    description: 'Perform appropriate statistical tests',
                     instruction: 'Statistical testing',
                     action: 'Perform t-tests, ANOVA, chi-square tests based on research questions',
+                    example: 't-test: p=0.023 (significant difference between groups), Effect size: Cohen\'s d=0.65 (medium)',
                     checkpoint: 'Statistical test results with p-values'
                 },
                 {
                     stepNumber: 5,
+                    title: 'Create Publication Figures',
+                    description: 'Design clear, publication-quality visualizations',
                     instruction: 'Create publication-quality figures',
                     action: 'Design clear, informative visualizations following best practices',
+                    visualization: 'Publication-ready figures with proper labels and captions',
                     checkpoint: 'Publication-ready figures with captions'
                 }
             ],
@@ -286,32 +318,47 @@ export const RESEARCH_VIRTUAL_LAB: VirtualLab = {
             procedure: [
                 {
                     stepNumber: 1,
+                    title: 'Define Research Problem',
+                    description: 'Articulate a clear, compelling research problem that addresses a significant gap',
                     instruction: 'Define research problem',
                     action: 'Write problem statement, significance, and research questions',
+                    example: 'Problem: Current AI models for medical diagnosis lack explainability, limiting clinical adoption. Significance: Explainable AI can increase trust and adoption by 60%. Questions: How can we develop interpretable models without sacrificing accuracy?',
                     checkpoint: 'Clear problem definition (500 words)'
                 },
                 {
                     stepNumber: 2,
+                    title: 'Design Methodology',
+                    description: 'Develop a rigorous, feasible research methodology',
                     instruction: 'Design methodology',
                     action: 'Detail research design, methods, data collection, analysis plan',
+                    example: 'Design: Mixed-methods approach. Methods: Develop attention-based CNN, conduct user studies with 50 clinicians. Data: 10K medical images from 3 hospitals. Analysis: Quantitative (accuracy, F1) + Qualitative (interviews)',
                     checkpoint: 'Complete methodology section (1000 words)'
                 },
                 {
                     stepNumber: 3,
+                    title: 'Create Timeline and Budget',
+                    description: 'Plan realistic timeline with milestones and justify budget allocation',
                     instruction: 'Create timeline and budget',
                     action: 'Develop realistic timeline with milestones and detailed budget',
+                    example: 'Timeline: M1-6: Data collection, M7-12: Model development, M13-18: User studies, M19-24: Analysis & writing. Budget: Equipment ₹5L, Personnel ₹15L, Travel ₹3L, Consumables ₹2L = Total ₹25L',
                     checkpoint: 'Gantt chart and budget breakdown'
                 },
                 {
                     stepNumber: 4,
+                    title: 'Write Complete Proposal',
+                    description: 'Integrate all sections into a cohesive, compelling proposal',
                     instruction: 'Write complete proposal',
                     action: 'Integrate all sections: abstract, intro, lit review, methodology, timeline, budget',
+                    example: 'Abstract (250 words) → Introduction (1 page) → Literature Review (2 pages) → Methodology (2 pages) → Timeline (1 page) → Budget (1 page) → References',
                     checkpoint: 'Complete proposal draft (5-10 pages)'
                 },
                 {
                     stepNumber: 5,
+                    title: 'Peer Review Simulation',
+                    description: 'Submit to virtual reviewers, receive feedback, and revise strategically',
                     instruction: 'Peer review simulation',
                     action: 'Submit to virtual reviewer system, receive feedback, revise proposal',
+                    example: 'Reviewer 1: "Methodology unclear" → Added flowchart. Reviewer 2: "Budget high" → Justified with market rates. Reviewer 3: "Timeline ambitious" → Added contingency buffer',
                     checkpoint: 'Revised proposal based on feedback'
                 }
             ],
@@ -706,18 +753,18 @@ export function getToolsByCategory(category: 'analysis' | 'visualization' | 'com
     return RESEARCH_VIRTUAL_LAB.tools.filter(t => t.category === category)
 }
 
-export function getAllNEP2020Competencies(): string[] {
-    return RESEARCH_VIRTUAL_LAB.nep2020Alignment.competencies
-}
-
 export function getLabStatistics() {
     return {
         totalExperiments: RESEARCH_VIRTUAL_LAB.experiments.length,
         totalSimulations: RESEARCH_VIRTUAL_LAB.simulations.length,
         totalDatasets: RESEARCH_VIRTUAL_LAB.datasets.length,
         totalTools: RESEARCH_VIRTUAL_LAB.tools.length,
-        totalCollaborationSpaces: RESEARCH_VIRTUAL_LAB.collaborationSpaces.length,
         nep2020Competencies: RESEARCH_VIRTUAL_LAB.nep2020Alignment.competencies.length,
+        totalCollaborationSpaces: RESEARCH_VIRTUAL_LAB.collaborationSpaces.length,
         skillsDeveloped: RESEARCH_VIRTUAL_LAB.nep2020Alignment.skillsDeveloped.length
     }
+}
+
+export function getAllNEP2020Competencies(): string[] {
+    return RESEARCH_VIRTUAL_LAB.nep2020Alignment.competencies
 }

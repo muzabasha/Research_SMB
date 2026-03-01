@@ -163,9 +163,12 @@ export default function VirtualLabPage() {
                                     </div>
                                 </div>
 
-                                <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                                <Link
+                                    href={`/virtual-lab/experiment/${experiment.id}`}
+                                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                                >
                                     Start Experiment
-                                </button>
+                                </Link>
                             </div>
                         ))}
                     </div>
@@ -207,9 +210,12 @@ export default function VirtualLabPage() {
                                     ))}
                                 </div>
 
-                                <button className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold">
+                                <Link
+                                    href={`/virtual-lab/simulation/${simulation.id}`}
+                                    className="block w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold text-center"
+                                >
                                     Launch Simulation
-                                </button>
+                                </Link>
                             </div>
                         ))}
                     </div>
@@ -246,9 +252,12 @@ export default function VirtualLabPage() {
                                     </ul>
                                 </div>
 
-                                <button className="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-semibold text-sm">
+                                <Link
+                                    href={`/virtual-lab/tool/${tool.id}`}
+                                    className="block w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-semibold text-sm text-center"
+                                >
                                     Open Tool
-                                </button>
+                                </Link>
                             </div>
                         ))}
                     </div>

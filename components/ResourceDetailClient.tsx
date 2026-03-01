@@ -782,16 +782,37 @@ ${prompt.limitations.map((l: string, i: number) => `${i + 1}. ${l}`).join('\n')}
                             {resource.category === 'tool' && (
                                 <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-500 p-6 rounded-r-xl">
                                     <div className="flex items-start gap-4">
-                                        <div className="flex-shrink-0 w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
-                                            <Lightbulb className="w-6 h-6 text-white" />
+                                        <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                                            <Sparkles className="w-6 h-6 text-white" />
                                         </div>
-                                        <div>
-                                            <h3 className="text-lg font-bold text-purple-900 mb-2">Interactive Research Tool</h3>
-                                            <p className="text-purple-800 leading-relaxed">
-                                                Use this interactive tool to enhance your research workflow. Features include
-                                                customizable prompts, usage guidelines, sample inputs/outputs, and ethical
-                                                considerations. Copy, edit, and download for your specific needs.
+                                        <div className="flex-1">
+                                            <h3 className="text-lg font-bold text-purple-900 mb-2 flex items-center gap-2">
+                                                Interactive Research Tool
+                                                <span className="text-xs px-2 py-1 bg-purple-200 text-purple-700 rounded-full font-medium">AI-Powered</span>
+                                            </h3>
+                                            <p className="text-purple-800 leading-relaxed mb-3">
+                                                Leverage AI ethically throughout your research journey with stage-specific prompts,
+                                                guidelines, and best practices. Each prompt includes sample inputs/outputs,
+                                                role definitions for human and AI collaboration, and ethical considerations.
                                             </p>
+                                            <div className="flex flex-wrap gap-2 mt-3">
+                                                <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-700 rounded-lg text-xs font-medium">
+                                                    <Copy className="w-3 h-3" />
+                                                    Copy to Clipboard
+                                                </span>
+                                                <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-700 rounded-lg text-xs font-medium">
+                                                    <Edit3 className="w-3 h-3" />
+                                                    Edit & Customize
+                                                </span>
+                                                <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-700 rounded-lg text-xs font-medium">
+                                                    <Download className="w-3 h-3" />
+                                                    Download as Markdown
+                                                </span>
+                                                <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-700 rounded-lg text-xs font-medium">
+                                                    <CheckCircle className="w-3 h-3" />
+                                                    Ethical Guidelines
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

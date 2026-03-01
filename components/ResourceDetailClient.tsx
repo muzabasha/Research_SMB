@@ -804,6 +804,146 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
                             </div>
                         )}
 
+                        {/* AI Research Prompts Display */}
+                        {content.type === 'ai-prompts' && content.data && (
+                            <div className="space-y-8">
+                                {content.data.map((prompt: any, idx: number) => (
+                                    <div key={idx} className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-8 border-2 border-indigo-200 shadow-lg">
+                                        {/* Header */}
+                                        <div className="mb-6">
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <span className="px-3 py-1 bg-indigo-600 text-white rounded-full text-sm font-semibold">
+                                                    Stage {prompt.stage}
+                                                </span>
+                                                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-semibold">
+                                                    {prompt.phase}
+                                                </span>
+                                            </div>
+                                            <h3 className="text-3xl font-bold text-gray-900 mb-2">{prompt.stageName}</h3>
+                                            {prompt.subStage && (
+                                                <p className="text-lg text-gray-600 italic">{prompt.subStage}</p>
+                                            )}
+                                        </div>
+
+                                        {/* AI Prompt */}
+                                        <div className="bg-white rounded-lg p-6 mb-6 border-l-4 border-indigo-500">
+                                            <h4 className="text-xl font-bold text-indigo-900 mb-3 flex items-center gap-2">
+                                                🤖 AI Prompt Template
+                                            </h4>
+                                            <pre className="text-sm text-gray-800 whitespace-pre-wrap font-mono bg-gray-50 p-4 rounded-lg overflow-x-auto">
+                                                {prompt.prompt}
+                                            </pre>
+                                        </div>
+
+                                        {/* Usage Guidelines */}
+                                        <div className="bg-blue-50 rounded-lg p-6 mb-6">
+                                            <h4 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                                                📋 Usage Guidelines
+                                            </h4>
+                                            <ul className="space-y-2">
+                                                {prompt.guidelines.map((guideline: string, gIdx: number) => (
+                                                    <li key={gIdx} className="text-sm text-blue-800 flex items-start gap-2">
+                                                        <span className="text-blue-600 mt-1">✓</span>
+                                                        <span>{guideline}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        {/* Role of Human */}
+                                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-6 mb-6 border-2 border-green-200">
+                                            <h4 className="text-xl font-bold text-green-900 mb-4 flex items-center gap-2">
+                                                👤 Role of Human
+                                            </h4>
+                                            <ul className="space-y-2">
+                                                {prompt.roleOfHuman.map((role: string, rIdx: number) => (
+                                                    <li key={rIdx} className="text-sm text-green-800 flex items-start gap-2">
+                                                        <span className="text-green-600 mt-1 font-bold">→</span>
+                                                        <span>{role}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        {/* Role of AI */}
+                                        <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-6 mb-6 border-2 border-blue-200">
+                                            <h4 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                                                🤖 Role of AI
+                                            </h4>
+                                            <ul className="space-y-2">
+                                                {prompt.roleOfAI.map((role: string, rIdx: number) => (
+                                                    <li key={rIdx} className="text-sm text-blue-800 flex items-start gap-2">
+                                                        <span className="text-blue-600 mt-1 font-bold">→</span>
+                                                        <span>{role}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        {/* Human + AI Performance */}
+                                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 mb-6 border-2 border-purple-200">
+                                            <h4 className="text-xl font-bold text-purple-900 mb-4 flex items-center gap-2">
+                                                🚀 Human + AI Performance
+                                            </h4>
+                                            <p className="text-sm text-purple-800 leading-relaxed">
+                                                {prompt.humanAIPerformance}
+                                            </p>
+                                        </div>
+
+                                        {/* Sample Input */}
+                                        <div className="bg-green-50 rounded-lg p-6 mb-6 border-l-4 border-green-500">
+                                            <h4 className="text-xl font-bold text-green-900 mb-3 flex items-center gap-2">
+                                                📝 Sample Input
+                                            </h4>
+                                            <pre className="text-sm text-green-800 whitespace-pre-wrap bg-white p-4 rounded-lg overflow-x-auto">
+                                                {prompt.sampleInput}
+                                            </pre>
+                                        </div>
+
+                                        {/* Sample Output */}
+                                        <div className="bg-purple-50 rounded-lg p-6 mb-6 border-l-4 border-purple-500">
+                                            <h4 className="text-xl font-bold text-purple-900 mb-3 flex items-center gap-2">
+                                                💡 Sample Output
+                                            </h4>
+                                            <pre className="text-sm text-purple-800 whitespace-pre-wrap bg-white p-4 rounded-lg overflow-x-auto max-h-96">
+                                                {prompt.sampleOutput}
+                                            </pre>
+                                        </div>
+
+                                        {/* Ethical Considerations */}
+                                        <div className="bg-yellow-50 rounded-lg p-6 mb-6">
+                                            <h4 className="text-xl font-bold text-yellow-900 mb-4 flex items-center gap-2">
+                                                ⚖️ Ethical Considerations
+                                            </h4>
+                                            <ul className="space-y-2">
+                                                {prompt.ethicalConsiderations.map((consideration: string, cIdx: number) => (
+                                                    <li key={cIdx} className="text-sm text-yellow-800 flex items-start gap-2">
+                                                        <span className="text-yellow-600 mt-1">⚠</span>
+                                                        <span>{consideration}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        {/* Limitations */}
+                                        <div className="bg-red-50 rounded-lg p-6">
+                                            <h4 className="text-xl font-bold text-red-900 mb-4 flex items-center gap-2">
+                                                🚫 Limitations
+                                            </h4>
+                                            <ul className="space-y-2">
+                                                {prompt.limitations.map((limitation: string, lIdx: number) => (
+                                                    <li key={lIdx} className="text-sm text-red-800 flex items-start gap-2">
+                                                        <span className="text-red-600 mt-1">!</span>
+                                                        <span>{limitation}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
                         {/* No content message */}
                         {!content.data && content.type === 'info' && (
                             <div className="text-center py-12">

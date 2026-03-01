@@ -11,6 +11,7 @@ import { INDUSTRY_PROPOSAL_COMPONENTS } from '@/lib/industry-proposal-guide'
 import { PATENT_TYPES, PATENT_FILING_PROCESS } from '@/lib/patent-drafting-guide'
 import { getAllTemplates } from '@/lib/templates-data'
 import { getAllActivities } from '@/lib/interactive-activities'
+import { getAllPrompts } from '@/lib/ai-research-prompts'
 
 // Generate static params for all resources
 export function generateStaticParams() {
@@ -55,6 +56,8 @@ export default async function ResourceDetailPage({ params }: { params: Promise<{
                 return { type: 'templates', data: getAllTemplates() }
             case 'interactive-activities':
                 return { type: 'activities', data: getAllActivities() }
+            case 'ai-research-prompts':
+                return { type: 'ai-prompts', data: getAllPrompts() }
             default:
                 return { type: 'info', data: null }
         }

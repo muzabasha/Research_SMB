@@ -23,6 +23,27 @@ export const RESOURCE_CATEGORIES = [
 ]
 
 export const RESOURCE_LIBRARY: ResourceItem[] = [
+    // NEW: AI Research Prompts Tool
+    {
+        id: 'ai-research-prompts',
+        title: 'Ethical Use of AI in Research Journey',
+        description: 'Domain-specific AI prompts for each research stage with guidelines, sample inputs/outputs, and ethical considerations. Learn how to effectively use AI tools throughout your research journey while maintaining academic integrity.',
+        category: 'tool',
+        icon: '🤖',
+        color: 'indigo',
+        file: 'ai-research-prompts.ts',
+        features: [
+            'Stage-specific AI prompts for all 15 research stages',
+            'Detailed usage guidelines and best practices',
+            'Sample inputs and expected outputs for each prompt',
+            'Ethical considerations and limitations clearly stated',
+            'Domain-specific examples (Medical AI, Computer Science, etc.)',
+            'Covers literature review, experimentation, paper writing, and more'
+        ],
+        downloadable: false,
+        interactive: true
+    },
+
     // Guides
     {
         id: 'paper-writing-guide',

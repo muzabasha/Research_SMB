@@ -67,10 +67,35 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
                 })
             })
         } else if (content.type === 'ai-prompts' && content.data) {
-            // AI prompts slides - one slide per stage
+            // AI prompts slides - break each prompt into multiple slides
             content.data.forEach((prompt: any) => {
+                // Slide 1: Stage Overview
                 slides.push({
-                    type: 'ai-prompt',
+                    type: 'ai-prompt-overview',
+                    data: prompt
+                })
+
+                // Slide 2: AI Prompt
+                slides.push({
+                    type: 'ai-prompt-prompt',
+                    data: prompt
+                })
+
+                // Slide 3: Sample Input/Output
+                slides.push({
+                    type: 'ai-prompt-samples',
+                    data: prompt
+                })
+
+                // Slide 4: Human + AI Performance & Roles
+                slides.push({
+                    type: 'ai-prompt-roles',
+                    data: prompt
+                })
+
+                // Slide 5: Ethical Considerations & Limitations
+                slides.push({
+                    type: 'ai-prompt-ethics',
                     data: prompt
                 })
             })
@@ -493,88 +518,236 @@ ${prompt.limitations.map((l: string, i: number) => `${i + 1}. ${l}`).join('\n')}
                                 </div>
                             )}
 
-                            {/* AI Prompt Slide */}
-                            {slides[currentSlide]?.type === 'ai-prompt' && (
-                                <div className="space-y-4 sm:space-y-6 w-full py-2 sm:py-4 max-h-[calc(100vh-200px)] sm:max-h-[calc(100vh-280px)] overflow-y-auto pr-2 sm:pr-4">
-                                    <div className="sticky top-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pb-3 sm:pb-4 z-10">
-                                        <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                                            <span className="px-3 py-1 sm:px-4 sm:py-2 bg-indigo-600 text-white rounded-full text-xs sm:text-base font-semibold">
+                            {/* AI Prompt Slide 1: Overview */}
+                            {slides[currentSlide]?.type === 'ai-prompt-overview' && (
+                                <div className="space-y-6 sm:space-y-8 w-full py-4 sm:py-8 flex items-center justify-center">
+                                    <div className="text-center max-w-5xl">
+                                        <div className="flex items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                                            <span className="px-4 py-2 sm:px-6 sm:py-3 bg-indigo-600 text-white rounded-full text-base sm:text-2xl font-bold shadow-lg">
                                                 Stage {slides[currentSlide].data.stage}
                                             </span>
-                                            <span className="px-3 py-1 sm:px-4 sm:py-2 bg-purple-500/30 text-purple-100 rounded-full text-xs sm:text-base font-semibold">
+                                            <span className="px-4 py-2 sm:px-6 sm:py-3 bg-purple-500/30 text-purple-100 rounded-full text-base sm:text-2xl font-semibold border-2 border-purple-400">
                                                 {slides[currentSlide].data.phase}
                                             </span>
                                         </div>
-                                        <h2 className="text-2xl sm:text-5xl font-bold text-white mb-2 px-2">
+                                        <div className="text-6xl sm:text-9xl mb-6 sm:mb-8">🤖</div>
+                                        <h2 className="text-4xl sm:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
                                             {slides[currentSlide].data.stageName}
                                         </h2>
                                         {slides[currentSlide].data.subStage && (
-                                            <p className="text-base sm:text-2xl text-white/80 italic px-2">
+                                            <p className="text-xl sm:text-3xl text-white/80 italic mb-6 sm:mb-8">
                                                 {slides[currentSlide].data.subStage}
                                             </p>
                                         )}
+                                        <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-2xl p-6 sm:p-8 border-2 border-indigo-400/30">
+                                            <p className="text-lg sm:text-2xl text-white/90 leading-relaxed">
+                                                Use AI ethically and effectively at this stage of your research journey
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* AI Prompt Slide 2: The Prompt */}
+                            {slides[currentSlide]?.type === 'ai-prompt-prompt' && (
+                                <div className="space-y-4 sm:space-y-6 w-full py-2 sm:py-4 max-h-[calc(100vh-200px)] sm:max-h-[calc(100vh-280px)] overflow-y-auto pr-2 sm:pr-4">
+                                    <div className="sticky top-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pb-3 sm:pb-4 z-10">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <span className="px-3 py-1 bg-indigo-600 text-white rounded-full text-xs sm:text-sm font-semibold">
+                                                Stage {slides[currentSlide].data.stage}
+                                            </span>
+                                            <span className="text-white/60 text-xs sm:text-sm">•</span>
+                                            <span className="text-white/80 text-xs sm:text-sm font-medium">AI Prompt Template</span>
+                                        </div>
+                                        <h2 className="text-2xl sm:text-4xl font-bold text-white px-2">
+                                            🤖 AI Prompt Template
+                                        </h2>
                                     </div>
 
-                                    {/* AI Prompt */}
-                                    <div className="bg-indigo-500/20 rounded-xl p-4 sm:p-6 border border-indigo-400/30 mb-4 sm:mb-6">
-                                        <h3 className="text-xl sm:text-3xl font-bold text-indigo-100 mb-3 sm:mb-4 flex items-center gap-2">
-                                            🤖 AI Prompt
-                                        </h3>
-                                        <pre className="text-xs sm:text-lg text-indigo-100 whitespace-pre-wrap font-mono bg-indigo-900/30 p-3 sm:p-4 rounded-lg leading-relaxed">
+                                    <div className="bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-xl p-4 sm:p-6 border-2 border-indigo-400/30">
+                                        <div className="bg-indigo-900/40 rounded-lg p-4 sm:p-6 mb-4">
+                                            <p className="text-sm sm:text-lg text-indigo-200 mb-3">
+                                                <strong className="text-indigo-100">💡 How to use:</strong> Copy this template, fill in the placeholders with your specific information, and use it with any AI assistant (ChatGPT, Claude, Gemini, etc.)
+                                            </p>
+                                        </div>
+                                        <pre className="text-xs sm:text-base text-white whitespace-pre-wrap font-mono bg-slate-900/60 p-4 sm:p-6 rounded-lg leading-relaxed border border-indigo-400/20 shadow-inner">
                                             {slides[currentSlide].data.prompt}
                                         </pre>
                                     </div>
 
+                                    {/* Guidelines */}
+                                    {slides[currentSlide].data.guidelines && slides[currentSlide].data.guidelines.length > 0 && (
+                                        <div className="bg-blue-500/20 rounded-xl p-4 sm:p-6 border border-blue-400/30">
+                                            <h3 className="text-lg sm:text-2xl font-bold text-blue-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                                📋 Usage Guidelines
+                                            </h3>
+                                            <ul className="space-y-2 sm:space-y-3">
+                                                {slides[currentSlide].data.guidelines.map((guideline: string, idx: number) => (
+                                                    <li key={idx} className="text-sm sm:text-lg text-blue-100 flex items-start gap-2 sm:gap-3 leading-relaxed">
+                                                        <span className="text-blue-300 text-base sm:text-xl flex-shrink-0 mt-0.5">✓</span>
+                                                        <span>{guideline}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* AI Prompt Slide 3: Sample Input/Output */}
+                            {slides[currentSlide]?.type === 'ai-prompt-samples' && (
+                                <div className="space-y-4 sm:space-y-6 w-full py-2 sm:py-4 max-h-[calc(100vh-200px)] sm:max-h-[calc(100vh-280px)] overflow-y-auto pr-2 sm:pr-4">
+                                    <div className="sticky top-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pb-3 sm:pb-4 z-10">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <span className="px-3 py-1 bg-indigo-600 text-white rounded-full text-xs sm:text-sm font-semibold">
+                                                Stage {slides[currentSlide].data.stage}
+                                            </span>
+                                            <span className="text-white/60 text-xs sm:text-sm">•</span>
+                                            <span className="text-white/80 text-xs sm:text-sm font-medium">Examples</span>
+                                        </div>
+                                        <h2 className="text-2xl sm:text-4xl font-bold text-white px-2">
+                                            📝 Sample Input & Output
+                                        </h2>
+                                    </div>
+
+                                    {/* Sample Input */}
+                                    <div className="bg-green-500/20 rounded-xl p-4 sm:p-6 border-2 border-green-400/30">
+                                        <h3 className="text-xl sm:text-3xl font-bold text-green-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                            📥 Sample Input
+                                        </h3>
+                                        <div className="bg-green-900/30 rounded-lg p-4 sm:p-5">
+                                            <pre className="text-xs sm:text-base text-green-100 whitespace-pre-wrap leading-relaxed">
+                                                {slides[currentSlide].data.sampleInput}
+                                            </pre>
+                                        </div>
+                                    </div>
+
+                                    {/* Sample Output */}
+                                    <div className="bg-blue-500/20 rounded-xl p-4 sm:p-6 border-2 border-blue-400/30">
+                                        <h3 className="text-xl sm:text-3xl font-bold text-blue-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                            📤 Sample Output
+                                        </h3>
+                                        <div className="bg-blue-900/30 rounded-lg p-4 sm:p-5">
+                                            <pre className="text-xs sm:text-base text-blue-100 whitespace-pre-wrap leading-relaxed">
+                                                {slides[currentSlide].data.sampleOutput}
+                                            </pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* AI Prompt Slide 4: Roles & Performance */}
+                            {slides[currentSlide]?.type === 'ai-prompt-roles' && (
+                                <div className="space-y-4 sm:space-y-6 w-full py-2 sm:py-4 max-h-[calc(100vh-200px)] sm:max-h-[calc(100vh-280px)] overflow-y-auto pr-2 sm:pr-4">
+                                    <div className="sticky top-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pb-3 sm:pb-4 z-10">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <span className="px-3 py-1 bg-indigo-600 text-white rounded-full text-xs sm:text-sm font-semibold">
+                                                Stage {slides[currentSlide].data.stage}
+                                            </span>
+                                            <span className="text-white/60 text-xs sm:text-sm">•</span>
+                                            <span className="text-white/80 text-xs sm:text-sm font-medium">Collaboration</span>
+                                        </div>
+                                        <h2 className="text-2xl sm:text-4xl font-bold text-white px-2">
+                                            🤝 Human-AI Collaboration
+                                        </h2>
+                                    </div>
+
                                     {/* Human + AI Performance */}
-                                    <div className="bg-purple-500/20 rounded-xl p-4 sm:p-6 border border-purple-400/30 mb-4 sm:mb-6">
+                                    <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-4 sm:p-6 border-2 border-purple-400/30">
                                         <h3 className="text-xl sm:text-3xl font-bold text-purple-100 mb-3 sm:mb-4 flex items-center gap-2">
                                             🚀 Human + AI Performance
                                         </h3>
-                                        <p className="text-sm sm:text-xl text-purple-100 leading-relaxed">
+                                        <p className="text-sm sm:text-xl text-purple-100 leading-relaxed bg-purple-900/30 p-4 sm:p-5 rounded-lg">
                                             {slides[currentSlide].data.humanAIPerformance}
                                         </p>
                                     </div>
 
-                                    {/* Role of Human */}
-                                    <div className="bg-green-500/20 rounded-xl p-4 sm:p-6 border border-green-400/30 mb-4 sm:mb-6">
-                                        <h3 className="text-xl sm:text-3xl font-bold text-green-100 mb-3 sm:mb-4 flex items-center gap-2">
-                                            👤 Role of Human
-                                        </h3>
-                                        <ul className="space-y-2 sm:space-y-3">
-                                            {slides[currentSlide].data.roleOfHuman.slice(0, 4).map((role: string, idx: number) => (
-                                                <li key={idx} className="text-sm sm:text-xl text-green-100 flex items-start gap-2 sm:gap-3 leading-relaxed">
-                                                    <span className="text-green-300 text-base sm:text-2xl flex-shrink-0">→</span>
-                                                    <span>{role}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
+                                    {/* Two Column Layout for Roles */}
+                                    <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+                                        {/* Role of Human */}
+                                        <div className="bg-green-500/20 rounded-xl p-4 sm:p-6 border-2 border-green-400/30">
+                                            <h3 className="text-lg sm:text-2xl font-bold text-green-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                                👤 Role of Human
+                                            </h3>
+                                            <ul className="space-y-2 sm:space-y-3">
+                                                {slides[currentSlide].data.roleOfHuman.map((role: string, idx: number) => (
+                                                    <li key={idx} className="text-xs sm:text-base text-green-100 flex items-start gap-2 leading-relaxed">
+                                                        <span className="text-green-300 text-sm sm:text-lg flex-shrink-0 mt-0.5">→</span>
+                                                        <span>{role}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
 
-                                    {/* Role of AI */}
-                                    <div className="bg-blue-500/20 rounded-xl p-4 sm:p-6 border border-blue-400/30 mb-4 sm:mb-6">
-                                        <h3 className="text-xl sm:text-3xl font-bold text-blue-100 mb-3 sm:mb-4 flex items-center gap-2">
-                                            🤖 Role of AI
-                                        </h3>
-                                        <ul className="space-y-2 sm:space-y-3">
-                                            {slides[currentSlide].data.roleOfAI.slice(0, 4).map((role: string, idx: number) => (
-                                                <li key={idx} className="text-sm sm:text-xl text-blue-100 flex items-start gap-2 sm:gap-3 leading-relaxed">
-                                                    <span className="text-blue-300 text-base sm:text-2xl flex-shrink-0">→</span>
-                                                    <span>{role}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                        {/* Role of AI */}
+                                        <div className="bg-blue-500/20 rounded-xl p-4 sm:p-6 border-2 border-blue-400/30">
+                                            <h3 className="text-lg sm:text-2xl font-bold text-blue-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                                🤖 Role of AI
+                                            </h3>
+                                            <ul className="space-y-2 sm:space-y-3">
+                                                {slides[currentSlide].data.roleOfAI.map((role: string, idx: number) => (
+                                                    <li key={idx} className="text-xs sm:text-base text-blue-100 flex items-start gap-2 leading-relaxed">
+                                                        <span className="text-blue-300 text-sm sm:text-lg flex-shrink-0 mt-0.5">→</span>
+                                                        <span>{role}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* AI Prompt Slide 5: Ethics & Limitations */}
+                            {slides[currentSlide]?.type === 'ai-prompt-ethics' && (
+                                <div className="space-y-4 sm:space-y-6 w-full py-2 sm:py-4 max-h-[calc(100vh-200px)] sm:max-h-[calc(100vh-280px)] overflow-y-auto pr-2 sm:pr-4">
+                                    <div className="sticky top-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pb-3 sm:pb-4 z-10">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <span className="px-3 py-1 bg-indigo-600 text-white rounded-full text-xs sm:text-sm font-semibold">
+                                                Stage {slides[currentSlide].data.stage}
+                                            </span>
+                                            <span className="text-white/60 text-xs sm:text-sm">•</span>
+                                            <span className="text-white/80 text-xs sm:text-sm font-medium">Ethics & Limitations</span>
+                                        </div>
+                                        <h2 className="text-2xl sm:text-4xl font-bold text-white px-2">
+                                            ⚖️ Responsible AI Use
+                                        </h2>
                                     </div>
 
                                     {/* Ethical Considerations */}
-                                    <div className="bg-yellow-500/20 rounded-xl p-4 sm:p-6 border border-yellow-400/30">
+                                    <div className="bg-yellow-500/20 rounded-xl p-4 sm:p-6 border-2 border-yellow-400/30">
                                         <h3 className="text-xl sm:text-3xl font-bold text-yellow-100 mb-3 sm:mb-4 flex items-center gap-2">
                                             ⚖️ Ethical Considerations
                                         </h3>
+                                        <div className="bg-yellow-900/30 rounded-lg p-4 sm:p-5 mb-4">
+                                            <p className="text-sm sm:text-lg text-yellow-200 mb-3">
+                                                <strong className="text-yellow-100">⚠️ Important:</strong> Always use AI ethically and responsibly. Follow these guidelines to maintain academic integrity.
+                                            </p>
+                                        </div>
                                         <ul className="space-y-2 sm:space-y-3">
                                             {slides[currentSlide].data.ethicalConsiderations.map((consideration: string, idx: number) => (
-                                                <li key={idx} className="text-sm sm:text-xl text-yellow-100 flex items-start gap-2 sm:gap-3 leading-relaxed">
-                                                    <span className="text-yellow-300 text-base sm:text-2xl flex-shrink-0">⚠</span>
+                                                <li key={idx} className="text-sm sm:text-lg text-yellow-100 flex items-start gap-2 sm:gap-3 leading-relaxed">
+                                                    <span className="text-yellow-300 text-base sm:text-xl flex-shrink-0 mt-0.5">⚠</span>
                                                     <span>{consideration}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    {/* Limitations */}
+                                    <div className="bg-red-500/20 rounded-xl p-4 sm:p-6 border-2 border-red-400/30">
+                                        <h3 className="text-xl sm:text-3xl font-bold text-red-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                            🚫 Limitations to Be Aware Of
+                                        </h3>
+                                        <div className="bg-red-900/30 rounded-lg p-4 sm:p-5 mb-4">
+                                            <p className="text-sm sm:text-lg text-red-200">
+                                                <strong className="text-red-100">⚠️ Remember:</strong> AI has limitations. Always verify, validate, and use human judgment.
+                                            </p>
+                                        </div>
+                                        <ul className="space-y-2 sm:space-y-3">
+                                            {slides[currentSlide].data.limitations.map((limitation: string, idx: number) => (
+                                                <li key={idx} className="text-sm sm:text-lg text-red-100 flex items-start gap-2 sm:gap-3 leading-relaxed">
+                                                    <span className="text-red-300 text-base sm:text-xl flex-shrink-0 mt-0.5">✗</span>
+                                                    <span>{limitation}</span>
                                                 </li>
                                             ))}
                                         </ul>

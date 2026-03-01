@@ -25,18 +25,38 @@ export const AI_RESEARCH_PROMPTS: AIPrompt[] = [
         phase: 'Foundation',
         stageName: 'Domain Discovery',
         subStage: 'Exploring Research Domains',
-        prompt: `I am a [your role: student/faculty/researcher] interested in exploring research domains in [broad field: e.g., Computer Science, Biology, Engineering]. 
+        prompt: `**CONTEXT**: I am at Stage 1 of my research journey - Domain Discovery. I need to explore and select a research domain that aligns with my interests, skills, and available resources.
 
-Please help me:
-1. Identify 5 emerging research domains in this field
-2. For each domain, provide:
-   - Brief description (2-3 sentences)
-   - Current trends and hot topics
-   - Potential research gaps
-   - Required foundational knowledge
-3. Suggest which domain might be suitable for a [beginner/intermediate/advanced] researcher
+**MY PROFILE**:
+- Role: [student/faculty/researcher]
+- Field: [broad field: e.g., Computer Science, Biology, Engineering]
+- Experience Level: [beginner/intermediate/advanced]
+- Background: [Your educational background and skills]
+- Interests: [Specific topics or applications that excite you]
+- Constraints: [Time: X months/years, Budget: available/limited, Resources: lab access/computational resources]
 
-Context: [Add any specific interests, background, or constraints]`,
+**WHAT I NEED**:
+1. Identify 5 emerging research domains in my field
+2. For EACH domain, provide:
+   - Brief description (2-3 sentences explaining what it is)
+   - Current trends and hot topics (what's happening now in 2024-2026)
+   - Potential research gaps (unexplored areas with high impact)
+   - Required foundational knowledge (what I need to learn)
+   - Career prospects (academic/industry opportunities)
+   - Estimated time to become productive (months to first publication)
+3. Recommend which domain suits my profile best and WHY
+
+**OUTPUT FORMAT**:
+- Use clear headings for each domain
+- Provide specific examples of recent breakthroughs
+- Include 2-3 top conferences/journals for each domain
+- Suggest 3-5 key researchers to follow in each domain
+
+**QUALITY CRITERIA**:
+- Domains should be emerging (not saturated)
+- Should have active research community
+- Should align with my stated interests
+- Should be feasible given my constraints`,
         guidelines: [
             'Replace placeholders with your specific information',
             'Be specific about your background and interests',
@@ -44,11 +64,22 @@ Context: [Add any specific interests, background, or constraints]`,
             'Ask follow-up questions to narrow down domains',
             'Verify AI suggestions with recent literature'
         ],
-        sampleInput: `I am a final year Computer Science student interested in exploring research domains in Artificial Intelligence. 
+        sampleInput: `**CONTEXT**: I am at Stage 1 of my research journey - Domain Discovery. I need to explore and select a research domain that aligns with my interests, skills, and available resources.
 
-Please help me identify 5 emerging research domains, provide descriptions, trends, gaps, and required knowledge for each.
+**MY PROFILE**:
+- Role: Final year Computer Science student
+- Field: Artificial Intelligence
+- Experience Level: Beginner (no prior research experience)
+- Background: Strong programming in Python, Java; Basic ML knowledge (completed online courses); Good at mathematics
+- Interests: Healthcare applications, solving real-world problems, working with data
+- Constraints: Time: 2 years for Masters, Budget: Limited (student budget), Resources: University GPU cluster available
 
-Context: I have strong programming skills in Python, basic knowledge of machine learning, and interest in healthcare applications.`,
+**WHAT I NEED**:
+Identify 5 emerging AI research domains with all details as specified above.
+
+**OUTPUT FORMAT**: As requested with clear headings, examples, conferences, and key researchers.
+
+**QUALITY CRITERIA**: Domains should be beginner-friendly, have healthcare applications, and be feasible with available resources.`,
         sampleOutput: `Based on your background, here are 5 emerging AI research domains:
 
 1. Explainable AI (XAI) in Healthcare
@@ -118,17 +149,51 @@ Recommendation for Beginner: Start with Explainable AI in Healthcare - it aligns
         phase: 'Foundation',
         stageName: 'Literature Review',
         subStage: 'Systematic Literature Search',
-        prompt: `I am conducting a literature review on [specific research topic]. 
+        prompt: `**CONTEXT**: I am at Stage 2 of my research journey - Literature Review. I need to conduct a systematic and comprehensive review of existing research in my chosen area.
 
-Please help me:
-1. Generate 10 relevant search queries for academic databases
-2. Suggest key authors and research groups in this area
-3. Identify seminal papers (foundational works) I should read first
-4. Recommend recent survey/review papers (last 2-3 years)
-5. Suggest related keywords and synonyms for comprehensive search
+**MY RESEARCH TOPIC**: [Specific research topic - be as specific as possible]
 
-My research focus: [Describe your specific angle or research question]
-Target: [Number] papers to review`,
+**MY PROFILE**:
+- Research Focus: [Your specific angle or research question]
+- Target Papers: [Number of papers you plan to review: 30/50/100]
+- Timeline: [Weeks available for literature review]
+- Access: [Databases available: IEEE, ACM, PubMed, Google Scholar, etc.]
+- Prior Knowledge: [Familiarity with the topic: none/basic/intermediate]
+
+**WHAT I NEED**:
+1. Generate 10-15 targeted search queries for academic databases
+   - Include Boolean operators (AND, OR, NOT)
+   - Provide both broad and narrow queries
+   - Suggest database-specific syntax if needed
+2. Identify key authors and research groups
+   - Include their affiliations and recent work
+   - Suggest which authors to prioritize
+3. List seminal papers (foundational works)
+   - Papers that defined the field
+   - Most-cited works (with approximate citation counts)
+   - Papers I MUST read first
+4. Recommend recent survey/review papers (2022-2026)
+   - Comprehensive surveys that provide field overview
+   - Recent systematic reviews
+5. Suggest related keywords, synonyms, and alternative terms
+   - Include domain-specific terminology
+   - Suggest acronyms and their expansions
+6. Provide a reading order strategy
+   - Which papers to read first, second, third
+   - How to organize papers (by theme/chronology/methodology)
+
+**OUTPUT FORMAT**:
+- Organize search queries by specificity (broad → narrow)
+- Group authors by sub-area or research group
+- Rank seminal papers by importance
+- Include DOI or links where possible
+- Provide a suggested 4-week reading plan
+
+**QUALITY CRITERIA**:
+- Queries should cover all aspects of my research focus
+- Authors should be currently active (publications in last 3 years)
+- Seminal papers should be highly cited and foundational
+- Surveys should be recent and comprehensive`,
         guidelines: [
             'Start with broad queries, then narrow down',
             'Use AI-suggested keywords in actual database searches',
@@ -136,12 +201,22 @@ Target: [Number] papers to review`,
             'Always read the actual papers - do not rely on AI summaries',
             'Use AI to organize and categorize found papers'
         ],
-        sampleInput: `I am conducting a literature review on "Explainable AI for Medical Image Diagnosis". 
+        sampleInput: `**CONTEXT**: I am at Stage 2 of my research journey - Literature Review. I need to conduct a systematic and comprehensive review of existing research in my chosen area.
 
-Please help me generate search queries, suggest key authors, identify seminal papers, recommend recent surveys, and suggest related keywords.
+**MY RESEARCH TOPIC**: Explainable AI for Medical Image Diagnosis
 
-My research focus: Understanding how XAI techniques improve trust and adoption of AI in radiology
-Target: 50 papers to review`,
+**MY PROFILE**:
+- Research Focus: Understanding how XAI techniques improve trust and adoption of AI in radiology, specifically for X-ray and CT scan interpretation
+- Target Papers: 50 papers (30 core papers + 20 related papers)
+- Timeline: 4 weeks available for literature review
+- Access: IEEE Xplore, ACM Digital Library, PubMed, Google Scholar, arXiv
+- Prior Knowledge: Basic understanding of deep learning and medical imaging, no prior XAI knowledge
+
+**WHAT I NEED**: All items as specified above (search queries, authors, seminal papers, surveys, keywords, reading strategy)
+
+**OUTPUT FORMAT**: As requested with organization, ranking, and 4-week reading plan
+
+**QUALITY CRITERIA**: Focus on radiology applications, include both XAI methods and clinical validation studies, prioritize papers with code/datasets available`,
         sampleOutput: `Search Queries:
 1. "explainable AI" AND "medical imaging" AND diagnosis
 2. "interpretable machine learning" AND radiology
@@ -210,20 +285,54 @@ interpretability, transparency, trust, clinical decision support, CAD systems, s
         phase: 'Foundation',
         stageName: 'Research Gap Identification',
         subStage: 'Finding Research Opportunities',
-        prompt: `I have read [number] papers on [research topic]. Help me identify meaningful research gaps.
+        prompt: `**CONTEXT**: I am at Stage 3 of my research journey - Research Gap Identification. I have completed my literature review and now need to identify meaningful, novel research gaps that I can pursue.
 
-Please analyze and suggest:
-1. 5-7 potential research gaps based on common patterns in literature
-2. For each gap, classify the type: Knowledge gap, Method gap, Theory gap, Application gap, or Population gap
-3. Evaluate each gap using NIFI criteria:
-   - Novel: Is it truly unexplored?
-   - Important: Does it matter to the field?
-   - Feasible: Can it be done with available resources?
-   - Interesting: Does it excite researchers?
-4. Suggest validation methods for each gap
-5. Recommend which gap might be most suitable for a [PhD/Masters/Faculty] researcher
+**MY LITERATURE REVIEW SUMMARY**:
+- Topic: [Your research topic]
+- Papers Read: [Number of papers reviewed]
+- Key Findings: [Main conclusions from your review]
+- Common Limitations: [Limitations mentioned across multiple papers]
+- Future Work Suggestions: [What authors suggested for future research]
+- Methodological Patterns: [Common methods used, their strengths/weaknesses]
 
-Context: [Describe your literature review findings, common limitations you noticed, and your research interests]`,
+**MY PROFILE**:
+- Degree Level: [PhD/Masters/Faculty/Postdoc]
+- Timeline: [Years available for research]
+- Resources: [Computational resources, datasets, lab equipment, funding]
+- Skills: [Technical skills, domain knowledge]
+- Collaboration: [Access to collaborators, industry partners, clinical partners]
+- Career Goals: [Academic/Industry/Entrepreneurship]
+
+**WHAT I NEED**:
+1. Identify 5-7 potential research gaps based on my literature review
+2. For EACH gap, provide:
+   - Gap Type: Knowledge/Method/Theory/Application/Population gap
+   - Detailed Description: What exactly is missing or unexplored
+   - NIFI Evaluation:
+     * Novel: Is it truly unexplored? (✓/✓✓/✓✓✓)
+     * Important: Does it matter to the field? (✓/✓✓/✓✓✓)
+     * Feasible: Can I do it with my resources? (✓/✓✓/✓✓✓)
+     * Interesting: Will it excite researchers and reviewers? (✓/✓✓/✓✓✓)
+   - Evidence of Gap: Which papers hint at this gap
+   - Potential Impact: How will filling this gap advance the field
+   - Required Resources: What I need to address this gap
+   - Estimated Timeline: Months to first results/publication
+   - Risk Level: Low/Medium/High (and why)
+3. Validation Strategy: How to verify each gap is truly novel
+4. Ranking: Which gaps are best suited for my profile and why
+5. Next Steps: Immediate actions to validate top 3 gaps
+
+**OUTPUT FORMAT**:
+- Present gaps in order of suitability for my profile
+- Use comparison table for NIFI scores
+- Highlight top 3 recommended gaps
+- Provide specific paper citations as evidence
+
+**QUALITY CRITERIA**:
+- Gaps should be specific and well-defined (not vague)
+- Should be validated against recent literature (2023-2026)
+- Should align with my resources and timeline
+- Should have clear success criteria and deliverables`,
         guidelines: [
             'Provide specific examples from papers you read',
             'Mention limitations and future work sections you found',
@@ -231,9 +340,29 @@ Context: [Describe your literature review findings, common limitations you notic
             'Ask AI to help validate if gap is truly novel',
             'Discuss top 3 gaps with your supervisor before finalizing'
         ],
-        sampleInput: `I have read 25 papers on "Federated Learning for Healthcare". Help me identify meaningful research gaps.
+        sampleInput: `**CONTEXT**: I am at Stage 3 of my research journey - Research Gap Identification. I have completed my literature review and now need to identify meaningful, novel research gaps that I can pursue.
 
-Context: Most papers focus on image data (X-rays, MRIs). Few address multi-modal data (combining images, text, genomics). Common limitations: non-IID data distribution, communication overhead, privacy-utility tradeoff. I'm a PhD student with strong ML background and access to healthcare datasets.`,
+**MY LITERATURE REVIEW SUMMARY**:
+- Topic: Federated Learning for Healthcare
+- Papers Read: 25 papers (15 core FL papers, 10 healthcare AI papers)
+- Key Findings: FL works well for image data (X-rays, MRIs), most focus on single modality, privacy-preserving techniques are mature
+- Common Limitations: Non-IID data distribution (mentioned in 18/25 papers), communication overhead (15/25 papers), limited multi-modal approaches (only 3/25 papers)
+- Future Work Suggestions: Authors suggest exploring multi-modal FL, adaptive communication, handling missing modalities
+- Methodological Patterns: FedAvg is baseline, most use differential privacy, few validate in real clinical settings
+
+**MY PROFILE**:
+- Degree Level: PhD (Year 1, 3 years remaining)
+- Timeline: 3 years for PhD completion
+- Resources: 4 GPUs (V100), synthetic healthcare datasets, potential access to hospital data through collaborator
+- Skills: Strong ML/DL, Python/PyTorch, basic distributed systems, no prior FL experience
+- Collaboration: One professor (ML expert), one hospital collaborator (radiologist)
+- Career Goals: Academic research position, focus on healthcare AI
+
+**WHAT I NEED**: All items as specified above (5-7 gaps with detailed analysis, NIFI evaluation, validation strategy, ranking, next steps)
+
+**OUTPUT FORMAT**: As requested with comparison table, citations, and top 3 recommendations
+
+**QUALITY CRITERIA**: Gaps should be publishable in top-tier venues (NeurIPS, ICML, MICCAI), feasible within 3 years, have clinical impact`,
         sampleOutput: `Based on your literature review, here are 7 potential research gaps:
 
 1. **Multi-Modal Federated Learning for Healthcare** (Application Gap)
@@ -308,20 +437,67 @@ Recommendation for PhD: Gap #1 (Multi-Modal FL) or Gap #4 (Explainable FL) - bot
         phase: 'Execution',
         stageName: 'Research Implementation',
         subStage: 'Building Your Solution',
-        prompt: `I am implementing my research on [research topic]. Help me plan and execute systematically.
+        prompt: `**CONTEXT**: I am at Stage 4 of my research journey - Research Implementation. I have identified my research gap and now need to systematically plan and execute my research project.
 
-Please help me:
-1. Break down my research into 2-week sprints with clear deliverables
-2. Suggest experimental design and methodology
-3. Identify potential technical challenges and solutions
-4. Recommend tools, libraries, and frameworks
-5. Create a data collection and analysis plan
-6. Suggest documentation practices for reproducibility
+**MY RESEARCH PROJECT**:
+- Research Topic: [Your specific research problem]
+- Research Goal: [What you want to achieve]
+- Research Gap: [The gap you're addressing]
+- Expected Contribution: [Novel contribution to the field]
+- Target Venues: [Conferences/journals you're targeting]
 
-My research goal: [Describe your research objective]
-Timeline: [Duration available]
-Resources: [Computational resources, datasets, tools available]
-Background: [Your technical skills and experience]`,
+**MY PROFILE**:
+- Timeline: [Total months available]
+- Resources: [Computational: GPUs/CPUs, Data: datasets available, Tools: software licenses]
+- Team: [Solo/With collaborators, Advisor availability]
+- Technical Skills: [Programming languages, frameworks, domain knowledge]
+- Experience: [Prior research projects, implementation experience]
+
+**WHAT I NEED**:
+1. Project Breakdown into 2-week sprints
+   - Clear deliverables for each sprint
+   - Dependencies between sprints
+   - Milestones and checkpoints
+2. Experimental Design and Methodology
+   - Research methodology (quantitative/qualitative/mixed)
+   - Experimental setup (datasets, baselines, metrics)
+   - Validation strategy (cross-validation, hold-out, etc.)
+   - Statistical tests for significance
+3. Technical Challenges and Solutions
+   - Anticipated technical challenges
+   - Proposed solutions or workarounds
+   - Backup plans if primary approach fails
+4. Tools, Libraries, and Frameworks
+   - Specific recommendations with versions
+   - Installation and setup instructions
+   - Alternatives if primary tools don't work
+5. Data Collection and Analysis Plan
+   - Data sources and acquisition strategy
+   - Data preprocessing pipeline
+   - Analysis methods and visualization
+   - Data storage and version control
+6. Documentation and Reproducibility
+   - Code organization structure
+   - Documentation standards
+   - Experiment tracking tools
+   - Reproducibility checklist
+7. Risk Management
+   - Potential risks and mitigation strategies
+   - Contingency plans
+   - Decision points for pivoting
+
+**OUTPUT FORMAT**:
+- Provide Gantt chart or timeline visualization (text-based)
+- Use tables for sprint planning
+- Include code snippets or pseudocode where helpful
+- Provide specific commands for tool installation
+- Include weekly progress tracking template
+
+**QUALITY CRITERIA**:
+- Plan should be realistic given timeline and resources
+- Should include buffer time for unexpected issues (20-30%)
+- Should have clear success criteria for each phase
+- Should align with target venue requirements`,
         guidelines: [
             'Be specific about your research methodology',
             'Mention any constraints (time, compute, data)',
@@ -329,12 +505,27 @@ Background: [Your technical skills and experience]`,
             'Request help with experimental design validation',
             'Use AI for debugging and optimization suggestions'
         ],
-        sampleInput: `I am implementing "Multi-Modal Federated Learning for Healthcare Diagnosis". Help me plan execution.
+        sampleInput: `**CONTEXT**: I am at Stage 4 of my research journey - Research Implementation. I have identified my research gap and now need to systematically plan and execute my research project.
 
-Research goal: Develop FL system that handles images + text + genomic data from 5 hospitals
-Timeline: 8 months
-Resources: 4 GPUs, synthetic healthcare datasets, Python/PyTorch
-Background: Strong ML, basic distributed systems, no FL experience`,
+**MY RESEARCH PROJECT**:
+- Research Topic: Multi-Modal Federated Learning for Healthcare Diagnosis
+- Research Goal: Develop FL system that handles images + text + genomic data from multiple hospitals while preserving privacy
+- Research Gap: Current FL systems handle single modality; no comprehensive multi-modal FL for healthcare
+- Expected Contribution: Novel fusion architecture for multi-modal FL, privacy-preserving aggregation, evaluation on real healthcare data
+- Target Venues: NeurIPS, ICML, or MICCAI (top-tier ML/medical imaging conferences)
+
+**MY PROFILE**:
+- Timeline: 8 months for implementation + experiments
+- Resources: 4 GPUs (V100), synthetic MIMIC-III dataset (images + text), synthetic genomic data, Python/PyTorch environment
+- Team: Solo PhD student, advisor available 1 hour/week, potential collaboration with hospital (data access pending)
+- Technical Skills: Strong Python/PyTorch, good ML/DL knowledge, basic distributed systems, no prior FL experience
+- Experience: Completed 2 course projects (image classification, NLP), no prior research publications
+
+**WHAT I NEED**: All items as specified above (sprint breakdown, experimental design, challenges, tools, data plan, documentation, risk management)
+
+**OUTPUT FORMAT**: As requested with timeline, tables, code snippets, and tracking template
+
+**QUALITY CRITERIA**: Plan should lead to NeurIPS-quality paper, include ablation studies, have reproducible results, complete within 8 months`,
         sampleOutput: `8-Month Implementation Plan (16 sprints):
 
 **Phase 1: Foundation (Months 1-2, Sprints 1-4)**
@@ -451,19 +642,81 @@ Sprint 16: Documentation & Reproducibility
         phase: 'Execution',
         stageName: 'Research Paper Drafting',
         subStage: 'Writing Your First Paper',
-        prompt: `I need to write a research paper on [research topic] for [target venue: conference/journal name].
+        prompt: `**CONTEXT**: I am at Stage 5 of my research journey - Research Paper Drafting. I have completed my research implementation and experiments, and now need to write a high-quality research paper.
 
-Please help me:
-1. Suggest paper structure and section breakdown
-2. Provide writing tips for each section (Abstract, Introduction, Related Work, Methodology, Results, Discussion, Conclusion)
-3. Recommend how to present my results effectively
-4. Suggest common mistakes to avoid
-5. Provide a writing timeline (weeks to complete each section)
+**MY RESEARCH PAPER**:
+- Research Topic: [Your research topic]
+- Target Venue: [Specific conference/journal name]
+- Paper Type: [Full paper/Short paper/Workshop paper]
+- Page Limit: [Number of pages]
+- Submission Deadline: [Date - X months from now]
+- Current Status: [Experiments complete/Ongoing/Results ready]
 
-My research: [Brief description of your work]
-Target venue: [Conference/Journal name and typical paper length]
-Deadline: [Submission deadline]
-Experience: [First paper / Have written X papers before]`,
+**MY RESEARCH SUMMARY**:
+- Main Contribution: [Your novel contribution in 1-2 sentences]
+- Key Results: [Your main findings with numbers/metrics]
+- Datasets Used: [Datasets and their sizes]
+- Baselines Compared: [Methods you compared against]
+- Performance Improvement: [X% better than baseline on metric Y]
+- Limitations: [Known limitations of your work]
+
+**MY PROFILE**:
+- Experience: [First paper / Have written X papers before]
+- Writing Skills: [Beginner/Intermediate/Advanced]
+- Advisor Support: [Available for feedback / Limited availability]
+- Co-authors: [Solo / With X co-authors]
+- Language: [Native English speaker / ESL]
+
+**WHAT I NEED**:
+1. Paper Structure and Section Breakdown
+   - Detailed outline for each section
+   - Word count allocation per section
+   - What to include/exclude in each section
+   - Section dependencies (write in what order)
+2. Writing Strategy for Each Section
+   - Abstract: How to write compelling abstract (4-6 sentences structure)
+   - Introduction: Story arc, motivation, contributions
+   - Related Work: How to position your work, what to cite
+   - Methodology: Level of detail, reproducibility requirements
+   - Experiments: What experiments to include, how to present
+   - Results: Table/figure design, what metrics to report
+   - Discussion: How to interpret results, limitations
+   - Conclusion: How to summarize and suggest future work
+3. Figure and Table Design
+   - How many figures/tables needed
+   - What to visualize (architecture, results, comparisons)
+   - Design principles for clarity
+   - Caption writing guidelines
+4. Common Mistakes to Avoid
+   - Specific to target venue
+   - Based on reviewer feedback patterns
+   - Writing style issues
+5. Writing Timeline (Week-by-Week)
+   - Realistic schedule from start to submission
+   - Buffer time for revisions
+   - Feedback incorporation cycles
+6. Venue-Specific Requirements
+   - Formatting guidelines
+   - Supplementary material requirements
+   - Ethical considerations/checklist
+   - Code/data release expectations
+7. Pre-Submission Checklist
+   - Technical checklist
+   - Writing quality checklist
+   - Formatting checklist
+
+**OUTPUT FORMAT**:
+- Provide detailed week-by-week writing schedule
+- Include section templates with examples
+- Provide figure/table mockups or descriptions
+- Include reviewer perspective for each section
+- Provide specific writing tips and phrases to use/avoid
+
+**QUALITY CRITERIA**:
+- Paper should meet venue standards (acceptance rate: X%)
+- Should clearly communicate novelty and impact
+- Should be reproducible (code/data availability)
+- Should anticipate and address reviewer concerns`,
         guidelines: [
             'Specify your target venue for tailored advice',
             'Mention your key results and contributions',
@@ -471,12 +724,36 @@ Experience: [First paper / Have written X papers before]`,
             'Request examples of good vs bad writing',
             'Use AI to improve clarity and flow of your drafts'
         ],
-        sampleInput: `I need to write a research paper on "Multi-Modal Federated Learning for Healthcare" for NeurIPS (8 pages).
+        sampleInput: `**CONTEXT**: I am at Stage 5 of my research journey - Research Paper Drafting. I have completed my research implementation and experiments, and now need to write a high-quality research paper.
 
-My research: Developed FL system handling images+text+genomics from 5 hospitals. Achieved 15% accuracy improvement over single-modal FL with 40% less communication.
-Target venue: NeurIPS (top ML conference, 8 pages)
-Deadline: 3 months from now
-Experience: First paper`,
+**MY RESEARCH PAPER**:
+- Research Topic: Multi-Modal Federated Learning for Healthcare Diagnosis
+- Target Venue: NeurIPS 2026 (Neural Information Processing Systems)
+- Paper Type: Full paper
+- Page Limit: 8 pages (+ unlimited appendix)
+- Submission Deadline: May 2026 (3 months from now)
+- Current Status: Experiments complete, results ready, no draft yet
+
+**MY RESEARCH SUMMARY**:
+- Main Contribution: Novel fusion architecture for multi-modal FL that handles images, text, and genomic data with adaptive communication
+- Key Results: 15% accuracy improvement over single-modal FL, 40% communication reduction, works across 5 simulated hospitals
+- Datasets Used: MIMIC-III (10K patients), synthetic genomic data
+- Baselines Compared: FedAvg, FedProx, single-modal FL, centralized learning
+- Performance Improvement: 15% accuracy, 40% less communication, 2x faster convergence
+- Limitations: Tested on synthetic data, limited to 3 modalities, assumes all clients have same modalities
+
+**MY PROFILE**:
+- Experience: First paper (PhD student, Year 1)
+- Writing Skills: Beginner (good technical writing, limited academic paper experience)
+- Advisor Support: Available for 2 rounds of feedback
+- Co-authors: Solo (advisor as co-author)
+- Language: ESL (English as Second Language)
+
+**WHAT I NEED**: All items as specified above (structure, writing strategy, figures, mistakes, timeline, venue requirements, checklist)
+
+**OUTPUT FORMAT**: As requested with week-by-week schedule, templates, examples, and reviewer perspective
+
+**QUALITY CRITERIA**: Target NeurIPS acceptance (23% acceptance rate), clearly show novelty, include ablation studies, reproducible with code release`,
         sampleOutput: `NeurIPS Paper Structure & Timeline (12 weeks):
 
 **Week 1-2: Results & Figures**
@@ -593,18 +870,83 @@ Write last! 4 sentences:
         phase: 'Execution',
         stageName: 'Patent Drafting',
         subStage: 'Protecting Your Innovation',
-        prompt: `I want to file a patent for my research innovation: [brief description].
+        prompt: `**CONTEXT**: I am at Stage 6 of my research journey - Patent Drafting. I have developed a novel innovation and want to protect it through a patent before publishing or commercializing.
 
-Help me:
-1. Determine if my innovation is patentable (novelty, non-obviousness, utility)
-2. Identify the type of patent needed (utility, design, provisional)
-3. Draft patent claims (independent and dependent)
-4. Describe the invention clearly for patent application
-5. Identify prior art that might affect patentability
+**MY INNOVATION**:
+- Innovation Name: [Brief descriptive name]
+- Technical Description: [What your innovation does]
+- Field/Domain: [Technology domain: AI/Biotech/Engineering/etc.]
+- Current Stage: [Concept/Prototype/Tested/Validated]
+- Novelty: [What makes it different from existing solutions]
+- Problem Solved: [What problem does it address]
+- Advantages: [Key benefits over existing approaches]
 
-My innovation: [Describe your technical solution]
-Field: [Technology domain]
-Current stage: [Prototype/Concept/Tested]`,
+**PRIOR ART KNOWLEDGE**:
+- Existing Solutions: [Known competing technologies/patents]
+- Limitations of Existing Solutions: [Why current solutions are inadequate]
+- Your Improvement: [How your innovation is better]
+- Similar Patents: [Any patents you're aware of in this space]
+
+**MY PROFILE**:
+- Role: [Student/Faculty/Researcher/Entrepreneur]
+- Institution: [University/Company/Independent]
+- Budget: [Available for patent filing: ₹X lakhs or $X]
+- Timeline: [Urgency: Need to file before publication/conference]
+- Geography: [Where to file: India/US/International]
+- Commercialization Plans: [Licensing/Startup/Technology transfer]
+
+**WHAT I NEED**:
+1. Patentability Assessment
+   - Novelty check: Is it truly new?
+   - Non-obviousness: Is it an inventive step?
+   - Utility: Does it have practical application?
+   - Patent type recommendation: Utility/Design/Provisional
+2. Patent Type and Strategy
+   - Which type of patent to file (Design/Utility/Provisional/Full)
+   - Geographic strategy (National/International/PCT)
+   - Cost-benefit analysis for each option
+   - Timeline for each patent type
+3. Claims Drafting Guidance
+   - Independent claims (broad protection)
+   - Dependent claims (specific embodiments)
+   - Claim structure and language
+   - How many claims to include
+4. Patent Application Structure
+   - Title: How to write effective title
+   - Abstract: Patent abstract vs research abstract
+   - Background: Prior art and problem statement
+   - Summary: Brief description of invention
+   - Detailed Description: Level of technical detail needed
+   - Drawings: What figures/diagrams to include
+   - Claims: How to structure claims
+5. Prior Art Search Strategy
+   - Where to search (patent databases, literature)
+   - Search keywords and classifications
+   - How to document prior art
+   - How to differentiate your invention
+6. Cost and Timeline Breakdown
+   - Filing costs for each patent type
+   - Attorney fees (if needed)
+   - Maintenance costs
+   - Expected timeline to grant
+7. Common Pitfalls to Avoid
+   - Disclosure issues (publishing before filing)
+   - Claim scope (too broad or too narrow)
+   - Insufficient technical detail
+   - Missing embodiments
+
+**OUTPUT FORMAT**:
+- Provide patentability score (0-100)
+- Include sample claim language
+- Provide cost comparison table
+- Include timeline Gantt chart
+- Provide prior art search checklist
+
+**QUALITY CRITERIA**:
+- Claims should be broad enough for protection
+- Should be specific enough to be granted
+- Should cover all embodiments of invention
+- Should anticipate potential workarounds`,
         guidelines: [
             'Describe your innovation in technical detail',
             'Mention what makes it different from existing solutions',

@@ -66,6 +66,14 @@ export default function ResourceDetailClient({ resource, content }: ResourceDeta
                     templates: categoryTemplates
                 })
             })
+        } else if (content.type === 'ai-prompts' && content.data) {
+            // AI prompts slides - one slide per stage
+            content.data.forEach((prompt: any) => {
+                slides.push({
+                    type: 'ai-prompt',
+                    data: prompt
+                })
+            })
         } else if (content.data && Array.isArray(content.data)) {
             // Regular content slides
             content.data.forEach((item: any) => {
@@ -481,6 +489,95 @@ ${prompt.limitations.map((l: string, i: number) => `${i + 1}. ${l}`).join('\n')}
                                                 </p>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* AI Prompt Slide */}
+                            {slides[currentSlide]?.type === 'ai-prompt' && (
+                                <div className="space-y-4 sm:space-y-6 w-full py-2 sm:py-4 max-h-[calc(100vh-200px)] sm:max-h-[calc(100vh-280px)] overflow-y-auto pr-2 sm:pr-4">
+                                    <div className="sticky top-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pb-3 sm:pb-4 z-10">
+                                        <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                                            <span className="px-3 py-1 sm:px-4 sm:py-2 bg-indigo-600 text-white rounded-full text-xs sm:text-base font-semibold">
+                                                Stage {slides[currentSlide].data.stage}
+                                            </span>
+                                            <span className="px-3 py-1 sm:px-4 sm:py-2 bg-purple-500/30 text-purple-100 rounded-full text-xs sm:text-base font-semibold">
+                                                {slides[currentSlide].data.phase}
+                                            </span>
+                                        </div>
+                                        <h2 className="text-2xl sm:text-5xl font-bold text-white mb-2 px-2">
+                                            {slides[currentSlide].data.stageName}
+                                        </h2>
+                                        {slides[currentSlide].data.subStage && (
+                                            <p className="text-base sm:text-2xl text-white/80 italic px-2">
+                                                {slides[currentSlide].data.subStage}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* AI Prompt */}
+                                    <div className="bg-indigo-500/20 rounded-xl p-4 sm:p-6 border border-indigo-400/30 mb-4 sm:mb-6">
+                                        <h3 className="text-xl sm:text-3xl font-bold text-indigo-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                            🤖 AI Prompt
+                                        </h3>
+                                        <pre className="text-xs sm:text-lg text-indigo-100 whitespace-pre-wrap font-mono bg-indigo-900/30 p-3 sm:p-4 rounded-lg leading-relaxed">
+                                            {slides[currentSlide].data.prompt}
+                                        </pre>
+                                    </div>
+
+                                    {/* Human + AI Performance */}
+                                    <div className="bg-purple-500/20 rounded-xl p-4 sm:p-6 border border-purple-400/30 mb-4 sm:mb-6">
+                                        <h3 className="text-xl sm:text-3xl font-bold text-purple-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                            🚀 Human + AI Performance
+                                        </h3>
+                                        <p className="text-sm sm:text-xl text-purple-100 leading-relaxed">
+                                            {slides[currentSlide].data.humanAIPerformance}
+                                        </p>
+                                    </div>
+
+                                    {/* Role of Human */}
+                                    <div className="bg-green-500/20 rounded-xl p-4 sm:p-6 border border-green-400/30 mb-4 sm:mb-6">
+                                        <h3 className="text-xl sm:text-3xl font-bold text-green-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                            👤 Role of Human
+                                        </h3>
+                                        <ul className="space-y-2 sm:space-y-3">
+                                            {slides[currentSlide].data.roleOfHuman.slice(0, 4).map((role: string, idx: number) => (
+                                                <li key={idx} className="text-sm sm:text-xl text-green-100 flex items-start gap-2 sm:gap-3 leading-relaxed">
+                                                    <span className="text-green-300 text-base sm:text-2xl flex-shrink-0">→</span>
+                                                    <span>{role}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    {/* Role of AI */}
+                                    <div className="bg-blue-500/20 rounded-xl p-4 sm:p-6 border border-blue-400/30 mb-4 sm:mb-6">
+                                        <h3 className="text-xl sm:text-3xl font-bold text-blue-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                            🤖 Role of AI
+                                        </h3>
+                                        <ul className="space-y-2 sm:space-y-3">
+                                            {slides[currentSlide].data.roleOfAI.slice(0, 4).map((role: string, idx: number) => (
+                                                <li key={idx} className="text-sm sm:text-xl text-blue-100 flex items-start gap-2 sm:gap-3 leading-relaxed">
+                                                    <span className="text-blue-300 text-base sm:text-2xl flex-shrink-0">→</span>
+                                                    <span>{role}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    {/* Ethical Considerations */}
+                                    <div className="bg-yellow-500/20 rounded-xl p-4 sm:p-6 border border-yellow-400/30">
+                                        <h3 className="text-xl sm:text-3xl font-bold text-yellow-100 mb-3 sm:mb-4 flex items-center gap-2">
+                                            ⚖️ Ethical Considerations
+                                        </h3>
+                                        <ul className="space-y-2 sm:space-y-3">
+                                            {slides[currentSlide].data.ethicalConsiderations.map((consideration: string, idx: number) => (
+                                                <li key={idx} className="text-sm sm:text-xl text-yellow-100 flex items-start gap-2 sm:gap-3 leading-relaxed">
+                                                    <span className="text-yellow-300 text-base sm:text-2xl flex-shrink-0">⚠</span>
+                                                    <span>{consideration}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
                                 </div>
                             )}
